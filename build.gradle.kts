@@ -17,6 +17,7 @@ repositories {
 dependencies {
     intellijPlatform {
         intellijIdeaUltimate(providers.gradleProperty("platformVersion"))
+        bundledPlugin("org.jetbrains.plugins.textmate")
     }
 }
 

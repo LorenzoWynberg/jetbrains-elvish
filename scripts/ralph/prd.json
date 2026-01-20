@@ -180,7 +180,7 @@
         "Bundle points to /textmate/elvish.tmLanguage.json resource",
         "Class compiles without errors"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-010"],
       "phase": 4,
       "epic": 1,

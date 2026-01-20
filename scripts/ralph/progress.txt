@@ -230,3 +230,25 @@
 - .elv files recognized with custom icon
 - LSP server starts when opening .elv files (requires elvish in PATH)
 - TextMate grammar created (awaiting bundle provider registration for highlighting)
+
+---
+
+## 2026-01-20 - STORY-011: Create ElvishTextMateBundleProvider
+
+**What was done:**
+- Created ElvishTextMateBundleProvider implementing TextMateBundleProvider interface
+- getBundles() returns list with PluginBundle("Elvish", path) pointing to /textmate resource directory
+- Added bundledPlugin("org.jetbrains.plugins.textmate") dependency to build.gradle.kts
+- Used java.nio.file.Path and javaClass.getResource to locate bundle at runtime
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/textmate/ElvishTextMateBundleProvider.kt
+
+**Files changed:**
+- build.gradle.kts (added textmate bundled plugin dependency)
+
+**Learnings:**
+- TextMateBundleProvider interface is in org.jetbrains.plugins.textmate.api package
+- PluginBundle is a data class taking name (String) and path (Path)
+- The path points to the directory containing the grammar file, not the file itself
+- Bundled plugins added via bundledPlugin() in intellijPlatform dependencies block
