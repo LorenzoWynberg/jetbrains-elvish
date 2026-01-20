@@ -607,7 +607,18 @@ while (< $current-iteration $max-iterations) {
     set state[attempts] = (num 0)
     set state[error] = $nil
     write-state $state
-    ralph-dim "  State saved."
+    ralph-dim "  State saved locally."
+
+    # Commit and push state to dev so it's persisted
+    ralph-dim "  Committing idle state to dev..."
+    try {
+      git -C $project-root add scripts/ralph/state.json
+      git -C $project-root commit -m "chore: reset state after "$story-id" completion" > /dev/null 2>&1
+      git -C $project-root push origin dev > /dev/null 2>&1
+      ralph-success "  State committed and pushed to dev."
+    } catch {
+      ralph-dim "  (state commit skipped - no changes or already up to date)"
+    }
 
     # Interactive prompt: chance to stop before next story (20s auto-continue)
     echo ""
@@ -615,7 +626,7 @@ while (< $current-iteration $max-iterations) {
     echo $C_YELLOW"Stop loop? [y/N] "$C_DIM"(continues in 20s)"$C_RESET
     var should-stop = $false
     try {
-      var answer = (bash -c 'read -t 20 ans; echo "$ans"' </dev/tty)
+      var answer = (bash -c 'read -t 20 -n 1 ans 2>/dev/null; echo "$ans"' </dev/tty 2>/dev/null)
       if (re:match '^[yY]' $answer) {
         set should-stop = $true
       }
@@ -629,7 +640,9 @@ while (< $current-iteration $max-iterations) {
       ralph-dim "Run again to continue from next story."
       exit 0
     }
-    ralph-dim "Continuing to next story..."
+    if (not $should-stop) {
+      ralph-dim "Continuing to next story..."
+    }
   } elif $story-blocked {
     echo ""
     ralph-error "Story "$story-id" is BLOCKED"
