@@ -544,6 +544,41 @@
 
 ---
 
+## 2026-01-20 - STORY-019: Create ElvishSettings persistent state
+
+**What was done:**
+- Created ElvishSettings.kt in new `settings` package
+- Uses @State annotation with storage in "elvish.xml"
+- Uses @Service annotation at PROJECT level
+- Implements PersistentStateComponent<ElvishSettings.State>
+- State data class with elvishPath property (default: "elvish")
+- Convenience property for accessing elvishPath directly
+- getInstance companion method for accessing settings from a Project
+- Created comprehensive unit tests (10 tests) covering:
+  - Default state values
+  - State modification
+  - getState/loadState methods
+  - Property getter/setter
+  - State equality and copy
+- Updated docs/DEVELOPMENT.md with settings package documentation
+- Performed 2 rounds of refactor checks - no changes needed (minimal, well-organized code)
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/settings/ElvishSettings.kt
+- src/test/kotlin/com/elvish/plugin/settings/ElvishSettingsTest.kt
+
+**Files changed:**
+- docs/DEVELOPMENT.md (added settings package to project structure and architecture)
+
+**Learnings:**
+- @State annotation's `storages` parameter specifies the XML file name for persistence
+- @Service(Service.Level.PROJECT) makes the service project-scoped
+- PersistentStateComponent uses a State class that must have mutable properties for XML serialization
+- Data class with var properties works well for State - gives equals/copy/toString for free
+- Project.getService() retrieves the service instance
+
+---
+
 ## Summary
 
 **Completed Phases:**
@@ -552,9 +587,10 @@
 - Phase 3: LSP Integration (STORY-008 to STORY-009)
 - Phase 4: TextMate Syntax Highlighting (STORY-010 to STORY-013)
 - Phase 5: Parser Definition (STORY-014 to STORY-018)
+- Phase 6 (partial): Settings storage (STORY-019)
 
 **Remaining Phases:**
-- Phase 6: Settings & Configuration (STORY-019 to STORY-022)
+- Phase 6 (remaining): Settings UI, LSP integration, registration (STORY-020 to STORY-022)
 
 **Current state:**
 - Plugin builds successfully with ./gradlew build
@@ -563,3 +599,4 @@
 - LSP server starts when opening .elv files (requires elvish in PATH)
 - TextMate syntax highlighting fully functional
 - Custom parser registered and active for Elvish files
+- Project-level settings storage ready for UI integration

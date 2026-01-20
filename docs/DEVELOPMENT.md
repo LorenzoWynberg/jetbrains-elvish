@@ -33,6 +33,8 @@ src/main/
 │   │   ├── ElvishLexer.kt            # Tokenizer
 │   │   ├── ElvishParser.kt           # AST builder
 │   │   └── ElvishParserDefinition.kt # Parser factory
+│   ├── settings/
+│   │   └── ElvishSettings.kt         # Plugin settings storage
 │   └── textmate/
 │       └── ElvishTextMateBundleProvider.kt
 └── resources/
@@ -66,7 +68,11 @@ src/main/
    - `ElvishParser`: Builds basic AST structure
    - `ElvishParserDefinition`: Factory that ties lexer, parser, and file creation together
 
-5. **Plugin Manifest** (`META-INF/plugin.xml`)
+5. **Settings** (`settings/` package)
+   - `ElvishSettings`: Project-level settings stored in `elvish.xml`
+   - Configurable elvish path (default: 'elvish' from PATH)
+
+6. **Plugin Manifest** (`META-INF/plugin.xml`)
    - Dependencies: `platform`, `ultimate`, `textmate` modules
    - Extensions: file type, LSP server support, TextMate bundle, parser definition
 
@@ -75,7 +81,7 @@ src/main/
 - **Minimal parser**: Basic AST structure for IDE features; LSP handles language intelligence
 - **Project-wide LSP**: Single server per project
 - **TextMate for highlighting**: Simpler than custom lexer, good enough for syntax colors
-- **Requires Elvish in PATH**: Future: configurable path in settings
+- **Configurable elvish path**: Settings allow custom path; defaults to 'elvish' in PATH
 
 ## Testing
 

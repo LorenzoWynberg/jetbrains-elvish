@@ -321,7 +321,7 @@
         "Settings stored in elvish.xml",
         "getInstance companion method for accessing settings"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-013"],
       "phase": 6,
       "epic": 1,
