@@ -355,7 +355,7 @@
         "createCommandLine uses configured path",
         "LSP server restarts when settings change (or requires IDE restart)"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-020"],
       "phase": 6,
       "epic": 1,

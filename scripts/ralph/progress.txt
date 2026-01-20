@@ -630,6 +630,25 @@
 
 ---
 
+## 2026-01-20 - STORY-021: Update LSP descriptor to use settings
+
+**What was done:**
+- Modified ElvishLspServerDescriptor to read elvish path from ElvishSettings
+- Added getElvishPath() private method that reads from settings and falls back to default
+- Added DEFAULT_ELVISH_PATH constant ("elvish") for fallback when settings are blank
+- createCommandLine() now uses configured path instead of hardcoded "elvish"
+- Performed 2 rounds of refactor checks - no changes needed (minimal addition)
+
+**Files changed:**
+- src/main/kotlin/com/elvish/plugin/lsp/ElvishLspServerDescriptor.kt
+
+**Learnings:**
+- Settings are read each time createCommandLine() is called, so changes take effect on LSP restart
+- Using isNotBlank() handles both empty strings and whitespace-only input
+- Companion object constants provide clean default values with clear naming
+
+---
+
 ## Summary
 
 **Completed Phases:**
@@ -638,16 +657,16 @@
 - Phase 3: LSP Integration (STORY-008 to STORY-009)
 - Phase 4: TextMate Syntax Highlighting (STORY-010 to STORY-013)
 - Phase 5: Parser Definition (STORY-014 to STORY-018)
-- Phase 6 (partial): Settings storage and UI (STORY-019 to STORY-020)
+- Phase 6 (partial): Settings storage, UI, and LSP integration (STORY-019 to STORY-021)
 
 **Remaining Phases:**
-- Phase 6 (remaining): LSP integration with settings, registration (STORY-021 to STORY-022)
+- Phase 6 (remaining): Settings registration (STORY-022)
 
 **Current state:**
 - Plugin builds successfully with ./gradlew build
 - Plugin runs in sandbox IDE with ./gradlew runIde
 - .elv files recognized with custom icon
-- LSP server starts when opening .elv files (requires elvish in PATH)
+- LSP server starts when opening .elv files (uses configured path or 'elvish' from PATH)
 - TextMate syntax highlighting fully functional
 - Custom parser registered and active for Elvish files
-- Project-level settings storage and UI ready for registration
+- Project-level settings storage and UI ready, LSP uses configured path
