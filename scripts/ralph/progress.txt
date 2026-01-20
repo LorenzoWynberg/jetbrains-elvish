@@ -730,3 +730,24 @@
 - Plugin verifier requires explicit IDE configuration via `intellijPlatform.pluginVerification.ides { recommended() }`
 - LSP API is still marked as experimental in IntelliJ platform - warnings are expected
 - Build requires Java 17+ to run (IntelliJ JBR works well)
+
+---
+
+## 2026-01-20 - STORY-103: Add LSP server startup logging
+
+**What was done:**
+- Added debug logging to ElvishLspServerSupportProvider.fileOpened()
+  - Logs file path and whether file is an Elvish file
+  - Logs when starting LSP server for a project
+- Added debug logging to ElvishLspServerDescriptor.createCommandLine()
+  - Logs the full command line string being executed (e.g., "elvish -lsp")
+
+**Files changed:**
+- src/main/kotlin/com/elvish/plugin/lsp/ElvishLspServerSupportProvider.kt
+- src/main/kotlin/com/elvish/plugin/lsp/ElvishLspServerDescriptor.kt
+
+**Learnings:**
+- Logger.getInstance() with class reference is standard pattern for IntelliJ logging
+- LOG.info() writes to idea.log accessible via Help > Show Log in IDE
+- commandLineString provides the full command with arguments for diagnostics
+- No refactoring needed - changes were minimal (~10 lines total)

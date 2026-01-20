@@ -42,7 +42,7 @@
         "Logs visible in IDE log (Help > Show Log)",
         "./gradlew build succeeds"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-101"],
       "phase": 1,
       "epic": 2,
