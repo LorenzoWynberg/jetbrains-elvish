@@ -395,21 +395,19 @@ class ElvishParser : PsiParser {
 
         // Parse binary operators but stop at LBRACE
         skipWhitespace(builder)
+        var hasBinaryOp = false
         while (!builder.eof() && !isStatementTerminator(builder.tokenType) &&
                builder.tokenType != ElvishTokenTypes.RBRACE &&
                builder.tokenType != ElvishTokenTypes.LBRACE &&
                builder.tokenType != ElvishTokenTypes.PIPE) {
 
             if (isBinaryOperator(builder.tokenType)) {
-                val opMarker = marker.precede()
-                marker.done(ElvishElementTypes.EXPRESSION)
+                hasBinaryOp = true
                 builder.advanceLexer()
                 skipWhitespace(builder)
                 if (!parsePrimaryExpressionNotBlock(builder)) {
-                    opMarker.error("Expected expression after operator")
-                    return true
+                    break
                 }
-                opMarker.done(ElvishElementTypes.BINARY_EXPRESSION)
                 skipWhitespace(builder)
             } else if (canStartExpressionNotBlock(builder.tokenType)) {
                 parsePrimaryExpressionNotBlock(builder)
@@ -419,7 +417,7 @@ class ElvishParser : PsiParser {
             }
         }
 
-        marker.done(ElvishElementTypes.EXPRESSION)
+        marker.done(if (hasBinaryOp) ElvishElementTypes.BINARY_EXPRESSION else ElvishElementTypes.EXPRESSION)
         return true
     }
 
@@ -437,21 +435,18 @@ class ElvishParser : PsiParser {
 
         // Parse binary operators and more arguments
         skipWhitespace(builder)
+        var hasBinaryOp = false
         while (!builder.eof() && !isStatementTerminator(builder.tokenType) &&
                builder.tokenType != ElvishTokenTypes.RBRACE &&
                builder.tokenType != ElvishTokenTypes.PIPE) {
 
             if (isBinaryOperator(builder.tokenType)) {
-                // Binary expression
-                val opMarker = marker.precede()
-                marker.done(ElvishElementTypes.EXPRESSION)
+                hasBinaryOp = true
                 builder.advanceLexer() // consume operator
                 skipWhitespace(builder)
                 if (!parsePrimaryExpression(builder)) {
-                    opMarker.error("Expected expression after operator")
-                    return true
+                    break
                 }
-                opMarker.done(ElvishElementTypes.BINARY_EXPRESSION)
                 skipWhitespace(builder)
             } else if (canStartExpression(builder.tokenType)) {
                 // Additional argument in command
@@ -462,7 +457,7 @@ class ElvishParser : PsiParser {
             }
         }
 
-        marker.done(ElvishElementTypes.EXPRESSION)
+        marker.done(if (hasBinaryOp) ElvishElementTypes.BINARY_EXPRESSION else ElvishElementTypes.EXPRESSION)
         return true
     }
 
