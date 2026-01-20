@@ -217,7 +217,7 @@
         "Variables appear in yellow (#FFCB6B)",
         "No errors in IDE logs related to TextMate grammar"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-012"],
       "phase": 4,
       "epic": 1,

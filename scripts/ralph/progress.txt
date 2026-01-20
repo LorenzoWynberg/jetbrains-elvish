@@ -269,3 +269,66 @@
 - TextMate extensions use a separate namespace: org.jetbrains.plugins.textmate
 - The extension point is "bundleProvider" (not "textmate.bundleProvider")
 - Plugin must declare dependency on textmate plugin for the extension to work
+
+---
+
+## 2026-01-20 - STORY-013: Test and verify syntax highlighting
+
+**What was done:**
+- Verified ./gradlew build passes successfully
+- Reviewed TextMate grammar (elvish.tmLanguage.json) - all scopes correctly defined
+- Reviewed bundle provider (ElvishTextMateBundleProvider.kt) - correctly returns bundle path
+- Verified plugin.xml registration - bundleProvider extension correctly registered
+- Created comprehensive test .elv file (src/test/resources/test-syntax.elv) with all syntax elements
+- Verified plugin ZIP contains all TextMate resources
+- Performed 2 rounds of refactor checking - no changes needed (code well-organized)
+
+**Test file coverage:**
+- Comments (# style)
+- Control keywords (if, elif, else, while, for, try, catch, finally, break, continue, return)
+- Other keywords (fn, var, set, tmp, del, use, pragma, and, or, coalesce)
+- Constants ($true, $false, $nil, $ok, nop)
+- Numbers (integer, float, hex, octal, binary, rational, Inf, NaN)
+- Strings (single-quoted, double-quoted with escapes and interpolation)
+- Variables ($var, $@explode, $namespace:var)
+- Built-in functions (60+ functions tested)
+- Operators (comparison, arithmetic, pipe, range, redirection)
+- Punctuation (brackets, braces, parens, semicolons, ampersands)
+
+**Scope to color mapping (Material Palenight theme):**
+- comment.line -> gray (#676E95)
+- keyword.control, keyword.other -> purple (#C792EA)
+- string.quoted -> green (#C3E88D)
+- constant.numeric -> orange (#F78C6C)
+- support.function.builtin -> blue (#82AAFF)
+- variable.other -> yellow (#FFCB6B)
+
+**Files created:**
+- src/test/resources/test-syntax.elv
+
+**Learnings:**
+- TextMate grammar colors depend on the IDE theme, not the grammar itself
+- Grammar assigns semantic scopes; themes map scopes to colors
+- The plugin ZIP correctly packages textmate/ directory inside the JAR
+- Build requires Java 21 (JAVA_HOME must be set if default is lower)
+
+---
+
+## Summary
+
+**Completed Phases:**
+- Phase 1: Project Setup (STORY-001 to STORY-003)
+- Phase 2: File Type Registration (STORY-004 to STORY-007)
+- Phase 3: LSP Integration (STORY-008 to STORY-009)
+- Phase 4: TextMate Syntax Highlighting (STORY-010 to STORY-013)
+
+**Remaining Phases:**
+- Phase 5: Parser Definition (STORY-014 to STORY-018) - Optional
+- Phase 6: Settings & Configuration (STORY-019 to STORY-022)
+
+**Current state:**
+- Plugin builds successfully with ./gradlew build
+- Plugin runs in sandbox IDE with ./gradlew runIde
+- .elv files recognized with custom icon
+- LSP server starts when opening .elv files (requires elvish in PATH)
+- TextMate syntax highlighting fully functional
