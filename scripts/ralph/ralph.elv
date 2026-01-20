@@ -254,8 +254,18 @@ fn create-story-branch {|story-id|
 fn ensure-on-branch {|branch|
   var current = (current-branch)
   if (not (eq $current $branch)) {
-    echo "  Switching to branch "$branch >&2
-    git -C $project-root checkout $branch > /dev/null 2>&1
+    # Check if branch exists
+    if (branch-exists $branch) {
+      echo "  Switching to branch "$branch >&2
+      git -C $project-root checkout $branch > /dev/null 2>&1
+    } else {
+      # Branch missing - recreate from base branch
+      echo "  Branch "$branch" not found, recreating from "$base-branch >&2
+      git -C $project-root fetch origin $base-branch > /dev/null 2>&1
+      git -C $project-root checkout $base-branch > /dev/null 2>&1
+      git -C $project-root reset --hard origin/$base-branch > /dev/null 2>&1
+      git -C $project-root checkout -b $branch > /dev/null 2>&1
+    }
   }
 }
 
