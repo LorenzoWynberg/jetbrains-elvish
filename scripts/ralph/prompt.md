@@ -55,7 +55,24 @@ After self-review, perform **two rounds** of refactor checking to catch issues m
 
 **Round 2 focus:** Double-check that round 1 refactoring didn't introduce new issues (e.g., large files, missed exports, circular dependencies).
 
-## 7. On SUCCESS
+## 7. Documentation Update (Required before merge)
+Update docs if your changes affect any of the following:
+
+- **README.md** - New features, changed requirements, installation steps
+- **docs/DEVELOPMENT.md** - Architecture changes, new components, build process
+- **docs/CONTRIBUTING.md** - Workflow changes, new conventions
+- **CLAUDE.md** - Key files changed, new patterns
+
+**Always update if:**
+- Adding new files/packages → update Architecture section
+- Changing build process → update Build Commands
+- Adding new feature → update Features list in README
+
+**Skip only if:** Changes are purely internal with no user-facing or developer-facing impact.
+
+Commit docs separately: `git commit -m "docs: update for {{CURRENT_STORY}}"`
+
+## 8. On SUCCESS
 
 Update these files:
 - `progress.txt`: Add entry with date, changes, learnings (include any refactoring done)
@@ -81,10 +98,10 @@ git branch -d {{BRANCH}} 2>/dev/null || true
 
 Output: `<story-complete>{{CURRENT_STORY}}</story-complete>`
 
-## 8. On BLOCKED
+## 9. On BLOCKED
 Don't commit. Don't update prd.json. Add to progress.txt what was tried and why blocked.
 
 Output: `<story-blocked>{{CURRENT_STORY}}</story-blocked>`
 
-## 9. All Done?
+## 10. All Done?
 If ALL stories in prd.json have `"passes": true`, output: `<promise>COMPLETE</promise>`
