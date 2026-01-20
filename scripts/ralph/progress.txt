@@ -649,6 +649,29 @@
 
 ---
 
+## 2026-01-20 - STORY-022: Register settings in plugin.xml
+
+**What was done:**
+- Added `projectConfigurable` extension to plugin.xml
+- Settings appear under Languages & Frameworks > Elvish (parentId="language")
+- displayName is "Elvish"
+- instance attribute points to ElvishConfigurable
+- id is "com.elvish.plugin.settings" for unique identification
+- Build passes (./gradlew build succeeds)
+- Performed 2 rounds of refactor checks - no changes needed (minimal addition)
+- Updated docs/DEVELOPMENT.md to mention project settings extension
+
+**Files changed:**
+- src/main/resources/META-INF/plugin.xml (added projectConfigurable extension)
+- docs/DEVELOPMENT.md (updated extensions list)
+
+**Learnings:**
+- projectConfigurable uses parentId="language" to place settings under "Languages & Frameworks"
+- instance attribute specifies the Configurable implementation class
+- The id attribute should be unique to prevent conflicts with other plugins
+
+---
+
 ## Summary
 
 **Completed Phases:**
@@ -657,10 +680,10 @@
 - Phase 3: LSP Integration (STORY-008 to STORY-009)
 - Phase 4: TextMate Syntax Highlighting (STORY-010 to STORY-013)
 - Phase 5: Parser Definition (STORY-014 to STORY-018)
-- Phase 6 (partial): Settings storage, UI, and LSP integration (STORY-019 to STORY-021)
+- Phase 6: Settings & Configuration (STORY-019 to STORY-022)
 
 **Remaining Phases:**
-- Phase 6 (remaining): Settings registration (STORY-022)
+- None - all stories complete!
 
 **Current state:**
 - Plugin builds successfully with ./gradlew build
@@ -669,4 +692,4 @@
 - LSP server starts when opening .elv files (uses configured path or 'elvish' from PATH)
 - TextMate syntax highlighting fully functional
 - Custom parser registered and active for Elvish files
-- Project-level settings storage and UI ready, LSP uses configured path
+- Project-level settings accessible from IDE preferences under Languages & Frameworks > Elvish
