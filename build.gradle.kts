@@ -1,7 +1,7 @@
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.9.25"
-    id("org.jetbrains.intellij.platform") version "2.2.1"
+    id("org.jetbrains.intellij.platform") version "2.10.5"
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -16,8 +16,7 @@ repositories {
 
 dependencies {
     intellijPlatform {
-        intellijIdeaCommunity(providers.gradleProperty("platformVersion"))
-        instrumentationTools()
+        intellijIdeaUltimate(providers.gradleProperty("platformVersion"))
     }
 }
 
