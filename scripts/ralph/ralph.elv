@@ -2,7 +2,7 @@
 
 # Ralph - Autonomous Development Loop v3
 # Iteratively works through tasks from prd.json until complete
-# Features: state persistence, smart branching, self-review cycle, PR automation
+# Features: state persistence, self-review cycle, PR automation
 # Adapted for JetBrains Elvish Plugin (Gradle/Kotlin)
 
 use str
@@ -80,14 +80,13 @@ OPTIONS:
 FEATURES:
   - State persistence: Tracks current story across invocations
   - Branch naming: Creates feat/story-<phase>.<epic>.<story> branches (e.g., feat/story-4.1.1)
-  - Smart branching: New stories branch from previous completed story in same epic
   - Self-review cycle: Agent reviews work, suggests improvements, iterates until done
   - PR automation: Creates PR, merges to dev, cleans up branch
   - Error recovery: Can resume interrupted work
 
 WORKFLOW:
   1. Pick next story (respecting dependencies)
-  2. Create branch from previous story in epic (or dev)
+  2. Create branch from dev (always syncs with latest)
   3. Implement story with verification (./gradlew build)
   4. Self-review: generate suggestions, evaluate, implement worthwhile ones
   5. Repeat review until no more improvements
@@ -224,38 +223,7 @@ fn get-story-info {|story-id|
   jq -r $query $pf
 }
 
-# Find the best base branch for a new story
-# Strategy: branch from the last completed story in the same epic, or dev
-fn get-base-branch-for-story {|story-id|
-  var sid = $story-id
-  var pf = $prd-file
-  var bb = $base-branch
-
-  # Get target story info
-  var info-query = ".stories[] | select(.id == \""$sid"\") | \"\\(.phase)|\\(.epic)|\\(.story_number)\""
-  var target-info = (jq -r $info-query $pf)
-  var target-parts = [(str:split "|" $target-info)]
-  var tp = $target-parts[0]  # target-phase
-  var te = $target-parts[1]  # target-epic
-  var ts = $target-parts[2]  # target-story-num
-
-  # Find the most recent completed story in the same epic
-  var query = ".stories | map(select(.phase == "$tp" and .epic == "$te" and .story_number < "$ts" and .passes == true)) | sort_by(.story_number) | reverse | .[0] // empty | \"feat/story-\\(.phase).\\(.epic).\\(.story_number)\""
-  var result = (jq -r $query $pf | slurp)
-  var trimmed = (str:trim-space $result)
-
-  if (eq $trimmed "") {
-    echo $bb
-  } else {
-    # Check if the branch actually exists (it may have been deleted after merge)
-    if (branch-exists $trimmed) {
-      echo $trimmed
-    } else {
-      # Branch was deleted after PR merge, fall back to base branch
-      echo $bb
-    }
-  }
-}
+# Always branch from BASE_BRANCH (dev) since PRs merge there and feature branches are deleted
 
 fn create-story-branch {|story-id|
   # Get story info for branch naming
@@ -273,24 +241,10 @@ fn create-story-branch {|story-id|
     echo "  Branch "$branch-name" already exists, switching to it" >&2
     git -C $project-root checkout $branch-name > /dev/null 2>&1
   } else {
-    # Get the best base branch (previous story in epic, or main)
-    var from-branch = (str:trim-space (get-base-branch-for-story $story-id | slurp))
-
-    echo "  Creating branch "$branch-name" from "$from-branch >&2
-
-    # Fetch and hard reset to avoid merge conflicts
-    try {
-      git -C $project-root fetch origin $from-branch > /dev/null 2>&1
-    } catch {
-      # Local branch, no remote to fetch from
-    }
-    git -C $project-root checkout $from-branch > /dev/null 2>&1
-    try {
-      git -C $project-root reset --hard origin/$from-branch > /dev/null 2>&1
-    } catch {
-      # Local branch, no remote to reset to
-    }
-
+    echo "  Creating branch "$branch-name" from "$base-branch >&2
+    git -C $project-root fetch origin $base-branch > /dev/null 2>&1
+    git -C $project-root checkout $base-branch > /dev/null 2>&1
+    git -C $project-root reset --hard origin/$base-branch > /dev/null 2>&1
     git -C $project-root checkout -b $branch-name > /dev/null 2>&1
   }
 
