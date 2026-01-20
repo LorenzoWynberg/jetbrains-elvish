@@ -196,7 +196,7 @@
         "Plugin depends on org.jetbrains.plugins.textmate (or bundled equivalent)",
         "./gradlew build succeeds"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-011"],
       "phase": 4,
       "epic": 1,
