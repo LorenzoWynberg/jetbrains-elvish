@@ -24,25 +24,31 @@ After build passes, ask: "What's missing or could improve?"
 - Only implement if: in scope, meaningful, aligns with acceptance criteria
 - Atomic commits per fix, re-run build after each
 
-## 5. Refactor Check (Required before merge)
-After self-review, evaluate code organization:
+## 5. Refactor Check (2 rounds required before merge)
+After self-review, perform **two rounds** of refactor checking to catch issues missed in the first pass.
 
-**Check for these issues:**
+**For each round (1 and 2), check for these issues:**
 - **File size**: Is any file > 300 lines? Consider splitting
+- **Code duplication**: Are there repeated code blocks that should be extracted into shared functions?
 - **Mixed responsibilities**: Does a file handle multiple unrelated concerns?
-- **Module organization**: Each feature area should be in its own package
+- **Module organization**: Each feature area should be in its own package (e.g., `lsp/`, `settings/`, `highlighting/`)
+- **Re-exports**: Update package visibility to cleanly expose public APIs
 - **Dead code**: Remove any unused code introduced in this story
 
-**If refactoring needed:**
+**If refactoring needed in either round:**
 1. Split large files into focused modules
-2. Update imports and package structure
-3. Run `./gradlew build` - must pass
-4. Commit refactor separately: `git commit -m "refactor: organize {{CURRENT_STORY}} code structure"`
+2. Move implementations to dedicated packages
+3. Update imports and package structure
+4. Run `./gradlew build` - must pass
+5. Commit refactor separately: `git commit -m "refactor: organize {{CURRENT_STORY}} code structure"`
+6. **Continue to next round** (or complete if on round 2)
 
-**Skip refactoring if:**
+**Skip refactoring for a round if:**
 - Changes are minimal (< 50 lines added)
 - Code is already well-organized
 - Splitting would create artificial boundaries
+
+**Round 2 focus:** Double-check that round 1 refactoring didn't introduce new issues (e.g., large files, missed exports, circular dependencies).
 
 ## 6. On SUCCESS
 

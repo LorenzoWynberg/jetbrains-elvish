@@ -225,7 +225,7 @@ fn get-story-info {|story-id|
 }
 
 # Find the best base branch for a new story
-# Strategy: branch from the last completed story in the same epic, or main
+# Strategy: branch from the last completed story in the same epic, or dev
 fn get-base-branch-for-story {|story-id|
   var sid = $story-id
   var pf = $prd-file
@@ -247,7 +247,13 @@ fn get-base-branch-for-story {|story-id|
   if (eq $trimmed "") {
     echo $bb
   } else {
-    echo $trimmed
+    # Check if the branch actually exists (it may have been deleted after merge)
+    if (branch-exists $trimmed) {
+      echo $trimmed
+    } else {
+      # Branch was deleted after PR merge, fall back to base branch
+      echo $bb
+    }
   }
 }
 
