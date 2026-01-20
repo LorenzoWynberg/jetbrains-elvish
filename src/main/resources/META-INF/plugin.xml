@@ -23,6 +23,7 @@
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.ultimate</depends>
+    <depends>org.jetbrains.plugins.textmate</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType
@@ -34,5 +35,9 @@
 
         <platform.lsp.serverSupportProvider
                 implementation="com.elvish.plugin.lsp.ElvishLspServerSupportProvider"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="org.jetbrains.plugins.textmate">
+        <bundleProvider implementation="com.elvish.plugin.textmate.ElvishTextMateBundleProvider"/>
     </extensions>
 </idea-plugin>

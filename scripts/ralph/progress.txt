@@ -252,3 +252,20 @@
 - PluginBundle is a data class taking name (String) and path (Path)
 - The path points to the directory containing the grammar file, not the file itself
 - Bundled plugins added via bundledPlugin() in intellijPlatform dependencies block
+
+---
+
+## 2026-01-20 - STORY-012: Register TextMate bundle in plugin.xml
+
+**What was done:**
+- Added dependency on org.jetbrains.plugins.textmate in plugin.xml
+- Registered ElvishTextMateBundleProvider as bundleProvider extension
+- Extension uses org.jetbrains.plugins.textmate namespace (not com.intellij)
+
+**Files changed:**
+- src/main/resources/META-INF/plugin.xml (added depends and bundleProvider extension)
+
+**Learnings:**
+- TextMate extensions use a separate namespace: org.jetbrains.plugins.textmate
+- The extension point is "bundleProvider" (not "textmate.bundleProvider")
+- Plugin must declare dependency on textmate plugin for the extension to work
