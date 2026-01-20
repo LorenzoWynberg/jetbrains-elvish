@@ -233,82 +233,235 @@ class ElvishLspServerDescriptor(project: Project) :
 
 ---
 
-### Phase 4: Basic Syntax Highlighting (Fallback)
+### Phase 4: Syntax Highlighting (Material Palenight Style)
 
-Even with LSP, having basic syntax highlighting provides immediate visual feedback. This can be done via TextMate grammars or a custom lexer.
+TextMate grammar with semantic scopes that map to Material Palenight-inspired colors:
 
-**Option A: TextMate Grammar (Recommended for simplicity)**
+**Color Mapping (Material Palenight):**
+| Element | Color | Hex | TextMate Scope |
+|---------|-------|-----|----------------|
+| Comments | Gray | #676E95 | `comment.line` |
+| Keywords | Purple | #C792EA | `keyword.control` |
+| Strings | Green | #C3E88D | `string.quoted` |
+| Numbers | Orange | #F78C6C | `constant.numeric` |
+| Built-in Functions | Blue | #82AAFF | `support.function` |
+| Variables | Yellow | #FFCB6B | `variable.other` |
+| Operators | Cyan | #89DDFF | `keyword.operator` |
+| Constants ($true/$false) | Orange | #F78C6C | `constant.language` |
+| Namespaces | Cyan | #89DDFF | `entity.name.namespace` |
+| Function definitions | Blue | #82AAFF | `entity.name.function` |
 
-Create `src/main/resources/textmate/elvish.tmLanguage.json`:
+**Create `src/main/resources/textmate/elvish.tmLanguage.json`:**
 ```json
 {
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
   "name": "Elvish",
   "scopeName": "source.elvish",
   "fileTypes": ["elv"],
   "patterns": [
     { "include": "#comments" },
     { "include": "#strings" },
+    { "include": "#constants" },
     { "include": "#variables" },
+    { "include": "#function-definition" },
     { "include": "#keywords" },
-    { "include": "#functions" },
+    { "include": "#builtins" },
     { "include": "#numbers" },
-    { "include": "#operators" }
+    { "include": "#operators" },
+    { "include": "#punctuation" }
   ],
   "repository": {
     "comments": {
-      "match": "#.*$",
-      "name": "comment.line.elvish"
+      "name": "comment.line.number-sign.elvish",
+      "match": "#.*$"
     },
     "strings": {
       "patterns": [
         {
+          "name": "string.quoted.double.elvish",
           "begin": "\"",
           "end": "\"",
-          "name": "string.quoted.double.elvish",
           "patterns": [
-            { "match": "\\\\.", "name": "constant.character.escape.elvish" }
+            {
+              "name": "constant.character.escape.elvish",
+              "match": "\\\\(?:[abtnvfre\"\\\\]|x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8}|[0-7]{1,3}|\\^[@-_?])"
+            }
           ]
         },
         {
+          "name": "string.quoted.single.elvish",
           "begin": "'",
           "end": "'",
-          "name": "string.quoted.single.elvish",
           "patterns": [
-            { "match": "''", "name": "constant.character.escape.elvish" }
+            { "name": "constant.character.escape.elvish", "match": "''" }
           ]
         }
       ]
     },
+    "constants": {
+      "name": "constant.language.elvish",
+      "match": "\\$(true|false|nil|ok|args|pwd|_)\\b"
+    },
     "variables": {
-      "match": "\\$[\\w:~-]+",
-      "name": "variable.other.elvish"
+      "patterns": [
+        {
+          "name": "variable.other.elvish",
+          "match": "\\$@?[\\w:~-]+"
+        },
+        {
+          "name": "variable.other.special.elvish",
+          "match": "@[\\w-]+"
+        }
+      ]
+    },
+    "function-definition": {
+      "match": "\\b(fn)\\s+([\\w-]+)",
+      "captures": {
+        "1": { "name": "keyword.control.elvish" },
+        "2": { "name": "entity.name.function.elvish" }
+      }
     },
     "keywords": {
-      "match": "\\b(if|elif|else|while|for|try|catch|finally|fn|var|set|del|use|pragma|and|or|coalesce|break|continue|return|fail)\\b",
-      "name": "keyword.control.elvish"
+      "name": "keyword.control.elvish",
+      "match": "\\b(if|elif|else|while|for|try|catch|else|finally|fn|var|set|del|use|pragma|and|or|coalesce|break|continue|return|fail)\\b"
     },
-    "functions": {
-      "match": "\\b(put|echo|print|pprint|repr|show|slurp|from-json|to-json|from-lines|to-lines|all|one|take|drop|count|range|repeat|keys|values|assoc|dissoc|has-key|has-value|each|peach|filter|map|reduce|order|compare|eq|not-eq|is|not|bool|not|num|exact-num|float64|str|styled|to-string|wcswidth|base|chr|ord|randint|rand|time|sleep|path-abs|path-base|path-clean|path-dir|path-ext|tilde-abbr|cd|pwd|dir-history|exec|exit|external|has-external|search-external|nop|call|resolve|eval|use-mod|deprecate)\\b",
-      "name": "support.function.elvish"
+    "builtins": {
+      "patterns": [
+        {
+          "name": "support.function.builtin.elvish",
+          "match": "\\b(put|echo|print|pprint|repr|show|only-bytes|only-values|slurp|from-json|to-json|from-lines|to-lines|from-terminated|to-terminated|all|one|take|drop|compact|count|order|uniq|range|repeat|keys|values|assoc|dissoc|has-key|has-value|each|peach|filter|map|conj|collect|while|take-while|drop-while)\\b"
+        },
+        {
+          "name": "support.function.builtin.elvish",
+          "match": "\\b(eq|not-eq|is|compare|bool|not|num|exact-num|inexact-num|float64|str|base|wcswidth|chr|ord|styled|styled-segment)\\b"
+        },
+        {
+          "name": "support.function.builtin.elvish",
+          "match": "\\b(constantly|call|resolve|eval|use-mod|deprecate|sleep|time|benchmark|make-map|ns|kind-of|constantly|call)\\b"
+        },
+        {
+          "name": "support.function.io.elvish",
+          "match": "\\b(cd|pwd|dir-history|path-abs|path-base|path-clean|path-dir|path-ext|path-temp-dir|path-temp-file|tilde-abbr)\\b"
+        },
+        {
+          "name": "support.function.external.elvish",
+          "match": "\\b(exec|exit|external|has-external|search-external|nop)\\b"
+        },
+        {
+          "name": "support.function.math.elvish",
+          "match": "\\b(randint|rand|math:[\\w-]+)\\b"
+        },
+        {
+          "name": "support.function.string.elvish",
+          "match": "\\b(str:[\\w-]+|re:[\\w-]+)\\b"
+        }
+      ]
     },
     "numbers": {
-      "match": "\\b(0x[0-9a-fA-F]+|0o[0-7]+|0b[01]+|[0-9]+\\.?[0-9]*([eE][+-]?[0-9]+)?|\\.[0-9]+([eE][+-]?[0-9]+)?)\\b",
-      "name": "constant.numeric.elvish"
+      "patterns": [
+        {
+          "name": "constant.numeric.hex.elvish",
+          "match": "\\b0x[0-9a-fA-F_]+\\b"
+        },
+        {
+          "name": "constant.numeric.octal.elvish",
+          "match": "\\b0o[0-7_]+\\b"
+        },
+        {
+          "name": "constant.numeric.binary.elvish",
+          "match": "\\b0b[01_]+\\b"
+        },
+        {
+          "name": "constant.numeric.float.elvish",
+          "match": "\\b[0-9][0-9_]*\\.[0-9_]*([eE][+-]?[0-9_]+)?\\b"
+        },
+        {
+          "name": "constant.numeric.float.elvish",
+          "match": "\\b\\.[0-9_]+([eE][+-]?[0-9_]+)?\\b"
+        },
+        {
+          "name": "constant.numeric.integer.elvish",
+          "match": "\\b[0-9][0-9_]*([eE][+-]?[0-9_]+)?\\b"
+        }
+      ]
     },
     "operators": {
-      "match": "[|<>&;]|>>|<>",
-      "name": "keyword.operator.elvish"
+      "patterns": [
+        {
+          "name": "keyword.operator.pipe.elvish",
+          "match": "\\|"
+        },
+        {
+          "name": "keyword.operator.redirect.elvish",
+          "match": ">>?|<>?|[0-9]*>[>&][0-9]*|[0-9]*<"
+        },
+        {
+          "name": "keyword.operator.comparison.elvish",
+          "match": "<=?|>=?|==?|!=?"
+        },
+        {
+          "name": "keyword.operator.arithmetic.elvish",
+          "match": "[+\\-*/%]"
+        },
+        {
+          "name": "keyword.operator.slice.elvish",
+          "match": "\\.\\."
+        }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "name": "punctuation.definition.list.begin.elvish",
+          "match": "\\["
+        },
+        {
+          "name": "punctuation.definition.list.end.elvish",
+          "match": "\\]"
+        },
+        {
+          "name": "punctuation.definition.map.elvish",
+          "match": "&"
+        },
+        {
+          "name": "punctuation.definition.block.begin.elvish",
+          "match": "\\{"
+        },
+        {
+          "name": "punctuation.definition.block.end.elvish",
+          "match": "\\}"
+        },
+        {
+          "name": "punctuation.separator.elvish",
+          "match": ";"
+        }
+      ]
     }
   }
 }
 ```
 
-Register in plugin.xml:
+**Register TextMate bundle in plugin.xml:**
 ```xml
 <extensions defaultExtensionNs="com.intellij">
     <textmate.bundleProvider
         implementation="com.elvish.plugin.ElvishTextMateBundleProvider"/>
 </extensions>
+```
+
+**Create ElvishTextMateBundleProvider.kt:**
+```kotlin
+package com.elvish.plugin
+
+import org.jetbrains.plugins.textmate.api.TextMateBundleProvider
+import org.jetbrains.plugins.textmate.api.TextMateBundle
+
+class ElvishTextMateBundleProvider : TextMateBundleProvider {
+    override fun getBundles(): List<TextMateBundle> {
+        val grammarPath = "/textmate/elvish.tmLanguage.json"
+        return listOf(TextMateBundle("Elvish", grammarPath))
+    }
+}
 ```
 
 ---
