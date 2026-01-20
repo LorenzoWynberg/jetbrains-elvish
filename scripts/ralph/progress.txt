@@ -1,0 +1,232 @@
+# JetBrains Elvish Plugin - Development Progress
+
+## Codebase Patterns
+
+- **Build System**: Gradle with IntelliJ Platform Plugin 2.10.5
+- **Language**: Kotlin 1.9.25 with Java 21 toolchain
+- **Target IDE**: IntelliJ Ultimate 2024.3 (build range 243-251.*)
+- **LSP**: Uses JetBrains official LSP API (not LSP4IJ)
+- **Commits**: No Co-Authored-By lines, concise commit messages
+- **Branches**: Feature branches from main, PRs merged back
+
+## Architecture Decisions
+
+- **Minimal parser**: LSP handles all language intelligence
+- **Project-wide LSP**: Single server instance per project
+- **TextMate for highlighting**: Phase 4 will add grammar-based syntax highlighting
+- **Settings optional**: Default to 'elvish' in PATH
+
+---
+
+## 2024-01 - STORY-001: Create Gradle project structure
+
+**What was done:**
+- Created standard Gradle project layout
+- Set up src/main/kotlin and src/main/resources directories
+- Configured settings.gradle.kts with project name 'intellij-elvish'
+- Added gradle.properties with plugin metadata
+- Initialized Gradle wrapper (8.13)
+
+**Files created:**
+- settings.gradle.kts
+- gradle.properties
+- gradle/wrapper/gradle-wrapper.properties
+
+**Learnings:**
+- JetBrains plugin requires Java 21 for modern platform versions
+- Gradle wrapper ensures consistent builds across environments
+
+---
+
+## 2024-01 - STORY-002: Configure build.gradle.kts for IntelliJ plugin
+
+**What was done:**
+- Configured org.jetbrains.intellij.platform plugin 2.10.5
+- Added Kotlin JVM plugin 1.9.25
+- Set up intellijPlatform dependencies block
+- Targeted IntelliJ Ultimate 2024.3
+- Configured build range (sinceBuild 243, untilBuild 251.*)
+- Added signing and publishing configuration
+
+**Files changed:**
+- build.gradle.kts
+
+**Learnings:**
+- Use intellijIdeaUltimate() for LSP API access (requires Ultimate)
+- instrumentationTools() needed for proper plugin instrumentation
+- Environment variables used for signing (CERTIFICATE_CHAIN, PRIVATE_KEY, etc.)
+
+---
+
+## 2024-01 - STORY-003: Create base plugin.xml manifest
+
+**What was done:**
+- Created plugin.xml with basic structure
+- Set plugin ID to com.elvish.plugin
+- Added dependencies on platform and ultimate modules
+- Configured basic metadata (name, vendor, description)
+
+**Files created:**
+- src/main/resources/META-INF/plugin.xml
+
+**Learnings:**
+- com.intellij.modules.ultimate required for LSP API
+- Extensions registered in defaultExtensionNs="com.intellij"
+
+---
+
+## 2024-01 - STORY-004: Create ElvishLanguage class
+
+**What was done:**
+- Created ElvishLanguage singleton extending Language
+- Used companion object pattern for INSTANCE
+- Language ID set to "Elvish"
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/ElvishLanguage.kt
+
+**Learnings:**
+- Language class is fundamental to IntelliJ's language support
+- Singleton pattern ensures consistent language reference
+
+---
+
+## 2024-01 - STORY-005: Create ElvishFileType class
+
+**What was done:**
+- Created ElvishFileType object extending LanguageFileType
+- Associated .elv extension with ElvishLanguage
+- Registered in plugin.xml as fileType extension
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/ElvishFileType.kt
+
+**Files changed:**
+- src/main/resources/META-INF/plugin.xml (added fileType extension)
+
+**Learnings:**
+- Object singleton pattern works well for file types
+- fieldName="INSTANCE" in plugin.xml references the object
+
+---
+
+## 2024-01 - STORY-006: Create ElvishIcons and SVG icon
+
+**What was done:**
+- Created Material Palenight-inspired SVG icon (16x16)
+- Icon features dark background (#292D3E) with gradient "E" text
+- ElvishIcons object loads icon via IconLoader
+- Icon path: /icons/elvish.svg
+
+**Files created:**
+- src/main/resources/icons/elvish.svg
+- src/main/kotlin/com/elvish/plugin/ElvishIcons.kt
+
+**Learnings:**
+- SVG icons scale well in modern IDEs
+- IconLoader.getIcon uses classpath-relative paths
+- Material Palenight colors: purple (#C792EA), blue (#82AAFF)
+
+---
+
+## 2024-01 - STORY-007: Create ElvishFile PSI wrapper
+
+**What was done:**
+- Created ElvishFile extending PsiFileBase
+- Associated with ElvishLanguage and ElvishFileType
+- Provides fileType property and toString
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/ElvishFile.kt
+
+**Learnings:**
+- PsiFileBase is the standard base for PSI files
+- FileViewProvider bridges virtual files and PSI
+
+---
+
+## 2024-01 - STORY-008: Create ElvishLspServerSupportProvider
+
+**What was done:**
+- Created ElvishLspServerSupportProvider implementing LspServerSupportProvider
+- fileOpened checks for .elv extension
+- Starts ElvishLspServerDescriptor when triggered
+- Registered in plugin.xml as platform.lsp.serverSupportProvider
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/lsp/ElvishLspServerSupportProvider.kt
+
+**Files changed:**
+- src/main/resources/META-INF/plugin.xml (added lsp extension)
+
+**Learnings:**
+- LspServerSupportProvider is the entry point for LSP integration
+- serverStarter.ensureServerStarted handles lifecycle
+
+---
+
+## 2024-01 - STORY-009: Create ElvishLspServerDescriptor
+
+**What was done:**
+- Created ElvishLspServerDescriptor extending ProjectWideLspServerDescriptor
+- createCommandLine returns GeneralCommandLine("elvish", "-lsp")
+- isSupportedFile filters .elv extension
+- Project-wide scope (single server per project)
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/lsp/ElvishLspServerDescriptor.kt
+
+**Learnings:**
+- ProjectWideLspServerDescriptor for single server per project
+- GeneralCommandLine configures process launch
+- Elvish's built-in LSP uses stdio communication
+- Requires elvish binary in PATH (configurable in Phase 6)
+
+---
+
+## 2026-01-20 - STORY-010: Create TextMate grammar file for Elvish syntax
+
+**What was done:**
+- Created comprehensive TextMate grammar (elvish.tmLanguage.json) in src/main/resources/textmate/
+- Patterns for comments (#), single-quoted and double-quoted strings with escape sequences
+- Patterns for control keywords (if, elif, else, while, for, try, catch, finally, break, continue, return)
+- Patterns for other keywords (fn, var, set, tmp, del, and, or, coalesce, pragma, use, with)
+- Patterns for 60+ built-in functions (put, echo, each, peach, all, range, etc.)
+- Patterns for variables ($var, $@var for explode, $namespace:var for namespaced)
+- Patterns for numbers: int, float, hex (0x), octal (0o), binary (0b), rational, Inf, NaN
+- Patterns for operators: comparison (==, !=, <, >, <=, >=, string variants), arithmetic (+, -, *, /, %), pipe (|), range (.., ..=), redirection
+- Patterns for constants ($true, $false, $nil, $ok, $nop)
+- Patterns for punctuation (brackets, braces, parens, semicolons, ampersands)
+- Variable interpolation inside double-quoted strings
+
+**Files created:**
+- src/main/resources/textmate/elvish.tmLanguage.json
+
+**Learnings:**
+- TextMate grammar uses scopeName for language identification (source.elvish)
+- Oniguruma regex used by TextMate supports lookbehind (?<![...])
+- Standard scope names map to theme colors (comment.line, string.quoted, keyword.control, etc.)
+- Variables inside strings handled by including #variable in string patterns
+- Elvish has many unique features: rational numbers, $@ explode syntax, string comparison operators (*s variants)
+
+---
+
+## Summary
+
+**Completed Phases:**
+- Phase 1: Project Setup (STORY-001 to STORY-003)
+- Phase 2: File Type Registration (STORY-004 to STORY-007)
+- Phase 3: LSP Integration (STORY-008 to STORY-009)
+- Phase 4 (partial): TextMate grammar created (STORY-010)
+
+**Remaining Phases:**
+- Phase 4 (remaining): Bundle provider, registration, testing (STORY-011 to STORY-013)
+- Phase 5: Parser Definition (STORY-014 to STORY-018) - Optional
+- Phase 6: Settings & Configuration (STORY-019 to STORY-022)
+
+**Current state:**
+- Plugin builds successfully with ./gradlew build
+- Plugin runs in sandbox IDE with ./gradlew runIde
+- .elv files recognized with custom icon
+- LSP server starts when opening .elv files (requires elvish in PATH)
+- TextMate grammar created (awaiting bundle provider registration for highlighting)
