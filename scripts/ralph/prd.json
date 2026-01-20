@@ -373,7 +373,7 @@
         "./gradlew build succeeds",
         "Settings panel accessible in runIde"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-021"],
       "phase": 6,
       "epic": 1,

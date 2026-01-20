@@ -39,6 +39,12 @@
         <lang.parserDefinition
                 language="Elvish"
                 implementationClass="com.elvish.plugin.parser.ElvishParserDefinition"/>
+
+        <projectConfigurable
+                parentId="language"
+                instance="com.elvish.plugin.settings.ElvishConfigurable"
+                id="com.elvish.plugin.settings"
+                displayName="Elvish"/>
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.plugins.textmate">
