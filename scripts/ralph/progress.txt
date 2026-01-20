@@ -482,7 +482,7 @@
 - Phase 5 (partial): Token types, lexer, and parser (STORY-014 to STORY-016)
 
 **Remaining Phases:**
-- Phase 5 (remaining): ParserDefinition and registration (STORY-017 to STORY-018)
+- Phase 5 (remaining): Parser registration in plugin.xml (STORY-018)
 - Phase 6: Settings & Configuration (STORY-019 to STORY-022)
 
 **Current state:**
@@ -492,3 +492,32 @@
 - LSP server starts when opening .elv files (requires elvish in PATH)
 - TextMate syntax highlighting fully functional
 - Parser with comprehensive unit tests ready for ParserDefinition integration
+- ParserDefinition ties together lexer, parser, and file creation
+
+---
+
+## 2026-01-20 - STORY-017: Create ElvishParserDefinition
+
+**What was done:**
+- Created ElvishParserDefinition.kt implementing ParserDefinition interface
+- createLexer() returns ElvishLexer instance
+- createParser() returns ElvishParser instance
+- getFileNodeType() returns ElvishElementTypes.FILE (IFileElementType)
+- getCommentTokens() returns ElvishTokenTypes.COMMENTS TokenSet
+- getStringLiteralElements() returns ElvishTokenTypes.STRING_LITERALS TokenSet
+- createFile() returns ElvishFile instance
+- createElement() throws UnsupportedOperationException (minimal parser approach)
+- Created comprehensive unit tests for all methods
+- Updated docs/DEVELOPMENT.md with parser package documentation
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/parser/ElvishParserDefinition.kt
+- src/test/kotlin/com/elvish/plugin/parser/ElvishParserDefinitionTest.kt
+
+**Files changed:**
+- docs/DEVELOPMENT.md (added parser package to project structure and architecture)
+
+**Learnings:**
+- ParserDefinition is the factory that ties together lexer, parser, and PSI file creation
+- createElement() is optional for minimal parsers - the actual PSI tree is built by PsiBuilder markers
+- The parser package now contains all 5 core components: TokenTypes, ElementTypes, Lexer, Parser, ParserDefinition

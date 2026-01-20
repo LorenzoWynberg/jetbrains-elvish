@@ -27,6 +27,12 @@ src/main/
 │   ├── lsp/
 │   │   ├── ElvishLspServerSupportProvider.kt
 │   │   └── ElvishLspServerDescriptor.kt
+│   ├── parser/
+│   │   ├── ElvishTokenTypes.kt       # Lexer token types
+│   │   ├── ElvishElementTypes.kt     # Parser AST node types
+│   │   ├── ElvishLexer.kt            # Tokenizer
+│   │   ├── ElvishParser.kt           # AST builder
+│   │   └── ElvishParserDefinition.kt # Parser factory
 │   └── textmate/
 │       └── ElvishTextMateBundleProvider.kt
 └── resources/
@@ -53,13 +59,20 @@ src/main/
    - TextMate grammar for Elvish syntax
    - Material Palenight-inspired color scheme
 
-4. **Plugin Manifest** (`META-INF/plugin.xml`)
+4. **Parser** (`parser/` package)
+   - `ElvishTokenTypes`: Token type definitions for lexer
+   - `ElvishElementTypes`: AST node types for parser
+   - `ElvishLexer`: Tokenizes Elvish source code
+   - `ElvishParser`: Builds basic AST structure
+   - `ElvishParserDefinition`: Factory that ties lexer, parser, and file creation together
+
+5. **Plugin Manifest** (`META-INF/plugin.xml`)
    - Dependencies: `platform`, `ultimate`, `textmate` modules
    - Extensions: file type, LSP server support, TextMate bundle
 
 ### Key Design Decisions
 
-- **No custom lexer/parser**: LSP handles language intelligence
+- **Minimal parser**: Basic AST structure for IDE features; LSP handles language intelligence
 - **Project-wide LSP**: Single server per project
 - **TextMate for highlighting**: Simpler than custom lexer, good enough for syntax colors
 - **Requires Elvish in PATH**: Future: configurable path in settings
