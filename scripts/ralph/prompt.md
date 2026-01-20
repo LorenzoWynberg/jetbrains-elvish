@@ -13,18 +13,23 @@ If attempt > 1: check `git log` and `git diff` for previous work.
 ## 2. Scope
 Implement ONLY {{CURRENT_STORY}}. No refactoring unrelated code. Note other issues in Learnings only.
 
-## 3. Verification (Required)
+## 3. Implementation
+- Write tests when applicable (unit tests for logic, integration tests for features)
+- Tests go in `src/test/kotlin/` mirroring the main source structure
+- Skip tests only if: pure UI code, trivial getters/setters, or external integration (LSP)
+
+## 4. Verification (Required)
 ```bash
 ./gradlew build  # Must pass (includes compile and tests)
 ```
 
-## 4. Self-Review (Max 3 cycles)
+## 5. Self-Review (Max 3 cycles)
 After build passes, ask: "What's missing or could improve?"
 - Edge cases, API design, code organization, error handling
 - Only implement if: in scope, meaningful, aligns with acceptance criteria
 - Atomic commits per fix, re-run build after each
 
-## 5. Refactor Check (2 rounds required before merge)
+## 6. Refactor Check (2 rounds required before merge)
 After self-review, perform **two rounds** of refactor checking to catch issues missed in the first pass.
 
 **For each round (1 and 2), check for these issues:**
@@ -50,7 +55,7 @@ After self-review, perform **two rounds** of refactor checking to catch issues m
 
 **Round 2 focus:** Double-check that round 1 refactoring didn't introduce new issues (e.g., large files, missed exports, circular dependencies).
 
-## 6. On SUCCESS
+## 7. On SUCCESS
 
 Update these files:
 - `progress.txt`: Add entry with date, changes, learnings (include any refactoring done)
@@ -76,10 +81,10 @@ git branch -d {{BRANCH}} 2>/dev/null || true
 
 Output: `<story-complete>{{CURRENT_STORY}}</story-complete>`
 
-## 7. On BLOCKED
+## 8. On BLOCKED
 Don't commit. Don't update prd.json. Add to progress.txt what was tried and why blocked.
 
 Output: `<story-blocked>{{CURRENT_STORY}}</story-blocked>`
 
-## 8. All Done?
+## 9. All Done?
 If ALL stories in prd.json have `"passes": true`, output: `<promise>COMPLETE</promise>`
