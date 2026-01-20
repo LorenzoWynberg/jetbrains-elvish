@@ -711,3 +711,22 @@
 - com.intellij.modules.lsp is the correct module for cross-IDE LSP support
 - As of 2025.3, JetBrains unified distribution makes LSP free for all users
 - No code refactoring needed - this was a minimal configuration change
+
+---
+
+## 2026-01-20 - STORY-102: Update minimum IDE version to 2024.3
+
+**What was done:**
+- Updated untilBuild to allow all future IDE versions (no upper bound)
+- Added plugin verification configuration with `intellijPlatform.pluginVerification.ides { recommended() }`
+- Verified plugin against 5 IDE versions (2024.3, 2025.1, 2025.2, 2025.3, 2026.1)
+- All verifications passed with "Compatible" status
+
+**Files changed:**
+- build.gradle.kts (updated untilBuild, added plugin verification config)
+
+**Learnings:**
+- `untilBuild.set(provider { null })` is the correct way to remove upper bound in Gradle Kotlin DSL
+- Plugin verifier requires explicit IDE configuration via `intellijPlatform.pluginVerification.ides { recommended() }`
+- LSP API is still marked as experimental in IntelliJ platform - warnings are expected
+- Build requires Java 17+ to run (IntelliJ JBR works well)

@@ -27,10 +27,19 @@ kotlin {
     jvmToolchain(21)
 }
 
+intellijPlatform {
+    pluginVerification {
+        ides {
+            recommended()
+        }
+    }
+}
+
 tasks {
     patchPluginXml {
         sinceBuild.set("243")
-        untilBuild.set("251.*")
+        // Allow future IDE versions - no upper bound
+        untilBuild.set(provider { null })
     }
 
     signPlugin {

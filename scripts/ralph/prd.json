@@ -25,7 +25,7 @@
         "./gradlew build succeeds",
         "Plugin verification passes"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-101"],
       "phase": 1,
       "epic": 2,
