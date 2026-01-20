@@ -269,7 +269,7 @@
         "Error recovery for malformed input",
         "Unit tests verify AST structure"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-015"],
       "phase": 5,
       "epic": 1,

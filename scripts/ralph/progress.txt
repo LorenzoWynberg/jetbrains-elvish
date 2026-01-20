@@ -418,3 +418,77 @@
 - LSP server starts when opening .elv files (requires elvish in PATH)
 - TextMate syntax highlighting fully functional
 - Lexer with comprehensive unit tests ready for parser integration
+
+---
+
+## 2026-01-20 - STORY-016: Create ElvishParser
+
+**What was done:**
+- Created ElvishElementTypes.kt with IFileElementType and element types for AST nodes:
+  - Top-level: FILE, STATEMENT, CHUNK
+  - Declarations: FUNCTION_DEFINITION, VARIABLE_DECLARATION, ASSIGNMENT
+  - Control flow: IF_STATEMENT, ELIF_CLAUSE, ELSE_CLAUSE, WHILE_STATEMENT, FOR_STATEMENT, TRY_STATEMENT, CATCH_CLAUSE, FINALLY_CLAUSE
+  - Expressions: EXPRESSION, COMMAND, PIPELINE, BINARY_EXPRESSION, INDEXING
+  - Literals: STRING_LITERAL, NUMBER_LITERAL, LIST_LITERAL, MAP_LITERAL
+  - Other: BLOCK, PARAMETER_LIST, ARGUMENT_LIST, VARIABLE_REFERENCE, USE_DIRECTIVE, PRAGMA_DIRECTIVE
+- Created ElvishParser.kt implementing PsiParser with comprehensive parsing:
+  - parseFile: Main loop consuming statements until EOF
+  - parseStatement: Dispatches to specific parsers based on token type
+  - parseFunctionDefinition: Handles `fn` keyword with optional name and block body
+  - parseVariableStatement: Handles var/set/tmp/del with optional assignment
+  - parseIfStatement: Handles if/elif/else chains with condition and blocks
+  - parseWhileStatement, parseForStatement: Loop constructs
+  - parseTryStatement: try/catch/finally blocks
+  - parseUseDirective, parsePragmaDirective: Module and pragma handling
+  - parseBlock: Block parsing with parameter list support
+  - parseExpression, parseExpressionUntilBlock: Expression parsing with binary operators
+  - parsePrimaryExpression: Literals, variables, grouped expressions
+  - parseCommandOrExpression: Command parsing with pipeline support
+  - Error recovery via advanceWithError for malformed input
+- Fixed lexer bug: Range operator (1..10) was incorrectly lexed when number was followed by '..'
+  - Updated lexNumber to check for digit after '.' before treating as float
+- Created comprehensive unit tests (76 tests) covering:
+  - All statement types (commands, declarations, control flow)
+  - All expression types (binary operators, literals, variables)
+  - Nested structures (function with for with if)
+  - Error recovery scenarios
+- Added Gradle toolchain resolver plugin (foojay-resolver-convention) for automatic JDK download
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/parser/ElvishElementTypes.kt
+- src/main/kotlin/com/elvish/plugin/parser/ElvishParser.kt
+- src/test/kotlin/com/elvish/plugin/parser/ElvishParserTest.kt
+
+**Files changed:**
+- src/main/kotlin/com/elvish/plugin/parser/ElvishLexer.kt (fixed range operator lexing)
+- settings.gradle.kts (added foojay resolver plugin for JDK auto-download)
+
+**Learnings:**
+- PsiBuilder marker pattern is key to AST construction: mark(), done(type), drop(), precede()
+- Condition parsing in control flow must stop at LBRACE (block start) to avoid consuming the block
+- Block parsing must skip whitespace before checking for RBRACE to handle whitespace between nested closing braces
+- Lexer must check for digit after '.' to distinguish float (1.5) from range (1..10)
+- Test PsiBuilder implementation requires implementing many interface methods as stubs
+
+---
+
+## Summary
+
+**Completed Phases:**
+- Phase 1: Project Setup (STORY-001 to STORY-003)
+- Phase 2: File Type Registration (STORY-004 to STORY-007)
+- Phase 3: LSP Integration (STORY-008 to STORY-009)
+- Phase 4: TextMate Syntax Highlighting (STORY-010 to STORY-013)
+- Phase 5 (partial): Token types, lexer, and parser (STORY-014 to STORY-016)
+
+**Remaining Phases:**
+- Phase 5 (remaining): ParserDefinition and registration (STORY-017 to STORY-018)
+- Phase 6: Settings & Configuration (STORY-019 to STORY-022)
+
+**Current state:**
+- Plugin builds successfully with ./gradlew build
+- Plugin runs in sandbox IDE with ./gradlew runIde
+- .elv files recognized with custom icon
+- LSP server starts when opening .elv files (requires elvish in PATH)
+- TextMate syntax highlighting fully functional
+- Parser with comprehensive unit tests ready for ParserDefinition integration

@@ -193,22 +193,25 @@ class ElvishLexer : LexerBase() {
         if (tokenEnd < bufferEnd) {
             when (buffer[tokenEnd]) {
                 '.' -> {
-                    // Float
-                    tokenEnd++
-                    while (tokenEnd < bufferEnd && buffer[tokenEnd].isDigit()) {
+                    // Float - only if followed by a digit (not another '.' for range operator)
+                    if (tokenEnd + 1 < bufferEnd && buffer[tokenEnd + 1].isDigit()) {
                         tokenEnd++
-                    }
-                    // Check for scientific notation
-                    if (tokenEnd < bufferEnd && (buffer[tokenEnd] == 'e' || buffer[tokenEnd] == 'E')) {
-                        tokenEnd++
-                        if (tokenEnd < bufferEnd && (buffer[tokenEnd] == '+' || buffer[tokenEnd] == '-')) {
-                            tokenEnd++
-                        }
                         while (tokenEnd < bufferEnd && buffer[tokenEnd].isDigit()) {
                             tokenEnd++
                         }
+                        // Check for scientific notation
+                        if (tokenEnd < bufferEnd && (buffer[tokenEnd] == 'e' || buffer[tokenEnd] == 'E')) {
+                            tokenEnd++
+                            if (tokenEnd < bufferEnd && (buffer[tokenEnd] == '+' || buffer[tokenEnd] == '-')) {
+                                tokenEnd++
+                            }
+                            while (tokenEnd < bufferEnd && buffer[tokenEnd].isDigit()) {
+                                tokenEnd++
+                            }
+                        }
+                        return ElvishTokenTypes.FLOAT
                     }
-                    return ElvishTokenTypes.FLOAT
+                    // Not a float - could be range operator, return as integer
                 }
                 '/' -> {
                     // Could be rational or division - check if followed by digits only
