@@ -35,6 +35,10 @@
 
         <platform.lsp.serverSupportProvider
                 implementation="com.elvish.plugin.lsp.ElvishLspServerSupportProvider"/>
+
+        <lang.parserDefinition
+                language="Elvish"
+                implementationClass="com.elvish.plugin.parser.ElvishParserDefinition"/>
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.plugins.textmate">

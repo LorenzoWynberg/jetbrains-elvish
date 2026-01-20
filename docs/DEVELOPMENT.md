@@ -68,7 +68,7 @@ src/main/
 
 5. **Plugin Manifest** (`META-INF/plugin.xml`)
    - Dependencies: `platform`, `ultimate`, `textmate` modules
-   - Extensions: file type, LSP server support, TextMate bundle
+   - Extensions: file type, LSP server support, TextMate bundle, parser definition
 
 ### Key Design Decisions
 

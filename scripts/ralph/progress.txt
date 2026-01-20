@@ -521,3 +521,45 @@
 - ParserDefinition is the factory that ties together lexer, parser, and PSI file creation
 - createElement() is optional for minimal parsers - the actual PSI tree is built by PsiBuilder markers
 - The parser package now contains all 5 core components: TokenTypes, ElementTypes, Lexer, Parser, ParserDefinition
+
+---
+
+## 2026-01-20 - STORY-018: Register parser in plugin.xml
+
+**What was done:**
+- Added `lang.parserDefinition` extension to plugin.xml
+- Extension associates ElvishParserDefinition with the Elvish language
+- Build passes (./gradlew build succeeds)
+- Performed 2 rounds of refactor checks - no changes needed (minimal addition)
+- Updated docs/DEVELOPMENT.md to mention parser definition extension
+
+**Files changed:**
+- src/main/resources/META-INF/plugin.xml (added lang.parserDefinition extension)
+- docs/DEVELOPMENT.md (updated extensions list)
+
+**Learnings:**
+- lang.parserDefinition extension requires `language` and `implementationClass` attributes
+- The language attribute must match the language ID defined in ElvishLanguage ("Elvish")
+- Parser registration is the final step to enable custom parsing for the language
+
+---
+
+## Summary
+
+**Completed Phases:**
+- Phase 1: Project Setup (STORY-001 to STORY-003)
+- Phase 2: File Type Registration (STORY-004 to STORY-007)
+- Phase 3: LSP Integration (STORY-008 to STORY-009)
+- Phase 4: TextMate Syntax Highlighting (STORY-010 to STORY-013)
+- Phase 5: Parser Definition (STORY-014 to STORY-018)
+
+**Remaining Phases:**
+- Phase 6: Settings & Configuration (STORY-019 to STORY-022)
+
+**Current state:**
+- Plugin builds successfully with ./gradlew build
+- Plugin runs in sandbox IDE with ./gradlew runIde
+- .elv files recognized with custom icon
+- LSP server starts when opening .elv files (requires elvish in PATH)
+- TextMate syntax highlighting fully functional
+- Custom parser registered and active for Elvish files

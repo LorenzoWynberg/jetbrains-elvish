@@ -303,7 +303,7 @@
         "./gradlew build succeeds",
         "./gradlew runIde works without parser errors"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-017"],
       "phase": 5,
       "epic": 1,
