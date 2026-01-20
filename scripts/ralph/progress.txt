@@ -362,3 +362,59 @@
 - TokenSet.create() is used to group related token types for parser use
 - @JvmField annotation exposes Kotlin vals as Java fields
 - Parser-related code belongs in a dedicated `parser` package
+
+---
+
+## 2026-01-20 - STORY-015: Create ElvishLexer
+
+**What was done:**
+- Created ElvishLexer.kt extending LexerBase in the `parser` package
+- Implemented comprehensive tokenization for all Elvish syntax elements:
+  - Comments: Recognizes # comments to end of line
+  - Strings: Single-quoted (with '' escape) and double-quoted (with \ escapes)
+  - Keywords: All 21 keywords mapped to specific token types
+  - Identifiers: Supports hyphens in names (e.g., my-function)
+  - Variables: $var, $@explode, $namespace:var formats
+  - Constants: $true, $false, $nil recognized as specific token types
+  - Numbers: Integer, float, hex (0x), octal (0o), binary (0b), rationals (22/7), scientific notation
+  - Operators: Comparison (==, !=, <, >, <=, >=), arithmetic (+, -, *, /, %), range (.., ..=)
+  - Punctuation: All brackets, braces, parens, semicolons, etc.
+- Added test framework dependencies to build.gradle.kts (JUnit 4.13.2, IntelliJ test framework)
+- Created comprehensive unit tests (30+ test cases) covering all token types
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/parser/ElvishLexer.kt
+- src/test/kotlin/com/elvish/plugin/parser/ElvishLexerTest.kt
+
+**Files changed:**
+- build.gradle.kts (added testImplementation and testFramework dependencies)
+
+**Learnings:**
+- LexerBase provides a clean interface for implementing custom lexers
+- IntelliJ lexers return IElementType tokens and manage buffer positions manually
+- Elvish allows hyphens in identifiers, which is unusual compared to most languages
+- Rational numbers (e.g., 22/7) are represented as FLOAT tokens
+- The `>>` redirect operator is context-dependent in Elvish
+
+---
+
+## Summary
+
+**Completed Phases:**
+- Phase 1: Project Setup (STORY-001 to STORY-003)
+- Phase 2: File Type Registration (STORY-004 to STORY-007)
+- Phase 3: LSP Integration (STORY-008 to STORY-009)
+- Phase 4: TextMate Syntax Highlighting (STORY-010 to STORY-013)
+- Phase 5 (partial): Token types and lexer (STORY-014 to STORY-015)
+
+**Remaining Phases:**
+- Phase 5 (remaining): Parser, ParserDefinition, registration (STORY-016 to STORY-018)
+- Phase 6: Settings & Configuration (STORY-019 to STORY-022)
+
+**Current state:**
+- Plugin builds successfully with ./gradlew build
+- Plugin runs in sandbox IDE with ./gradlew runIde
+- .elv files recognized with custom icon
+- LSP server starts when opening .elv files (requires elvish in PATH)
+- TextMate syntax highlighting fully functional
+- Lexer with comprehensive unit tests ready for parser integration

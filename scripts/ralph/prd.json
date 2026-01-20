@@ -252,7 +252,7 @@
         "Recognizes operators and punctuation",
         "Unit tests verify token sequences"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-014"],
       "phase": 5,
       "epic": 1,
