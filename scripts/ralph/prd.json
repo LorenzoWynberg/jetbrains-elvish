@@ -9,7 +9,7 @@
         "LSP dependency remains optional with config-file attribute",
         "./gradlew build succeeds"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": [],
       "phase": 1,
       "epic": 2,

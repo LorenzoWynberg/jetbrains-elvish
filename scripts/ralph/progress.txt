@@ -693,3 +693,21 @@
 - TextMate syntax highlighting fully functional
 - Custom parser registered and active for Elvish files
 - Project-level settings accessible from IDE preferences under Languages & Frameworks > Elvish
+
+---
+
+## 2026-01-20 - STORY-101: Fix LSP module dependency for cross-IDE support
+
+**What was done:**
+- Changed `com.intellij.modules.ultimate` to `com.intellij.modules.lsp` in plugin.xml
+- Kept the dependency optional with config-file="lsp-support.xml"
+- Updated comment to reflect LSP availability in all JetBrains IDEs since 2024.2
+
+**Files changed:**
+- src/main/resources/META-INF/plugin.xml (changed LSP module dependency)
+
+**Learnings:**
+- com.intellij.modules.ultimate restricted plugin to IntelliJ IDEA Ultimate only
+- com.intellij.modules.lsp is the correct module for cross-IDE LSP support
+- As of 2025.3, JetBrains unified distribution makes LSP free for all users
+- No code refactoring needed - this was a minimal configuration change
