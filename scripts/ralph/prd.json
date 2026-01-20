@@ -59,7 +59,7 @@
         "IDE logs show LSP server started message",
         "No LSP-related errors in IDE logs"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-103"],
       "phase": 2,
       "epic": 2,
