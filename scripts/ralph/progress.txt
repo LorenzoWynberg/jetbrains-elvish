@@ -332,3 +332,33 @@
 - .elv files recognized with custom icon
 - LSP server starts when opening .elv files (requires elvish in PATH)
 - TextMate syntax highlighting fully functional
+
+---
+
+## 2026-01-20 - STORY-014: Create ElvishTokenTypes
+
+**What was done:**
+- Created ElvishTokenTypes.kt in new `parser` package with comprehensive IElementType definitions
+- Defined token types for all Elvish lexical elements:
+  - Comments: COMMENT
+  - Strings: SINGLE_QUOTED_STRING, DOUBLE_QUOTED_STRING
+  - Numbers: INTEGER, FLOAT, HEX_NUMBER, OCTAL_NUMBER, BINARY_NUMBER
+  - Control keywords: IF, ELIF, ELSE, WHILE, FOR, TRY, CATCH, FINALLY, BREAK, CONTINUE, RETURN
+  - Other keywords: FN, VAR, SET, TMP, DEL, USE, PRAGMA, AND, OR, COALESCE
+  - Identifiers: IDENTIFIER, VARIABLE
+  - Constants: TRUE, FALSE, NIL
+  - Operators: PIPE, EQ, NE, LT, GT, LE, GE, PLUS, MINUS, STAR, SLASH, PERCENT, ASSIGN, RANGE, RANGE_INCLUSIVE
+  - Punctuation: LPAREN, RPAREN, LBRACKET, RBRACKET, LBRACE, RBRACE, SEMICOLON, AMPERSAND, COLON, COMMA
+  - Special: WHITE_SPACE, NEWLINE, BAD_CHARACTER
+- Defined TokenSets: COMMENTS, STRING_LITERALS, NUMBERS, KEYWORDS, OPERATORS, CONSTANTS, WHITESPACES
+- Created ElvishTokenType class extending IElementType with ElvishLanguage.INSTANCE
+- All types use @JvmField for Java interoperability
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/parser/ElvishTokenTypes.kt
+
+**Learnings:**
+- IElementType requires a Language instance to associate tokens with the language
+- TokenSet.create() is used to group related token types for parser use
+- @JvmField annotation exposes Kotlin vals as Java fields
+- Parser-related code belongs in a dedicated `parser` package

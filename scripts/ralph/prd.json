@@ -233,7 +233,7 @@
         "TokenSets defined for comments and string literals",
         "All types use ElvishLanguage.INSTANCE"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-013"],
       "phase": 5,
       "epic": 1,
