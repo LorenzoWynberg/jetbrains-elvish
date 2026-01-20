@@ -623,11 +623,11 @@ while (< $current-iteration $max-iterations) {
     # Interactive prompt: chance to stop before next story (20s auto-continue)
     echo ""
     ralph-status "Pausing before next story..."
-    echo $C_YELLOW"Stop loop? [y/N] "$C_DIM"(continues in 20s)"$C_RESET
+    echo $C_YELLOW"Continue? [Y/n] "$C_DIM"(auto-continues in 20s)"$C_RESET
     var should-stop = $false
     try {
       var answer = (bash -c 'read -t 20 -n 1 ans 2>/dev/null; echo "$ans"' </dev/tty 2>/dev/null)
-      if (re:match '^[yY]' $answer) {
+      if (re:match '^[nN]' $answer) {
         set should-stop = $true
       }
     } catch {
