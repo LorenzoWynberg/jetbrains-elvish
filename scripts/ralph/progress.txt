@@ -929,3 +929,52 @@
 - Need to use waitForNotification() instead of sendRequest() for server-initiated messages
 - Document changes trigger new diagnostics via textDocument/didChange notification
 - Elvish LSP responds quickly to syntax errors (under 2 seconds typically)
+
+---
+
+## 2026-01-21 - STORY-108: Add error handling for missing Elvish binary
+
+**What was done:**
+- Created ElvishBinaryChecker.kt utility to verify elvish binary availability:
+  - Checks absolute paths directly
+  - Searches PATH environment variable for relative paths
+  - Checks common installation locations (/usr/local/bin, /opt/homebrew/bin, etc.)
+  - Caches results by path to avoid repeated filesystem checks
+- Created ElvishNotifications.kt to handle user notifications:
+  - Shows warning notification when elvish binary not found
+  - Includes "Open Settings" action to configure path
+  - Includes "Install Elvish" action linking to elv.sh/get/
+  - Prevents duplicate notifications per project using ConcurrentHashMap
+- Modified ElvishLspServerSupportProvider to check binary before starting LSP
+- Modified ElvishConfigurable to reset caches when settings change
+- Registered notification group "Elvish Plugin" in plugin.xml
+- Created ElvishBinaryCheckerTest.kt with 8 unit tests
+- All 123 tests pass with ./gradlew build
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/lsp/ElvishBinaryChecker.kt
+- src/main/kotlin/com/elvish/plugin/lsp/ElvishNotifications.kt
+- src/test/kotlin/com/elvish/plugin/lsp/ElvishBinaryCheckerTest.kt
+
+**Files changed:**
+- src/main/kotlin/com/elvish/plugin/lsp/ElvishLspServerSupportProvider.kt (added binary check)
+- src/main/kotlin/com/elvish/plugin/settings/ElvishConfigurable.kt (reset caches on change)
+- src/main/resources/META-INF/plugin.xml (added notification group)
+- docs/DEVELOPMENT.md (updated project structure)
+
+**Acceptance criteria verification:**
+- [x] If elvish binary not found, show notification to user: ElvishNotifications.notifyElvishNotFound() shows balloon
+- [x] Notification suggests installing Elvish or configuring path in settings: Two actions added to notification
+- [x] Plugin doesn't crash or spam errors when Elvish missing: ConcurrentHashMap prevents duplicates
+- [x] LSP gracefully disabled until Elvish available: Early return in fileOpened()
+
+**Refactoring:**
+- Round 1: All files under 300 lines, single responsibility, no duplication - no changes needed
+- Round 2: Verified no circular dependencies or missed exports - no changes needed
+
+**Learnings:**
+- IntelliJ notification groups must be registered in plugin.xml via notificationGroup extension
+- NotificationGroupManager.getInstance().getNotificationGroup() retrieves registered groups
+- ConcurrentHashMap.putIfAbsent() is useful for "show once" logic
+- Project.locationHash provides a stable project identifier for tracking
+- Clearing caches on settings change allows user to re-trigger binary check

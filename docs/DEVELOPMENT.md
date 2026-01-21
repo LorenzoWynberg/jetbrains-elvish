@@ -26,7 +26,9 @@ src/main/
 │   ├── ElvishIcons.kt         # Icon definitions
 │   ├── lsp/
 │   │   ├── ElvishLspServerSupportProvider.kt
-│   │   └── ElvishLspServerDescriptor.kt
+│   │   ├── ElvishLspServerDescriptor.kt
+│   │   ├── ElvishBinaryChecker.kt
+│   │   └── ElvishNotifications.kt
 │   ├── parser/
 │   │   ├── ElvishTokenTypes.kt       # Lexer token types
 │   │   ├── ElvishElementTypes.kt     # Parser AST node types
@@ -56,6 +58,8 @@ src/main/
 2. **LSP Integration** (`lsp/` package)
    - `ElvishLspServerSupportProvider`: Triggers LSP on `.elv` file open
    - `ElvishLspServerDescriptor`: Configures `elvish -lsp` command
+   - `ElvishBinaryChecker`: Verifies elvish binary availability before starting LSP
+   - `ElvishNotifications`: Shows user notifications for missing binary
    - Uses JetBrains official LSP API
 
 3. **Syntax Highlighting** (`textmate/` package)

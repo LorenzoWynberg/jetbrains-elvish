@@ -16,6 +16,14 @@ class ElvishLspServerSupportProvider : LspServerSupportProvider {
         LOG.info("fileOpened: ${file.path} (isElvishFile=$isElvishFile)")
 
         if (isElvishFile) {
+            // Check if Elvish binary is available before starting LSP
+            if (!ElvishBinaryChecker.isElvishAvailable(project)) {
+                val elvishPath = ElvishBinaryChecker.getElvishPath(project)
+                LOG.warn("Elvish binary not found at '$elvishPath'. LSP will not start.")
+                ElvishNotifications.notifyElvishNotFound(project, elvishPath)
+                return
+            }
+
             LOG.info("Starting Elvish LSP server for project: ${project.name}")
             serverStarter.ensureServerStarted(ElvishLspServerDescriptor(project))
         }

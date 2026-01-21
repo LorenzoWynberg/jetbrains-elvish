@@ -122,7 +122,7 @@
         "Plugin doesn't crash or spam errors when Elvish missing",
         "LSP gracefully disabled until Elvish available"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-104"],
       "phase": 3,
       "epic": 2,

@@ -48,6 +48,9 @@
                 instance="com.elvish.plugin.settings.ElvishConfigurable"
                 id="com.elvish.plugin.settings"
                 displayName="Elvish"/>
+
+        <notificationGroup id="Elvish Plugin"
+                           displayType="BALLOON"/>
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.plugins.textmate">

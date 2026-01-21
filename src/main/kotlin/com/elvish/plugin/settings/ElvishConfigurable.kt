@@ -1,5 +1,7 @@
 package com.elvish.plugin.settings
 
+import com.elvish.plugin.lsp.ElvishBinaryChecker
+import com.elvish.plugin.lsp.ElvishNotifications
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory
 import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.project.Project
@@ -37,7 +39,15 @@ class ElvishConfigurable(private val project: Project) : Configurable {
 
     override fun apply() {
         val settings = ElvishSettings.getInstance(project)
+        val oldPath = settings.elvishPath
         settings.elvishPath = elvishPathField
+
+        // Clear caches when path changes so the binary is re-checked
+        if (oldPath != elvishPathField) {
+            ElvishBinaryChecker.clearCache(oldPath)
+            ElvishBinaryChecker.clearCache(elvishPathField)
+            ElvishNotifications.resetNotificationState(project)
+        }
     }
 
     override fun reset() {
