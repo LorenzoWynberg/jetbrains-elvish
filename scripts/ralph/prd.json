@@ -90,7 +90,7 @@
         "Hover over variable shows type information if available",
         "Hover popup appears within reasonable time (<1 second)"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-104"],
       "phase": 2,
       "epic": 2,
