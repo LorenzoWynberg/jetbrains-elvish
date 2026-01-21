@@ -1326,3 +1326,29 @@ Stories now use the format STORY-{phase}.{epic}.{story}.
 - ProcessTerminatedListener automatically displays exit code when process finishes
 - Custom argument parser needed for proper handling of quoted strings in script arguments
 - getElvishPath() checks useElvishFromSettings flag to decide between project settings or custom path
+
+---
+
+## 2026-01-21 - STORY-6.4.4: Add Gutter Run Icons
+
+**What was done:**
+- Created ElvishRunLineMarkerProvider implementing RunLineMarkerContributor
+- Shows green play icon in gutter at line 1 of .elv files
+- Clicking icon creates and runs temporary Elvish run configuration
+- Right-clicking icon shows Run action (Debug and Coverage are disabled by default for configs without debugger support)
+- Registered runLineMarkerContributor extension in plugin.xml
+- Updated docs/DEVELOPMENT.md with ElvishRunLineMarkerProvider documentation
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/run/ElvishRunLineMarkerProvider.kt
+
+**Files changed:**
+- src/main/resources/META-INF/plugin.xml (added runLineMarkerContributor extension)
+- docs/DEVELOPMENT.md (added ElvishRunLineMarkerProvider to project structure)
+
+**Learnings:**
+- RunLineMarkerContributor.Info constructor with java.util.function.Function is preferred over deprecated com.intellij.util.Function
+- ExecutorAction.getActions(0) provides standard run actions for the file
+- Show marker only at first leaf element to avoid duplicate icons in gutter
+- findFirstLeafElement() traverses PSI tree to find first token
+- AllIcons.RunConfigurations.TestState.Run is the standard green play icon
