@@ -857,3 +857,34 @@
 - Document must be opened via textDocument/didOpen before requesting completion
 - Tests communicate directly with elvish -lsp using JSON-RPC protocol
 - Shared test utilities reduce code duplication between LSP test classes
+
+---
+
+## 2026-01-21 - STORY-106: Test LSP hover documentation
+
+**What was done:**
+- Created ElvishLspHoverTest.kt with 5 automated tests:
+  - testHoverOverBuiltinFunction: Verifies hover works over built-in functions (echo)
+  - testHoverOverPutFunction: Verifies hover works over the 'put' function
+  - testHoverOverVariable: Verifies hover shows info for variable references
+  - testHoverResponseTime: Verifies hover responds within 1 second
+  - testHoverOverModuleFunction: Verifies hover works for module functions (str:join)
+- All 5 hover tests pass with ./gradlew build (total 109 tests)
+
+**Files created:**
+- src/test/kotlin/com/elvish/plugin/lsp/ElvishLspHoverTest.kt
+
+**Acceptance criteria verification:**
+- [x] Hover over built-in function (e.g., echo, put) shows documentation: testHoverOverBuiltinFunction and testHoverOverPutFunction verify this
+- [x] Hover over variable shows type information if available: testHoverOverVariable verifies this
+- [x] Hover popup appears within reasonable time (<1 second): testHoverResponseTime verifies this
+
+**Refactoring:**
+- Round 1: All files under 300 lines, no changes needed
+- Round 2: Double-checked organization, no issues found
+
+**Learnings:**
+- LSP hover requests use textDocument/hover method with position
+- Hover responses include "result" with documentation content
+- Followed same test pattern as completion tests for consistency
+- Added module function test (str:join) as edge case coverage
