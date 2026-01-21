@@ -38,7 +38,11 @@ src/main/
 │   ├── editor/
 │   │   ├── ElvishCommenter.kt        # Line comment support (Ctrl+/)
 │   │   ├── ElvishBraceMatcher.kt     # Matching braces highlighting
-│   │   └── ElvishFoldingBuilder.kt   # Code folding for blocks
+│   │   ├── ElvishFoldingBuilder.kt   # Code folding for blocks
+│   │   └── structure/
+│   │       ├── ElvishStructureViewFactory.kt  # Structure view builder factory
+│   │       ├── ElvishStructureViewModel.kt    # Structure view model
+│   │       └── ElvishStructureViewElement.kt  # Tree element for structure view
 │   ├── settings/
 │   │   ├── ElvishSettings.kt         # Plugin settings storage
 │   │   └── ElvishConfigurable.kt     # Settings UI panel
@@ -86,11 +90,15 @@ src/main/
    - `ElvishCommenter`: Line comment support using `# ` prefix (Ctrl+/ / Cmd+/)
    - `ElvishBraceMatcher`: Highlights matching braces `{}`, brackets `[]`, and parentheses `()`
    - `ElvishFoldingBuilder`: Code folding for function bodies, control flow blocks, and multi-line lists/maps
+   - `structure/` subpackage: Structure view support
+     - `ElvishStructureViewFactory`: Creates structure view builders
+     - `ElvishStructureViewModel`: Controls structure view display and sorting
+     - `ElvishStructureViewElement`: Parses file to find functions (fn), variables (var), and imports (use)
 
 7. **Plugin Manifest** (`META-INF/plugin.xml`)
    - Dependencies: `platform`, `textmate` modules, plus optional `lsp` module
    - The `lsp` module is available in all JetBrains IDEs since 2024.2 (free for all users)
-   - Extensions: file type, LSP server support, TextMate bundle, parser definition, project settings, commenter, brace matcher, folding builder
+   - Extensions: file type, LSP server support, TextMate bundle, parser definition, project settings, commenter, brace matcher, folding builder, structure view
 
 ### Key Design Decisions
 

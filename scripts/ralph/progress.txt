@@ -1182,3 +1182,35 @@ Stories now use the format STORY-{phase}.{epic}.{story}.
 - Only multi-line constructs should be foldable (single-line blocks are not useful to fold)
 - Context detection via looking backward in PSI tree to find preceding keywords
 - Map literals distinguished from lists by checking for & ampersand after bracket
+
+---
+
+## 2026-01-21 - STORY-5.3.1: Implement Structure View
+
+**What was done:**
+- Created ElvishStructureViewFactory implementing PsiStructureViewFactory
+- Created ElvishStructureViewModel extending StructureViewModelBase with alpha sorting
+- Created ElvishStructureViewElement that parses file to find functions, variables, and imports
+- Structure view shows fn definitions with parameter lists, var declarations, use imports
+- Icons differentiate element types (Function, Variable, Include)
+- Navigation works - clicking on item jumps to that location
+- Registered in plugin.xml with lang.psiStructureViewFactory extension point
+- Updated docs/DEVELOPMENT.md with structure view documentation
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/editor/structure/ElvishStructureViewFactory.kt
+- src/main/kotlin/com/elvish/plugin/editor/structure/ElvishStructureViewModel.kt
+- src/main/kotlin/com/elvish/plugin/editor/structure/ElvishStructureViewElement.kt
+
+**Files changed:**
+- src/main/resources/META-INF/plugin.xml (added lang.psiStructureViewFactory extension)
+- docs/DEVELOPMENT.md (added structure view to project structure and architecture)
+
+**Learnings:**
+- PsiStructureViewFactory creates TreeBasedStructureViewBuilder instances
+- StructureViewModelBase provides base implementation with sorting support
+- StructureViewTreeElement wraps PSI elements for display in tree
+- Parsing tokens from statements to find fn/var/use keywords works with flat AST
+- Function parameters extracted from {|param1 param2|} Elvish syntax
+- AllIcons.Nodes.* provides standard icons consistent with other language plugins
+- SortableTreeElement interface enables alpha sorting in structure view
