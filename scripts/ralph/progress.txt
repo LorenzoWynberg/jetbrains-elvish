@@ -1045,17 +1045,23 @@
 
 ## Summary - Epic 2 Complete
 
-**All Epic 2 stories completed:**
-- STORY-101: Fix LSP module dependency for cross-IDE support
-- STORY-102: Update minimum IDE version to 2024.3
-- STORY-103: Add LSP server startup logging
-- STORY-104: Verify LSP server process starts
-- STORY-105: Test LSP code completion
-- STORY-106: Test LSP hover documentation
-- STORY-107: Test LSP diagnostics
-- STORY-108: Add error handling for missing Elvish binary
-- STORY-109: Update documentation for cross-IDE support
-- STORY-110: Prepare for marketplace submission
+**Story ID Format Change (2026-01-21):**
+Stories now use the format STORY-{phase}.{epic}.{story}. Old story IDs mapped to new format:
+- STORY-101 → STORY-1.2.1: Fix LSP module dependency for cross-IDE support
+- STORY-102 → STORY-1.2.2: Update minimum IDE version to 2024.3
+- STORY-103 → STORY-1.2.3: Add LSP server startup logging
+- STORY-104 → STORY-2.2.1: Verify LSP server process starts
+- STORY-105 → STORY-2.2.2: Test LSP code completion
+- STORY-106 → STORY-2.2.3: Test LSP hover documentation
+- STORY-107 → STORY-2.2.4: Test LSP diagnostics
+- STORY-108 → STORY-3.2.1: Add error handling for missing Elvish binary
+- STORY-109 → STORY-3.2.2: Update documentation for cross-IDE support
+- STORY-110 → STORY-3.2.3: Prepare for marketplace submission
+
+**Epic History:**
+- Epic 1: Original plugin development (STORY-001 to STORY-022) - Historical, not in current PRD
+- Epic 2: LSP verification and marketplace preparation (STORY-1.2.x to STORY-3.2.x) - Complete
+- Epic 3+: New editor features (commenter, brace matching, folding, etc.) - In progress
 
 **Current state:**
 - Plugin is ready for JetBrains Marketplace submission
@@ -1066,3 +1072,6 @@
 - Custom parser for enhanced PSI support
 - Configurable Elvish binary path
 - Error handling for missing Elvish installation
+
+**Next Phase:**
+- Phase 4-9 stories add editor enhancements, run configurations, templates, and polish

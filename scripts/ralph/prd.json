@@ -1,11 +1,11 @@
 {
   "stories": [
     {
-      "id": "STORY-101",
+      "id": "STORY-1.2.1",
       "title": "Fix LSP module dependency for cross-IDE support",
-      "intent": "Change from com.intellij.modules.ultimate to com.intellij.modules.lsp to enable LSP in all JetBrains IDEs",
+      "intent": "Change from com.intellij.modules.lsp to com.intellij.modules.ultimate for 2024.x compatibility",
       "acceptance": [
-        "plugin.xml uses com.intellij.modules.lsp instead of com.intellij.modules.ultimate",
+        "plugin.xml uses com.intellij.modules.ultimate for LSP dependency",
         "LSP dependency remains optional with config-file attribute",
         "./gradlew build succeeds"
       ],
@@ -16,7 +16,7 @@
       "story_number": 1
     },
     {
-      "id": "STORY-102",
+      "id": "STORY-1.2.2",
       "title": "Update minimum IDE version to 2024.3",
       "intent": "Set sinceBuild to 243 to ensure stable LSP API availability across all JetBrains IDEs",
       "acceptance": [
@@ -26,13 +26,13 @@
         "Plugin verification passes"
       ],
       "passes": true,
-      "depends_on": ["STORY-101"],
+      "depends_on": ["STORY-1.2.1"],
       "phase": 1,
       "epic": 2,
       "story_number": 2
     },
     {
-      "id": "STORY-103",
+      "id": "STORY-1.2.3",
       "title": "Add LSP server startup logging",
       "intent": "Add debug logging to LSP provider to diagnose server startup issues",
       "acceptance": [
@@ -43,13 +43,13 @@
         "./gradlew build succeeds"
       ],
       "passes": true,
-      "depends_on": ["STORY-101"],
+      "depends_on": ["STORY-1.2.1"],
       "phase": 1,
       "epic": 2,
       "story_number": 3
     },
     {
-      "id": "STORY-104",
+      "id": "STORY-2.2.1",
       "title": "Verify LSP server process starts",
       "intent": "Confirm that elvish -lsp process actually starts when opening .elv files",
       "acceptance": [
@@ -60,13 +60,13 @@
         "No LSP-related errors in IDE logs"
       ],
       "passes": true,
-      "depends_on": ["STORY-103"],
+      "depends_on": ["STORY-1.2.3"],
       "phase": 2,
       "epic": 2,
       "story_number": 1
     },
     {
-      "id": "STORY-105",
+      "id": "STORY-2.2.2",
       "title": "Test LSP code completion",
       "intent": "Verify that LSP-powered code completion works for Elvish",
       "acceptance": [
@@ -76,13 +76,13 @@
         "Completion popup shows function signatures where available"
       ],
       "passes": true,
-      "depends_on": ["STORY-104"],
+      "depends_on": ["STORY-2.2.1"],
       "phase": 2,
       "epic": 2,
       "story_number": 2
     },
     {
-      "id": "STORY-106",
+      "id": "STORY-2.2.3",
       "title": "Test LSP hover documentation",
       "intent": "Verify that hovering over functions shows documentation",
       "acceptance": [
@@ -91,13 +91,13 @@
         "Hover popup appears within reasonable time (<1 second)"
       ],
       "passes": true,
-      "depends_on": ["STORY-104"],
+      "depends_on": ["STORY-2.2.1"],
       "phase": 2,
       "epic": 2,
       "story_number": 3
     },
     {
-      "id": "STORY-107",
+      "id": "STORY-2.2.4",
       "title": "Test LSP diagnostics",
       "intent": "Verify that syntax errors are reported by the LSP",
       "acceptance": [
@@ -107,13 +107,13 @@
         "Diagnostics update in real-time as you type"
       ],
       "passes": true,
-      "depends_on": ["STORY-104"],
+      "depends_on": ["STORY-2.2.1"],
       "phase": 2,
       "epic": 2,
       "story_number": 4
     },
     {
-      "id": "STORY-108",
+      "id": "STORY-3.2.1",
       "title": "Add error handling for missing Elvish binary",
       "intent": "Show clear error message when elvish is not installed or not in PATH",
       "acceptance": [
@@ -123,29 +123,29 @@
         "LSP gracefully disabled until Elvish available"
       ],
       "passes": true,
-      "depends_on": ["STORY-104"],
+      "depends_on": ["STORY-2.2.1"],
       "phase": 3,
       "epic": 2,
       "story_number": 1
     },
     {
-      "id": "STORY-109",
+      "id": "STORY-3.2.2",
       "title": "Update documentation for cross-IDE support",
       "intent": "Update all documentation to reflect cross-IDE compatibility",
       "acceptance": [
         "README.md lists all supported JetBrains IDEs",
-        "README.md clarifies LSP is free for all users (2025.3+)",
+        "README.md clarifies LSP is free for all users (2024.3+)",
         "docs/DEVELOPMENT.md updated with correct module dependency info",
         "CHANGELOG.md documents the cross-IDE fix"
       ],
       "passes": true,
-      "depends_on": ["STORY-107"],
+      "depends_on": ["STORY-2.2.4"],
       "phase": 3,
       "epic": 2,
       "story_number": 2
     },
     {
-      "id": "STORY-110",
+      "id": "STORY-3.2.3",
       "title": "Prepare for marketplace submission",
       "intent": "Ensure plugin meets JetBrains Marketplace requirements",
       "acceptance": [
@@ -156,10 +156,425 @@
         "Plugin passes JetBrains Plugin Verifier"
       ],
       "passes": true,
-      "depends_on": ["STORY-109"],
+      "depends_on": ["STORY-3.2.2"],
       "phase": 3,
       "epic": 2,
       "story_number": 3
+    },
+    {
+      "id": "STORY-4.3.1",
+      "title": "Implement Commenter for line comments",
+      "intent": "Enable Ctrl+/ (Cmd+/ on Mac) to toggle line comments using # prefix",
+      "acceptance": [
+        "Create ElvishCommenter implementing com.intellij.lang.Commenter interface",
+        "getLineCommentPrefix() returns '# ' (Elvish uses # for comments, space for readability)",
+        "getBlockCommentPrefix() and getBlockCommentSuffix() return null (Elvish has no block comments)",
+        "Register commenter in plugin.xml with lang.commenter extension point",
+        "Pressing Ctrl+/ on a line adds '# ' prefix",
+        "Pressing Ctrl+/ on a commented line removes '# ' prefix",
+        "Multi-line selection comments/uncomments all selected lines",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-3.2.3"],
+      "phase": 4,
+      "epic": 3,
+      "story_number": 1
+    },
+    {
+      "id": "STORY-4.3.2",
+      "title": "Implement Brace Matching",
+      "intent": "Highlight matching braces, brackets, and parentheses when cursor is adjacent",
+      "acceptance": [
+        "Create ElvishBraceMatcher implementing com.intellij.lang.PairedBraceMatcher",
+        "Define BracePair for curly braces: { } (structural, used for functions/blocks)",
+        "Define BracePair for square brackets: [ ] (used for lists and maps)",
+        "Define BracePair for parentheses: ( ) (used for output capture)",
+        "Register in plugin.xml with lang.braceMatcher extension point",
+        "When cursor is next to {, matching } is highlighted",
+        "When cursor is next to [, matching ] is highlighted",
+        "When cursor is next to (, matching ) is highlighted",
+        "Unmatched braces show error highlighting",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-4.3.1"],
+      "phase": 4,
+      "epic": 3,
+      "story_number": 2
+    },
+    {
+      "id": "STORY-4.3.3",
+      "title": "Implement Code Folding",
+      "intent": "Allow collapsing function bodies, blocks, and multi-line constructs",
+      "acceptance": [
+        "Create ElvishFoldingBuilder implementing com.intellij.lang.folding.FoldingBuilderEx",
+        "Fold function definitions: fn name {|args| ... } shows as 'fn name {...}'",
+        "Fold lambda expressions: {|args| ... } shows as '{...}'",
+        "Fold if/for/while/try blocks",
+        "Fold multi-line lists: [a b c] across lines can be collapsed",
+        "Fold multi-line maps: [&key=value ...] can be collapsed",
+        "Register in plugin.xml with lang.foldingBuilder extension point",
+        "Folding regions appear in gutter with +/- icons",
+        "Default state: functions expanded, deeply nested blocks collapsed",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-4.3.2"],
+      "phase": 4,
+      "epic": 3,
+      "story_number": 3
+    },
+    {
+      "id": "STORY-5.3.1",
+      "title": "Implement Structure View",
+      "intent": "Show file structure panel with functions and variables for quick navigation",
+      "acceptance": [
+        "Create ElvishStructureViewFactory implementing PsiStructureViewFactory",
+        "Create ElvishStructureViewModel extending TextEditorBasedStructureViewModel",
+        "Create ElvishStructureViewElement implementing StructureViewTreeElement",
+        "Show 'fn' function definitions with their names and parameter lists",
+        "Show top-level 'var' declarations",
+        "Show 'use' module imports",
+        "Register in plugin.xml with lang.psiStructureViewFactory extension point",
+        "Clicking on item navigates to that location in the file",
+        "Structure view updates when file is edited",
+        "Icons differentiate functions, variables, and imports",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-4.3.3"],
+      "phase": 5,
+      "epic": 3,
+      "story_number": 1
+    },
+    {
+      "id": "STORY-5.3.2",
+      "title": "Implement Breadcrumbs",
+      "intent": "Show current code context (function name, block type) at top of editor",
+      "acceptance": [
+        "Create ElvishBreadcrumbsProvider implementing BreadcrumbsProvider",
+        "Show function name when cursor is inside a function body",
+        "Show block type (if/for/while/try) when inside control structures",
+        "Show nested context for deeply nested code",
+        "Register in plugin.xml with breadcrumbsInfoProvider extension point",
+        "Clicking breadcrumb navigates to that scope's start",
+        "Breadcrumbs respect editor setting to enable/disable",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-5.3.1"],
+      "phase": 5,
+      "epic": 3,
+      "story_number": 2
+    },
+    {
+      "id": "STORY-6.4.1",
+      "title": "Create Elvish Run Configuration Type",
+      "intent": "Allow users to run .elv scripts from the IDE with a dedicated run configuration",
+      "acceptance": [
+        "Create ElvishConfigurationType extending SimpleConfigurationType",
+        "Create ElvishRunConfiguration extending RunConfigurationBase",
+        "Configuration stores: script path, arguments, working directory, environment variables",
+        "Register in plugin.xml with configurationType extension point",
+        "Configuration appears in Run > Edit Configurations dialog",
+        "Configuration uses Elvish file icon",
+        "Configuration validates script path exists and ends with .elv",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-5.3.2"],
+      "phase": 6,
+      "epic": 4,
+      "story_number": 1
+    },
+    {
+      "id": "STORY-6.4.2",
+      "title": "Implement Run Configuration Settings Editor",
+      "intent": "Provide UI for editing Elvish run configuration settings",
+      "acceptance": [
+        "Create ElvishRunConfigurationEditor extending SettingsEditor",
+        "UI includes: script file path with browse button",
+        "UI includes: script arguments text field",
+        "UI includes: working directory with browse button (defaults to project root)",
+        "UI includes: environment variables editor (key=value pairs)",
+        "UI includes: option to use Elvish from settings vs custom path",
+        "Settings are persisted between IDE sessions",
+        "applyEditorTo() and resetEditorFrom() properly sync UI and configuration",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-6.4.1"],
+      "phase": 6,
+      "epic": 4,
+      "story_number": 2
+    },
+    {
+      "id": "STORY-6.4.3",
+      "title": "Implement Run Configuration Execution",
+      "intent": "Execute Elvish scripts and display output in Run tool window",
+      "acceptance": [
+        "Create ElvishRunProfileState implementing RunProfileState",
+        "Execute script using: elvish <script.elv> [args...]",
+        "Use configured Elvish binary path from ElvishSettings",
+        "Pass environment variables to process",
+        "Set working directory correctly",
+        "Output appears in Run tool window with proper colors (stdout/stderr)",
+        "Exit code displayed when script completes",
+        "Stop button terminates running script",
+        "Re-run button works correctly",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-6.4.2"],
+      "phase": 6,
+      "epic": 4,
+      "story_number": 3
+    },
+    {
+      "id": "STORY-6.4.4",
+      "title": "Add Gutter Run Icons",
+      "intent": "Show run icon in gutter for .elv files to quickly run scripts",
+      "acceptance": [
+        "Create ElvishRunLineMarkerProvider implementing RunLineMarkerContributor",
+        "Show green play icon in gutter at line 1 of .elv files",
+        "Clicking icon creates and runs temporary Elvish run configuration",
+        "Right-clicking icon shows: Run, Debug (disabled), Run with Coverage (disabled)",
+        "Icon respects 'Run line markers' editor setting",
+        "Register in plugin.xml with runLineMarkerContributor extension point",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-6.4.3"],
+      "phase": 6,
+      "epic": 4,
+      "story_number": 4
+    },
+    {
+      "id": "STORY-6.4.5",
+      "title": "Implement Run Configuration Producer",
+      "intent": "Auto-create run configuration when right-clicking .elv file or using context menu",
+      "acceptance": [
+        "Create ElvishRunConfigurationProducer extending LazyRunConfigurationProducer",
+        "Right-click on .elv file in project tree shows 'Run <filename>'",
+        "Context menu in editor shows 'Run <filename>'",
+        "Producer creates configuration with correct script path",
+        "Producer reuses existing configuration if one matches the script",
+        "Register in plugin.xml with runConfigurationProducer extension point",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-6.4.4"],
+      "phase": 6,
+      "epic": 4,
+      "story_number": 5
+    },
+    {
+      "id": "STORY-7.5.1",
+      "title": "Create Elvish Script File Template",
+      "intent": "Add 'New > Elvish Script' option with starter template",
+      "acceptance": [
+        "Create file template at fileTemplates/Elvish Script.elv.ft",
+        "Template includes: shebang (#!/usr/bin/env elvish)",
+        "Template includes: comment header with description placeholder",
+        "Template includes: newline for code to start",
+        "Create description file fileTemplates/Elvish Script.elv.html",
+        "New > Elvish Script appears in New File menu",
+        "Dialog prompts for filename",
+        "Created file has .elv extension automatically added if missing",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-6.4.5"],
+      "phase": 7,
+      "epic": 5,
+      "story_number": 1
+    },
+    {
+      "id": "STORY-7.5.2",
+      "title": "Create Elvish Module File Template",
+      "intent": "Add 'New > Elvish Module' option for creating reusable modules",
+      "acceptance": [
+        "Create file template at fileTemplates/Elvish Module.elv.ft",
+        "Template includes: comment header with module description placeholder",
+        "Template includes: example function definition with 'fn name {|args| }' syntax",
+        "Template includes: comment about exporting variables",
+        "Create description file fileTemplates/Elvish Module.elv.html",
+        "Description explains Elvish module system and 'use' statement",
+        "New > Elvish Module appears in New File menu",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-7.5.1"],
+      "phase": 7,
+      "epic": 5,
+      "story_number": 2
+    },
+    {
+      "id": "STORY-8.5.1",
+      "title": "Create Function Definition Live Template",
+      "intent": "Add 'fn' abbreviation that expands to function definition boilerplate",
+      "acceptance": [
+        "Create liveTemplates/Elvish.xml with templateSet group='Elvish'",
+        "Template abbreviation: fn",
+        "Template expands to: fn $NAME$ {|$PARAMS$|\\n  $END$\\n}",
+        "$NAME$ variable: cursor stops here first",
+        "$PARAMS$ variable: cursor stops here second, can be empty",
+        "$END$ variable: final cursor position inside function body",
+        "Template context limited to Elvish files only",
+        "Template appears in completion popup when typing 'fn'",
+        "Tab key cycles through template variables",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-7.5.2"],
+      "phase": 8,
+      "epic": 5,
+      "story_number": 1
+    },
+    {
+      "id": "STORY-8.5.2",
+      "title": "Create Control Flow Live Templates",
+      "intent": "Add live templates for if, for, while, and try control structures",
+      "acceptance": [
+        "Add to liveTemplates/Elvish.xml",
+        "Template 'if': if $COND$ { $END$ } - basic conditional",
+        "Template 'ife': if $COND$ { $THEN$ } else { $END$ } - if-else",
+        "Template 'for': for $VAR$ $CONTAINER$ { $END$ } - for loop over container",
+        "Template 'while': while $COND$ { $END$ } - while loop",
+        "Template 'try': try { $CODE$ } catch e { $END$ } - try-catch block",
+        "Template 'tryf': try { $CODE$ } finally { $END$ } - try-finally block",
+        "All templates have descriptive names shown in completion popup",
+        "All templates limited to Elvish context",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-8.5.1"],
+      "phase": 8,
+      "epic": 5,
+      "story_number": 2
+    },
+    {
+      "id": "STORY-8.5.3",
+      "title": "Create Common Pattern Live Templates",
+      "intent": "Add live templates for common Elvish patterns and idioms",
+      "acceptance": [
+        "Add to liveTemplates/Elvish.xml",
+        "Template 'use': use $MODULE$ - import module (suggest: str, path, math, re, file, os)",
+        "Template 'var': var $NAME$ = $VALUE$ - variable declaration",
+        "Template 'set': set $NAME$ = $VALUE$ - variable assignment",
+        "Template 'each': each {|$VAR$| $END$ } - iteration pattern",
+        "Template 'peach': peach {|$VAR$| $END$ } - parallel iteration",
+        "Template 'lambda': {|$PARAMS$| $END$ } - anonymous function",
+        "Template 'map': [&$KEY$=$VALUE$ $END$] - map literal",
+        "Template 'list': [$ITEMS$] - list literal",
+        "All templates have descriptive tooltips explaining usage",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-8.5.2"],
+      "phase": 8,
+      "epic": 5,
+      "story_number": 3
+    },
+    {
+      "id": "STORY-8.5.4",
+      "title": "Register Live Templates with Elvish Context",
+      "intent": "Ensure live templates only appear in Elvish files and work correctly",
+      "acceptance": [
+        "Create ElvishTemplateContextType extending TemplateContextType",
+        "Context type checks if file is Elvish language",
+        "Register in plugin.xml with liveTemplateContext extension point",
+        "Register template set in plugin.xml with defaultLiveTemplates extension point",
+        "Templates appear in Settings > Editor > Live Templates > Elvish group",
+        "Templates can be edited by user in settings",
+        "Templates only expand in .elv files, not in other file types",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-8.5.3"],
+      "phase": 8,
+      "epic": 5,
+      "story_number": 4
+    },
+    {
+      "id": "STORY-9.6.1",
+      "title": "Add TODO/FIXME highlighting in comments",
+      "intent": "Highlight TODO and FIXME comments for visibility in TODO tool window",
+      "acceptance": [
+        "Create ElvishTodoIndexer or configure via indexPatternBuilder",
+        "Recognize patterns: TODO, FIXME, XXX, HACK, BUG in # comments",
+        "Pattern matching is case-insensitive",
+        "Highlighted items appear in TODO tool window",
+        "Register in plugin.xml with appropriate extension point",
+        "Double-clicking TODO in tool window navigates to comment",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-8.5.4"],
+      "phase": 9,
+      "epic": 6,
+      "story_number": 1
+    },
+    {
+      "id": "STORY-9.6.2",
+      "title": "Enable spell checking in comments and strings",
+      "intent": "Allow spell checking in Elvish comments and string literals",
+      "acceptance": [
+        "Create ElvishSpellcheckingStrategy extending SpellcheckingStrategy",
+        "Enable spell checking for COMMENT tokens (# comments)",
+        "Enable spell checking for STRING tokens (single-quoted 'text' and double-quoted \"text\")",
+        "Disable spell checking for barewords (they're often commands/paths)",
+        "Register in plugin.xml with spellchecker.support extension point",
+        "Misspelled words show squiggly underline",
+        "Right-click offers spelling suggestions",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-9.6.1"],
+      "phase": 9,
+      "epic": 6,
+      "story_number": 2
+    },
+    {
+      "id": "STORY-9.6.3",
+      "title": "Update documentation for new features",
+      "intent": "Document all new editor features in README and CHANGELOG",
+      "acceptance": [
+        "README.md updated with new features section",
+        "List all new features: commenter, brace matching, folding, structure view, breadcrumbs",
+        "List run configuration features with usage instructions",
+        "List file templates and live templates with examples",
+        "CHANGELOG.md updated with all changes for version 1.1.0",
+        "docs/DEVELOPMENT.md updated with architecture notes for new components",
+        "./gradlew build succeeds"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-9.6.2"],
+      "phase": 9,
+      "epic": 6,
+      "story_number": 3
+    },
+    {
+      "id": "STORY-9.6.4",
+      "title": "Final testing and release preparation",
+      "intent": "Comprehensive testing of all features before release",
+      "acceptance": [
+        "All existing tests pass",
+        "Manual testing of all new features in sandbox IDE",
+        "Test run configuration with various scripts and arguments",
+        "Test all live templates expand correctly",
+        "Test file templates create proper files",
+        "Plugin verifier passes for 2024.3, 2025.1, 2025.2",
+        "Update plugin version to 1.1.0 in gradle.properties",
+        "./gradlew buildPlugin produces distributable ZIP",
+        "CHANGELOG.md has release date for 1.1.0"
+      ],
+      "passes": false,
+      "depends_on": ["STORY-9.6.3"],
+      "phase": 9,
+      "epic": 6,
+      "story_number": 4
     }
   ]
 }
