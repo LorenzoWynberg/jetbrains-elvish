@@ -138,7 +138,7 @@
         "docs/DEVELOPMENT.md updated with correct module dependency info",
         "CHANGELOG.md documents the cross-IDE fix"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-107"],
       "phase": 3,
       "epic": 2,

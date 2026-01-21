@@ -2,6 +2,26 @@
 
 Syntax highlighting and language intelligence for [Elvish shell](https://elv.sh) files (`.elv`) in JetBrains IDEs.
 
+## Supported IDEs
+
+Works with **all JetBrains IDEs** version 2024.3 or later:
+
+- IntelliJ IDEA (Community & Ultimate)
+- PyCharm (Community & Professional)
+- WebStorm
+- GoLand
+- RustRover
+- CLion
+- PhpStorm
+- RubyMine
+- Rider
+- DataGrip
+- DataSpell
+- Fleet
+- Android Studio (2024.3+)
+
+**LSP features are free for all users** - no Ultimate/Professional license required.
+
 ## Features
 
 - File type recognition for `.elv` files with custom icon
@@ -11,8 +31,8 @@ Syntax highlighting and language intelligence for [Elvish shell](https://elv.sh)
 
 ## Requirements
 
-- JetBrains IDE 2024.3+
-- [Elvish](https://elv.sh) installed and available in PATH
+- JetBrains IDE 2024.3 or later (any edition)
+- [Elvish](https://elv.sh) installed and available in PATH (or configured in Settings)
 
 ## Installation
 

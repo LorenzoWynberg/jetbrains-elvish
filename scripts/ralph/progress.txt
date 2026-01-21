@@ -978,3 +978,25 @@
 - ConcurrentHashMap.putIfAbsent() is useful for "show once" logic
 - Project.locationHash provides a stable project identifier for tracking
 - Clearing caches on settings change allows user to re-trigger binary check
+
+---
+
+## 2026-01-21 - STORY-109: Update documentation for cross-IDE support
+
+**What was done:**
+- Updated README.md with comprehensive list of supported JetBrains IDEs (13 total)
+- Added clear statement that LSP features are free for all users (no Ultimate required)
+- Updated docs/DEVELOPMENT.md to reflect correct module dependency (lsp instead of ultimate)
+- Updated docs/CHANGELOG.md with "Changed" section documenting cross-IDE support
+- All acceptance criteria verified and met
+
+**Files changed:**
+- README.md (added Supported IDEs section, clarified requirements)
+- docs/DEVELOPMENT.md (fixed module dependency info)
+- docs/CHANGELOG.md (added Changed section for cross-IDE fix)
+- docs/activity/2026-01-21.md (activity log update)
+
+**Learnings:**
+- JetBrains unified distribution (2025.3+) makes LSP free for all users
+- com.intellij.modules.lsp is the correct module for cross-IDE LSP support
+- Keep a Changelog format uses "Changed" section for modifications to existing features
