@@ -587,7 +587,7 @@
         "Icons differentiate functions, variables, and imports",
         "./gradlew build succeeds"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-4.3.3"],
       "phase": 5,
       "epic": 3,
