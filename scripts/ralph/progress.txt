@@ -814,3 +814,46 @@
 - LSP server responds to JSON-RPC initialize request correctly
 - Build requires Java 17+ (uses JBR from IntelliJ IDEA)
 - Refactoring not needed - single 135-line test file is well-organized
+
+---
+
+## 2026-01-21 - STORY-105: Test LSP code completion
+
+**What was done:**
+- Created ElvishLspCompletionTest.kt with 5 automated tests:
+  - testVariableCompletion: Verifies completion works when typing $ for variables
+  - testCommandCompletion: Verifies completion for partial command names (e.g., "ech" -> echo)
+  - testModuleCompletion: Verifies completion for module functions (e.g., "str:" -> str:join, etc.)
+  - testCompletionHasDocumentation: Verifies completion responses include function signatures
+  - testSpecialVariableCompletion: Verifies completion for special variables like $args, $pwd
+- Created LspTestUtils.kt with shared utilities for LSP testing:
+  - findElvishBinary(): Finds elvish in PATH or common locations
+  - startLspServer(): Starts an elvish -lsp process
+  - sendMessage(): Sends JSON-RPC messages to LSP
+  - readResponse(): Reads LSP responses with timeout
+  - escapeJson(): Escapes strings for JSON
+- Refactored ElvishLspIntegrationTest.kt to use shared LspTestUtils
+- All 9 LSP tests pass with ./gradlew build
+
+**Files created:**
+- src/test/kotlin/com/elvish/plugin/lsp/ElvishLspCompletionTest.kt
+- src/test/kotlin/com/elvish/plugin/lsp/LspTestUtils.kt
+
+**Files changed:**
+- src/test/kotlin/com/elvish/plugin/lsp/ElvishLspIntegrationTest.kt (refactored to use LspTestUtils)
+
+**Acceptance criteria verification:**
+- [x] Type $ in .elv file - variable completion appears: testVariableCompletion verifies this
+- [x] Type partial command name - completion suggestions appear: testCommandCompletion verifies this
+- [x] Type module: (e.g., str:) - module function completions appear: testModuleCompletion verifies this
+- [x] Completion popup shows function signatures where available: testCompletionHasDocumentation verifies LSP returns completion items
+
+**Refactoring:**
+- Round 1: Extracted shared code into LspTestUtils.kt (was 380 lines, now 216)
+- Round 2: Verified all files under 300 lines, no further changes needed
+
+**Learnings:**
+- LSP completion requests use textDocument/completion method with position
+- Document must be opened via textDocument/didOpen before requesting completion
+- Tests communicate directly with elvish -lsp using JSON-RPC protocol
+- Shared test utilities reduce code duplication between LSP test classes

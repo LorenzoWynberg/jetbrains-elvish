@@ -75,7 +75,7 @@
         "Type module: (e.g., str:) - module function completions appear",
         "Completion popup shows function signatures where available"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-104"],
       "phase": 2,
       "epic": 2,

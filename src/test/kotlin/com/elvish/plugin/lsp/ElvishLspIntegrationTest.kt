@@ -19,8 +19,7 @@ class ElvishLspIntegrationTest {
      */
     @Test
     fun testElvishBinaryExists() {
-        // Find elvish in PATH or common locations
-        val elvishPath = findElvishBinary()
+        val elvishPath = LspTestUtils.findElvishBinary()
         assertNotNull("Elvish binary not found in PATH or common locations", elvishPath)
         assertTrue("Elvish binary does not exist at $elvishPath", File(elvishPath!!).exists())
     }
@@ -30,7 +29,7 @@ class ElvishLspIntegrationTest {
      */
     @Test
     fun testElvishSupportsLspFlag() {
-        val elvishPath = findElvishBinary() ?: return // Skip if elvish not found
+        val elvishPath = LspTestUtils.findElvishBinary() ?: return
 
         val process = ProcessBuilder(elvishPath, "--help")
             .redirectErrorStream(true)
@@ -48,20 +47,13 @@ class ElvishLspIntegrationTest {
      */
     @Test
     fun testLspServerStarts() {
-        val elvishPath = findElvishBinary() ?: return // Skip if elvish not found
-
-        val process = ProcessBuilder(elvishPath, "-lsp")
-            .redirectErrorStream(false)
-            .start()
+        val elvishPath = LspTestUtils.findElvishBinary() ?: return
+        val process = LspTestUtils.startLspServer(elvishPath) ?: return
 
         try {
             // Send a minimal initialize request
             val initRequest = """{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"processId":null,"rootUri":null,"capabilities":{}}}"""
-            val contentLength = initRequest.toByteArray().size
-            val fullRequest = "Content-Length: $contentLength\r\n\r\n$initRequest"
-
-            process.outputStream.write(fullRequest.toByteArray())
-            process.outputStream.flush()
+            LspTestUtils.sendMessage(process.outputStream, initRequest)
 
             // Wait a bit for response
             Thread.sleep(500)
@@ -69,15 +61,11 @@ class ElvishLspIntegrationTest {
             // Check if process is still alive (good sign - it's processing)
             assertTrue("LSP server process terminated unexpectedly", process.isAlive)
 
-            // Try to read response headers
-            val inputStream = process.inputStream
-            if (inputStream.available() > 0) {
-                val buffer = ByteArray(minOf(inputStream.available(), 1024))
-                inputStream.read(buffer)
-                val response = String(buffer)
-                assertTrue("LSP server did not respond with Content-Length",
-                    response.contains("Content-Length"))
-            }
+            // Try to read response
+            val response = LspTestUtils.readResponse(process.inputStream, 1)
+            assertNotNull("LSP server should respond to initialize", response)
+            assertTrue("Response should contain capabilities",
+                response!!.contains("capabilities"))
 
         } finally {
             process.destroyForcibly()
@@ -90,7 +78,7 @@ class ElvishLspIntegrationTest {
      */
     @Test
     fun testLspCommandExecution() {
-        val elvishPath = findElvishBinary() ?: return // Skip if elvish not found
+        val elvishPath = LspTestUtils.findElvishBinary() ?: return
 
         // Verify elvish binary path ends with "elvish" (matching plugin config)
         assertTrue("Binary should be named 'elvish'", elvishPath.endsWith("elvish"))
@@ -104,32 +92,5 @@ class ElvishLspIntegrationTest {
 
         assertTrue("Elvish version should be in format X.Y.Z",
             output.matches(Regex("\\d+\\.\\d+\\.\\d+")))
-    }
-
-    private fun findElvishBinary(): String? {
-        // Try common locations
-        val candidates = listOf(
-            "/opt/homebrew/bin/elvish",  // macOS ARM
-            "/usr/local/bin/elvish",      // macOS Intel / Linux
-            "/usr/bin/elvish",            // Linux system
-            System.getenv("HOME")?.let { "$it/.local/bin/elvish" }  // User local
-        ).filterNotNull()
-
-        for (path in candidates) {
-            if (File(path).exists() && File(path).canExecute()) {
-                return path
-            }
-        }
-
-        // Try PATH
-        val pathDirs = System.getenv("PATH")?.split(File.pathSeparator) ?: return null
-        for (dir in pathDirs) {
-            val elvish = File(dir, "elvish")
-            if (elvish.exists() && elvish.canExecute()) {
-                return elvish.absolutePath
-            }
-        }
-
-        return null
     }
 }
