@@ -75,7 +75,8 @@
         "Type module: (e.g., str:) - module function completions appear",
         "Completion popup shows function signatures where available"
       ],
-      "passes": false,
+      "manual_test": true,
+      "passes": true,
       "depends_on": ["STORY-104"],
       "phase": 2,
       "epic": 2,
@@ -90,7 +91,8 @@
         "Hover over variable shows type information if available",
         "Hover popup appears within reasonable time (<1 second)"
       ],
-      "passes": false,
+      "manual_test": true,
+      "passes": true,
       "depends_on": ["STORY-104"],
       "phase": 2,
       "epic": 2,
@@ -106,7 +108,8 @@
         "Fix error - highlighting disappears",
         "Diagnostics update in real-time as you type"
       ],
-      "passes": false,
+      "manual_test": true,
+      "passes": true,
       "depends_on": ["STORY-104"],
       "phase": 2,
       "epic": 2,
