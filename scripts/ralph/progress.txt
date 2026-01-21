@@ -1407,3 +1407,28 @@ Stories now use the format STORY-{phase}.{epic}.{story}.
 - internalFileTemplate extension makes templates available to the IDE
 - Action must be added to NewGroup to appear in "New" context menu
 - Template variables use ${VARIABLE_NAME} syntax for IntelliJ template variable support
+
+---
+
+## 2026-01-21 - STORY-7.5.2: Create Elvish Module File Template
+
+**What was done:**
+- Created file template at fileTemplates/Elvish Module.elv.ft with example function and export comment
+- Created description file fileTemplates/Elvish Module.elv.html explaining module system
+- Updated CreateElvishFileAction to add "Elvish Module" option in dialog
+- Registered internalFileTemplate extension for Elvish Module in plugin.xml
+- Removed unused import and improved getActionName() to be dynamic
+
+**Files created:**
+- src/main/resources/fileTemplates/Elvish Module.elv.ft
+- src/main/resources/fileTemplates/Elvish Module.elv.html
+
+**Files changed:**
+- src/main/kotlin/com/elvish/plugin/actions/CreateElvishFileAction.kt (added module option)
+- src/main/resources/META-INF/plugin.xml (added Elvish Module template registration)
+
+**Learnings:**
+- Module templates don't need shebang (modules are imported, not executed directly)
+- addKind() in buildDialog() allows multiple template options in the same action
+- Description HTML should explain the language feature (module system, use statement)
+- Template can include usage instructions as comments for user convenience

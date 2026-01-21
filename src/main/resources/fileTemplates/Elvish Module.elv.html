@@ -1,0 +1,26 @@
+<html>
+<body>
+<p>Creates a new Elvish module file for reusable code.</p>
+
+<h4>Elvish Module System</h4>
+<p>Modules in Elvish allow you to organize and share code between scripts. Any <code>.elv</code> file can be used as a module.</p>
+
+<h4>Using Modules</h4>
+<p>Import a module with the <code>use</code> statement:</p>
+<ul>
+    <li><code>use ./mymodule</code> - Import from current directory</li>
+    <li><code>use str</code> - Import built-in module</li>
+    <li><code>use github.com/user/repo</code> - Import from URL</li>
+</ul>
+
+<h4>Exporting</h4>
+<p>All functions and variables defined at the module level are automatically exported and can be accessed with the module prefix:</p>
+<pre>
+use ./mymodule
+mymodule:my-function arg1 arg2
+echo $mymodule:my-variable
+</pre>
+
+<p>Learn more about Elvish modules at <a href="https://elv.sh/ref/language.html#modules">elv.sh/ref/language.html#modules</a></p>
+</body>
+</html>

@@ -1,6 +1,5 @@
 package com.elvish.plugin.actions
 
-import com.elvish.plugin.ElvishFileType
 import com.elvish.plugin.ElvishIcons
 import com.intellij.ide.actions.CreateFileFromTemplateAction
 import com.intellij.ide.actions.CreateFileFromTemplateDialog
@@ -19,11 +18,12 @@ class CreateElvishFileAction : CreateFileFromTemplateAction(
 
     override fun buildDialog(project: Project, directory: PsiDirectory, builder: CreateFileFromTemplateDialog.Builder) {
         builder
-            .setTitle("New Elvish Script")
+            .setTitle("New Elvish File")
             .addKind("Elvish Script", ElvishIcons.FILE, "Elvish Script")
+            .addKind("Elvish Module", ElvishIcons.FILE, "Elvish Module")
     }
 
     override fun getActionName(directory: PsiDirectory?, newName: String, templateName: String?): String {
-        return "Create Elvish Script $newName"
+        return "Create Elvish ${templateName ?: "File"} $newName"
     }
 }

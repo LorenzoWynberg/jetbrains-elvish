@@ -1,0 +1,11 @@
+# ${DESCRIPTION}
+#
+# Usage: use ./${NAME}
+
+# Example function - exported automatically when file is used as a module
+fn greet {|name|
+  echo "Hello, "$name"!"
+}
+
+# To export variables, define them at the module level
+# var my-variable = "value"

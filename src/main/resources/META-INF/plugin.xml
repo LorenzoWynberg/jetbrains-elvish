@@ -99,6 +99,7 @@
                 implementation="com.elvish.plugin.run.ElvishRunConfigurationProducer"/>
 
         <internalFileTemplate name="Elvish Script"/>
+        <internalFileTemplate name="Elvish Module"/>
     </extensions>
 
     <actions>
