@@ -17,6 +17,10 @@ class ElvishRunConfigurationOptions : RunConfigurationOptions() {
     // Environment variables stored as semicolon-separated key=value pairs
     private val environmentVariablesProperty: StoredProperty<String?> = string("").provideDelegate(this, "environmentVariables")
 
+    // Use Elvish path from global settings or custom path for this run configuration
+    private val useElvishFromSettingsProperty: StoredProperty<Boolean> = property(true).provideDelegate(this, "useElvishFromSettings")
+    private val customElvishPathProperty: StoredProperty<String?> = string("").provideDelegate(this, "customElvishPath")
+
     var scriptPath: String
         get() = scriptPathProperty.getValue(this) ?: ""
         set(value) {
@@ -58,5 +62,17 @@ class ElvishRunConfigurationOptions : RunConfigurationOptions() {
                 this,
                 value.entries.joinToString(";") { "${it.key}=${it.value}" }
             )
+        }
+
+    var useElvishFromSettings: Boolean
+        get() = useElvishFromSettingsProperty.getValue(this)
+        set(value) {
+            useElvishFromSettingsProperty.setValue(this, value)
+        }
+
+    var customElvishPath: String
+        get() = customElvishPathProperty.getValue(this) ?: ""
+        set(value) {
+            customElvishPathProperty.setValue(this, value)
         }
 }
