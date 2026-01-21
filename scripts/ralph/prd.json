@@ -1,6 +1,351 @@
 {
   "stories": [
     {
+      "id": "STORY-1.1.1",
+      "title": "Create Gradle project structure",
+      "intent": "Set up the basic Gradle project layout for the IntelliJ plugin",
+      "acceptance": [
+        "Standard Gradle project layout created",
+        "src/main/kotlin and src/main/resources directories exist",
+        "settings.gradle.kts configured with project name",
+        "gradle.properties has plugin metadata",
+        "Gradle wrapper initialized"
+      ],
+      "passes": true,
+      "depends_on": [],
+      "phase": 1,
+      "epic": 1,
+      "story_number": 1
+    },
+    {
+      "id": "STORY-1.1.2",
+      "title": "Configure build.gradle.kts for IntelliJ plugin",
+      "intent": "Configure Gradle build with IntelliJ Platform plugin and dependencies",
+      "acceptance": [
+        "org.jetbrains.intellij.platform plugin configured",
+        "Kotlin JVM plugin added",
+        "intellijPlatform dependencies block set up",
+        "Target IntelliJ IDE version configured",
+        "Build range configured (sinceBuild, untilBuild)",
+        "./gradlew build succeeds"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-1.1.1"],
+      "phase": 1,
+      "epic": 1,
+      "story_number": 2
+    },
+    {
+      "id": "STORY-1.1.3",
+      "title": "Create base plugin.xml manifest",
+      "intent": "Create the plugin manifest with basic metadata and dependencies",
+      "acceptance": [
+        "plugin.xml created in META-INF",
+        "Plugin ID set to com.elvish.plugin",
+        "Dependencies on platform modules declared",
+        "Basic metadata (name, vendor, description) configured"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-1.1.2"],
+      "phase": 1,
+      "epic": 1,
+      "story_number": 3
+    },
+    {
+      "id": "STORY-2.1.1",
+      "title": "Create ElvishLanguage class",
+      "intent": "Register Elvish as a language in the IntelliJ platform",
+      "acceptance": [
+        "ElvishLanguage singleton extending Language created",
+        "Companion object pattern for INSTANCE",
+        "Language ID set to 'Elvish'"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-1.1.3"],
+      "phase": 2,
+      "epic": 1,
+      "story_number": 1
+    },
+    {
+      "id": "STORY-2.1.2",
+      "title": "Create ElvishFileType class",
+      "intent": "Register .elv file extension with the IDE",
+      "acceptance": [
+        "ElvishFileType object extending LanguageFileType created",
+        ".elv extension associated with ElvishLanguage",
+        "Registered in plugin.xml as fileType extension"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-2.1.1"],
+      "phase": 2,
+      "epic": 1,
+      "story_number": 2
+    },
+    {
+      "id": "STORY-2.1.3",
+      "title": "Create ElvishIcons and SVG icon",
+      "intent": "Create a distinctive icon for Elvish files",
+      "acceptance": [
+        "16x16 SVG icon created with Material Palenight colors",
+        "ElvishIcons object loads icon via IconLoader",
+        "Icon displayed for .elv files in project tree"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-2.1.2"],
+      "phase": 2,
+      "epic": 1,
+      "story_number": 3
+    },
+    {
+      "id": "STORY-2.1.4",
+      "title": "Create ElvishFile PSI wrapper",
+      "intent": "Create the PSI file class for Elvish files",
+      "acceptance": [
+        "ElvishFile extending PsiFileBase created",
+        "Associated with ElvishLanguage and ElvishFileType",
+        "Provides fileType property and toString"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-2.1.3"],
+      "phase": 2,
+      "epic": 1,
+      "story_number": 4
+    },
+    {
+      "id": "STORY-3.1.1",
+      "title": "Create ElvishLspServerSupportProvider",
+      "intent": "Create the entry point for LSP integration",
+      "acceptance": [
+        "ElvishLspServerSupportProvider implementing LspServerSupportProvider created",
+        "fileOpened checks for .elv extension",
+        "Starts ElvishLspServerDescriptor when triggered",
+        "Registered in plugin.xml"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-2.1.4"],
+      "phase": 3,
+      "epic": 1,
+      "story_number": 1
+    },
+    {
+      "id": "STORY-3.1.2",
+      "title": "Create ElvishLspServerDescriptor",
+      "intent": "Configure the LSP server command and settings",
+      "acceptance": [
+        "ElvishLspServerDescriptor extending ProjectWideLspServerDescriptor created",
+        "createCommandLine returns GeneralCommandLine for 'elvish -lsp'",
+        "isSupportedFile filters .elv extension",
+        "Project-wide scope (single server per project)"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-3.1.1"],
+      "phase": 3,
+      "epic": 1,
+      "story_number": 2
+    },
+    {
+      "id": "STORY-4.1.1",
+      "title": "Create TextMate grammar file for Elvish syntax",
+      "intent": "Create comprehensive TextMate grammar for syntax highlighting",
+      "acceptance": [
+        "elvish.tmLanguage.json created in textmate/ directory",
+        "Patterns for comments, strings, keywords, operators",
+        "Patterns for 60+ built-in functions",
+        "Patterns for variables, numbers, constants",
+        "Variable interpolation in double-quoted strings"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-3.1.2"],
+      "phase": 4,
+      "epic": 1,
+      "story_number": 1
+    },
+    {
+      "id": "STORY-4.1.2",
+      "title": "Create ElvishTextMateBundleProvider",
+      "intent": "Register the TextMate bundle with the IDE",
+      "acceptance": [
+        "ElvishTextMateBundleProvider implementing TextMateBundleProvider created",
+        "getBundles() returns bundle pointing to textmate/ directory",
+        "TextMate plugin dependency added to build.gradle.kts"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-4.1.1"],
+      "phase": 4,
+      "epic": 1,
+      "story_number": 2
+    },
+    {
+      "id": "STORY-4.1.3",
+      "title": "Register TextMate bundle in plugin.xml",
+      "intent": "Wire up the TextMate bundle provider in the plugin manifest",
+      "acceptance": [
+        "Dependency on org.jetbrains.plugins.textmate declared",
+        "bundleProvider extension registered",
+        "Extension uses correct namespace"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-4.1.2"],
+      "phase": 4,
+      "epic": 1,
+      "story_number": 3
+    },
+    {
+      "id": "STORY-4.1.4",
+      "title": "Test and verify syntax highlighting",
+      "intent": "Verify that syntax highlighting works correctly",
+      "acceptance": [
+        "./gradlew build passes",
+        "Test file with all syntax elements created",
+        "Plugin ZIP contains TextMate resources",
+        "Syntax highlighting works in sandbox IDE"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-4.1.3"],
+      "phase": 4,
+      "epic": 1,
+      "story_number": 4
+    },
+    {
+      "id": "STORY-5.1.1",
+      "title": "Create ElvishTokenTypes",
+      "intent": "Define token types for the lexer",
+      "acceptance": [
+        "ElvishTokenTypes.kt with IElementType definitions created",
+        "Token types for all Elvish lexical elements",
+        "TokenSets for comments, strings, keywords, etc."
+      ],
+      "passes": true,
+      "depends_on": ["STORY-4.1.4"],
+      "phase": 5,
+      "epic": 1,
+      "story_number": 1
+    },
+    {
+      "id": "STORY-5.1.2",
+      "title": "Create ElvishLexer",
+      "intent": "Implement lexer for tokenizing Elvish code",
+      "acceptance": [
+        "ElvishLexer extending LexerBase created",
+        "Tokenization for all Elvish syntax elements",
+        "Comprehensive unit tests (30+ test cases)"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-5.1.1"],
+      "phase": 5,
+      "epic": 1,
+      "story_number": 2
+    },
+    {
+      "id": "STORY-5.1.3",
+      "title": "Create ElvishParser",
+      "intent": "Implement parser for building PSI tree",
+      "acceptance": [
+        "ElvishElementTypes.kt with AST node types created",
+        "ElvishParser implementing PsiParser created",
+        "Parsing for all statement and expression types",
+        "Comprehensive unit tests (76 tests)"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-5.1.2"],
+      "phase": 5,
+      "epic": 1,
+      "story_number": 3
+    },
+    {
+      "id": "STORY-5.1.4",
+      "title": "Create ElvishParserDefinition",
+      "intent": "Create the factory that ties together lexer, parser, and PSI",
+      "acceptance": [
+        "ElvishParserDefinition implementing ParserDefinition created",
+        "createLexer() returns ElvishLexer",
+        "createParser() returns ElvishParser",
+        "Unit tests for all methods"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-5.1.3"],
+      "phase": 5,
+      "epic": 1,
+      "story_number": 4
+    },
+    {
+      "id": "STORY-5.1.5",
+      "title": "Register parser in plugin.xml",
+      "intent": "Enable the custom parser for Elvish files",
+      "acceptance": [
+        "lang.parserDefinition extension added to plugin.xml",
+        "Extension associates ElvishParserDefinition with Elvish language",
+        "./gradlew build succeeds"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-5.1.4"],
+      "phase": 5,
+      "epic": 1,
+      "story_number": 5
+    },
+    {
+      "id": "STORY-6.1.1",
+      "title": "Create ElvishSettings persistent state",
+      "intent": "Store plugin settings persistently",
+      "acceptance": [
+        "ElvishSettings.kt with @State and @Service annotations created",
+        "PersistentStateComponent implementation",
+        "elvishPath property with default value",
+        "Unit tests for settings"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-5.1.5"],
+      "phase": 6,
+      "epic": 1,
+      "story_number": 1
+    },
+    {
+      "id": "STORY-6.1.2",
+      "title": "Create ElvishConfigurable settings UI",
+      "intent": "Provide UI for configuring plugin settings",
+      "acceptance": [
+        "ElvishConfigurable implementing Configurable created",
+        "Kotlin UI DSL panel with text field for elvish path",
+        "File browser for selecting executable",
+        "isModified(), apply(), reset() implemented"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-6.1.1"],
+      "phase": 6,
+      "epic": 1,
+      "story_number": 2
+    },
+    {
+      "id": "STORY-6.1.3",
+      "title": "Update LSP descriptor to use settings",
+      "intent": "Use configured elvish path in LSP server",
+      "acceptance": [
+        "ElvishLspServerDescriptor reads path from ElvishSettings",
+        "Falls back to 'elvish' if not configured",
+        "Changes take effect on LSP restart"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-6.1.2"],
+      "phase": 6,
+      "epic": 1,
+      "story_number": 3
+    },
+    {
+      "id": "STORY-6.1.4",
+      "title": "Register settings in plugin.xml",
+      "intent": "Make settings accessible from IDE preferences",
+      "acceptance": [
+        "projectConfigurable extension added to plugin.xml",
+        "Settings appear under Languages & Frameworks > Elvish",
+        "./gradlew build succeeds"
+      ],
+      "passes": true,
+      "depends_on": ["STORY-6.1.3"],
+      "phase": 6,
+      "epic": 1,
+      "story_number": 4
+    },
+    {
       "id": "STORY-1.2.1",
       "title": "Fix LSP module dependency for cross-IDE support",
       "intent": "Change from com.intellij.modules.lsp to com.intellij.modules.ultimate for 2024.x compatibility",
@@ -10,7 +355,7 @@
         "./gradlew build succeeds"
       ],
       "passes": true,
-      "depends_on": [],
+      "depends_on": ["STORY-6.1.4"],
       "phase": 1,
       "epic": 2,
       "story_number": 1

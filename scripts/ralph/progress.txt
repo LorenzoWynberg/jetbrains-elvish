@@ -1043,28 +1043,59 @@
 
 ---
 
-## Summary - Epic 2 Complete
+## Summary - Epics 1 & 2 Complete
 
 **Story ID Format Change (2026-01-21):**
-Stories now use the format STORY-{phase}.{epic}.{story}. Old story IDs mapped to new format:
-- STORY-101 → STORY-1.2.1: Fix LSP module dependency for cross-IDE support
-- STORY-102 → STORY-1.2.2: Update minimum IDE version to 2024.3
-- STORY-103 → STORY-1.2.3: Add LSP server startup logging
-- STORY-104 → STORY-2.2.1: Verify LSP server process starts
-- STORY-105 → STORY-2.2.2: Test LSP code completion
-- STORY-106 → STORY-2.2.3: Test LSP hover documentation
-- STORY-107 → STORY-2.2.4: Test LSP diagnostics
-- STORY-108 → STORY-3.2.1: Add error handling for missing Elvish binary
-- STORY-109 → STORY-3.2.2: Update documentation for cross-IDE support
-- STORY-110 → STORY-3.2.3: Prepare for marketplace submission
+Stories now use the format STORY-{phase}.{epic}.{story}.
 
-**Epic History:**
-- Epic 1: Original plugin development (STORY-001 to STORY-022) - Historical, not in current PRD
-- Epic 2: LSP verification and marketplace preparation (STORY-1.2.x to STORY-3.2.x) - Complete
-- Epic 3+: New editor features (commenter, brace matching, folding, etc.) - In progress
+**Epic 1: Core Plugin Development** (complete)
+| Old ID | New ID | Title |
+|--------|--------|-------|
+| STORY-001 | STORY-1.1.1 | Create Gradle project structure |
+| STORY-002 | STORY-1.1.2 | Configure build.gradle.kts for IntelliJ plugin |
+| STORY-003 | STORY-1.1.3 | Create base plugin.xml manifest |
+| STORY-004 | STORY-2.1.1 | Create ElvishLanguage class |
+| STORY-005 | STORY-2.1.2 | Create ElvishFileType class |
+| STORY-006 | STORY-2.1.3 | Create ElvishIcons and SVG icon |
+| STORY-007 | STORY-2.1.4 | Create ElvishFile PSI wrapper |
+| STORY-008 | STORY-3.1.1 | Create ElvishLspServerSupportProvider |
+| STORY-009 | STORY-3.1.2 | Create ElvishLspServerDescriptor |
+| STORY-010 | STORY-4.1.1 | Create TextMate grammar file |
+| STORY-011 | STORY-4.1.2 | Create ElvishTextMateBundleProvider |
+| STORY-012 | STORY-4.1.3 | Register TextMate bundle in plugin.xml |
+| STORY-013 | STORY-4.1.4 | Test and verify syntax highlighting |
+| STORY-014 | STORY-5.1.1 | Create ElvishTokenTypes |
+| STORY-015 | STORY-5.1.2 | Create ElvishLexer |
+| STORY-016 | STORY-5.1.3 | Create ElvishParser |
+| STORY-017 | STORY-5.1.4 | Create ElvishParserDefinition |
+| STORY-018 | STORY-5.1.5 | Register parser in plugin.xml |
+| STORY-019 | STORY-6.1.1 | Create ElvishSettings persistent state |
+| STORY-020 | STORY-6.1.2 | Create ElvishConfigurable settings UI |
+| STORY-021 | STORY-6.1.3 | Update LSP descriptor to use settings |
+| STORY-022 | STORY-6.1.4 | Register settings in plugin.xml |
+
+**Epic 2: LSP Verification & Marketplace** (complete)
+| Old ID | New ID | Title |
+|--------|--------|-------|
+| STORY-101 | STORY-1.2.1 | Fix LSP module dependency for cross-IDE support |
+| STORY-102 | STORY-1.2.2 | Update minimum IDE version to 2024.3 |
+| STORY-103 | STORY-1.2.3 | Add LSP server startup logging |
+| STORY-104 | STORY-2.2.1 | Verify LSP server process starts |
+| STORY-105 | STORY-2.2.2 | Test LSP code completion |
+| STORY-106 | STORY-2.2.3 | Test LSP hover documentation |
+| STORY-107 | STORY-2.2.4 | Test LSP diagnostics |
+| STORY-108 | STORY-3.2.1 | Add error handling for missing Elvish binary |
+| STORY-109 | STORY-3.2.2 | Update documentation for cross-IDE support |
+| STORY-110 | STORY-3.2.3 | Prepare for marketplace submission |
+
+**Epic 3-6: New Features** (pending)
+- Epic 3: Editor Enhancements (commenter, brace matching, folding, structure view, breadcrumbs)
+- Epic 4: Run Configuration (type, editor, execution, gutter icons, producer)
+- Epic 5: Templates (file templates, live templates)
+- Epic 6: Polish (TODO highlighting, spell checking, docs, release)
 
 **Current state:**
-- Plugin is ready for JetBrains Marketplace submission
+- Plugin is ready for JetBrains Marketplace submission (v1.0.0)
 - Compatible with IntelliJ IDEA 2024.3 through 2026.1
 - Works with all JetBrains IDEs (not just Ultimate)
 - Full LSP support: completion, hover, diagnostics, go-to-definition
@@ -1073,5 +1104,5 @@ Stories now use the format STORY-{phase}.{epic}.{story}. Old story IDs mapped to
 - Configurable Elvish binary path
 - Error handling for missing Elvish installation
 
-**Next Phase:**
-- Phase 4-9 stories add editor enhancements, run configurations, templates, and polish
+**Next Story:**
+- STORY-4.3.1: Implement Commenter for line comments
