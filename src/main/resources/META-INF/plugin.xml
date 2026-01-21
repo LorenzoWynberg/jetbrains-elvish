@@ -87,6 +87,9 @@
 
         <notificationGroup id="Elvish Plugin"
                            displayType="BALLOON"/>
+
+        <configurationType
+                implementation="com.elvish.plugin.run.ElvishConfigurationType"/>
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.plugins.textmate">
