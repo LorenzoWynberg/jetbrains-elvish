@@ -4,6 +4,7 @@ import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * Shared utilities for LSP integration tests.
@@ -11,6 +12,17 @@ import java.util.concurrent.TimeUnit
  * communicating with the LSP server.
  */
 object LspTestUtils {
+
+    /** Thread-safe message ID counter for tests. */
+    private val messageIdCounter = AtomicInteger(0)
+
+    /** Resets message ID counter (call before each test class if needed). */
+    fun resetMessageId() {
+        messageIdCounter.set(0)
+    }
+
+    /** Gets the next message ID. */
+    fun nextMessageId(): Int = messageIdCounter.incrementAndGet()
 
     /**
      * Finds the Elvish binary in PATH or common locations.
@@ -152,5 +164,93 @@ object LspTestUtils {
             .replace("\n", "\\n")
             .replace("\r", "\\r")
             .replace("\t", "\\t") + "\""
+    }
+
+    /**
+     * Sends an LSP request and waits for response.
+     * @param process LSP server process
+     * @param method LSP method name
+     * @param params JSON params string
+     * @return Response JSON or null on timeout
+     */
+    fun sendRequest(process: Process, method: String, params: String): String? {
+        val id = nextMessageId()
+        val message = """{"jsonrpc":"2.0","id":$id,"method":"$method","params":$params}"""
+        sendMessage(process.outputStream, message)
+        return readResponse(process.inputStream, id)
+    }
+
+    /**
+     * Sends an LSP notification (no response expected).
+     * @param process LSP server process
+     * @param method LSP method name
+     * @param params JSON params string
+     */
+    fun sendNotification(process: Process, method: String, params: String) {
+        val message = """{"jsonrpc":"2.0","method":"$method","params":$params}"""
+        sendMessage(process.outputStream, message)
+        Thread.sleep(100)
+    }
+
+    /**
+     * Waits for a specific LSP notification from the server.
+     * @param process LSP server process
+     * @param notificationMethod Method name to wait for (e.g., "textDocument/publishDiagnostics")
+     * @param timeoutMs Timeout in milliseconds
+     * @return Notification JSON or null on timeout
+     */
+    fun waitForNotification(process: Process, notificationMethod: String, timeoutMs: Long = 3000): String? {
+        val timeout = System.currentTimeMillis() + timeoutMs
+        val input = process.inputStream
+
+        while (System.currentTimeMillis() < timeout) {
+            if (input.available() > 0) {
+                val headerBuilder = StringBuilder()
+                var prev = 0
+                var curr: Int
+                while (input.read().also { curr = it } != -1) {
+                    headerBuilder.append(curr.toChar())
+                    if (prev == '\r'.code && curr == '\n'.code &&
+                        headerBuilder.length >= 4 &&
+                        headerBuilder.substring(headerBuilder.length - 4) == "\r\n\r\n") {
+                        break
+                    }
+                    prev = curr
+                }
+
+                val header = headerBuilder.toString()
+                val lengthMatch = Regex("Content-Length:\\s*(\\d+)").find(header)
+                if (lengthMatch != null) {
+                    val contentLength = lengthMatch.groupValues[1].toInt()
+                    val content = ByteArray(contentLength)
+                    var read = 0
+                    while (read < contentLength) {
+                        val n = input.read(content, read, contentLength - read)
+                        if (n == -1) break
+                        read += n
+                    }
+                    val response = String(content, Charsets.UTF_8)
+                    if (response.contains(notificationMethod)) {
+                        return response
+                    }
+                }
+            }
+            Thread.sleep(50)
+        }
+        return null
+    }
+
+    /**
+     * Gracefully shuts down an LSP server.
+     * @param process LSP server process
+     */
+    fun shutdown(process: Process) {
+        try {
+            sendRequest(process, "shutdown", "null")
+            sendNotification(process, "exit", "null")
+            process.waitFor(2, TimeUnit.SECONDS)
+        } finally {
+            process.destroyForcibly()
+        }
     }
 }

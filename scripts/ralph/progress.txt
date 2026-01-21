@@ -888,3 +888,44 @@
 - Hover responses include "result" with documentation content
 - Followed same test pattern as completion tests for consistency
 - Added module function test (str:join) as edge case coverage
+
+---
+
+## 2026-01-21 - STORY-107: Test LSP diagnostics
+
+**What was done:**
+- Created ElvishLspDiagnosticsTest.kt with 6 automated tests:
+  - testSyntaxErrorDiagnostics: Verifies diagnostics appear for unclosed brace
+  - testUnclosedBracketDiagnostics: Verifies diagnostics for unclosed bracket
+  - testDiagnosticsContainErrorMessage: Verifies error messages in diagnostics
+  - testFixingErrorClearsDiagnostics: Verifies diagnostics clear when errors are fixed
+  - testRealTimeDiagnosticsUpdate: Verifies diagnostics update in real-time (< 2 seconds)
+  - testUndefinedVariableDiagnostics: Tests diagnostics for undefined variable references
+- Extended LspTestUtils.kt with shared helper methods:
+  - sendRequest(): Sends LSP request and waits for response
+  - sendNotification(): Sends LSP notification (no response expected)
+  - waitForNotification(): Waits for server-pushed notifications (e.g., publishDiagnostics)
+  - shutdown(): Gracefully shuts down LSP server
+- All 115 tests pass with ./gradlew build
+
+**Files created:**
+- src/test/kotlin/com/elvish/plugin/lsp/ElvishLspDiagnosticsTest.kt
+
+**Files changed:**
+- src/test/kotlin/com/elvish/plugin/lsp/LspTestUtils.kt (added shared helper methods)
+
+**Acceptance criteria verification:**
+- [x] Introduce syntax error (e.g., unclosed brace) - error highlighting appears: testSyntaxErrorDiagnostics and testUnclosedBracketDiagnostics verify this
+- [x] Error message shown in editor gutter or tooltip: testDiagnosticsContainErrorMessage verifies publishDiagnostics contains error info
+- [x] Fix error - highlighting disappears: testFixingErrorClearsDiagnostics verifies diagnostics update when fixed
+- [x] Diagnostics update in real-time as you type: testRealTimeDiagnosticsUpdate verifies updates within 2 seconds
+
+**Refactoring:**
+- Round 1: Extracted common helpers to LspTestUtils - reduced diagnostics test from 328 to 260 lines
+- Round 2: Verified all files under 300 lines, no additional changes needed
+
+**Learnings:**
+- LSP diagnostics are pushed via textDocument/publishDiagnostics notification (not request/response)
+- Need to use waitForNotification() instead of sendRequest() for server-initiated messages
+- Document changes trigger new diagnostics via textDocument/didChange notification
+- Elvish LSP responds quickly to syntax errors (under 2 seconds typically)
