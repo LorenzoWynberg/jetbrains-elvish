@@ -47,6 +47,11 @@ src/main/
 │   ├── settings/
 │   │   ├── ElvishSettings.kt         # Plugin settings storage
 │   │   └── ElvishConfigurable.kt     # Settings UI panel
+│   ├── run/
+│   │   ├── ElvishConfigurationType.kt     # Run configuration type
+│   │   ├── ElvishRunConfiguration.kt      # Run configuration with validation
+│   │   ├── ElvishRunConfigurationOptions.kt  # Configuration state persistence
+│   │   └── ElvishRunConfigurationEditor.kt   # Configuration UI
 │   └── textmate/
 │       └── ElvishTextMateBundleProvider.kt
 └── resources/
@@ -87,7 +92,13 @@ src/main/
    - `ElvishConfigurable`: Settings UI panel for configuring elvish path
    - Configurable elvish path (default: 'elvish' from PATH)
 
-6. **Editor Features** (`editor/` package)
+6. **Run Configuration** (`run/` package)
+   - `ElvishConfigurationType`: Registers "Elvish" run configuration type in Run > Edit Configurations
+   - `ElvishRunConfiguration`: Stores script path, arguments, working directory, environment variables
+   - `ElvishRunConfigurationOptions`: Persistent state storage for configuration properties
+   - `ElvishRunConfigurationEditor`: Basic UI for editing configuration (will be enhanced)
+
+7. **Editor Features** (`editor/` package)
    - `ElvishCommenter`: Line comment support using `# ` prefix (Ctrl+/ / Cmd+/)
    - `ElvishBraceMatcher`: Highlights matching braces `{}`, brackets `[]`, and parentheses `()`
    - `ElvishFoldingBuilder`: Code folding for function bodies, control flow blocks, and multi-line lists/maps
@@ -97,10 +108,10 @@ src/main/
      - `ElvishStructureViewModel`: Controls structure view display and sorting
      - `ElvishStructureViewElement`: Parses file to find functions (fn), variables (var), and imports (use)
 
-7. **Plugin Manifest** (`META-INF/plugin.xml`)
+8. **Plugin Manifest** (`META-INF/plugin.xml`)
    - Dependencies: `platform`, `textmate` modules, plus optional `lsp` module
    - The `lsp` module is available in all JetBrains IDEs since 2024.2 (free for all users)
-   - Extensions: file type, LSP server support, TextMate bundle, parser definition, project settings, commenter, brace matcher, folding builder, structure view, breadcrumbs
+   - Extensions: file type, LSP server support, TextMate bundle, parser definition, project settings, commenter, brace matcher, folding builder, structure view, breadcrumbs, run configuration type
 
 ### Key Design Decisions
 

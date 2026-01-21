@@ -1240,3 +1240,33 @@ Stories now use the format STORY-{phase}.{epic}.{story}.
 - Navigation and enable/disable settings are handled by the framework
 - Similar token collection pattern to structure view works well for identifying structural elements
 - Lambda expressions distinguished by {| pattern at start of block
+
+---
+
+## 2026-01-21 - STORY-6.4.1: Create Elvish Run Configuration Type
+
+**What was done:**
+- Created ElvishConfigurationType extending SimpleConfigurationType for Run > Edit Configurations
+- Created ElvishRunConfiguration extending RunConfigurationBase with storage for script path, arguments, working directory, environment variables
+- Created ElvishRunConfigurationOptions for persistent state storage using StoredProperty
+- Created ElvishRunConfigurationEditor for basic configuration UI
+- Registered configurationType extension in plugin.xml
+- Configuration uses Elvish file icon (ElvishIcons.FILE)
+- Validation: script path required, must exist, should end with .elv
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/run/ElvishConfigurationType.kt
+- src/main/kotlin/com/elvish/plugin/run/ElvishRunConfiguration.kt
+- src/main/kotlin/com/elvish/plugin/run/ElvishRunConfigurationOptions.kt
+- src/main/kotlin/com/elvish/plugin/run/ElvishRunConfigurationEditor.kt
+
+**Files changed:**
+- src/main/resources/META-INF/plugin.xml (added configurationType extension)
+- docs/DEVELOPMENT.md (added run package to project structure and architecture)
+
+**Learnings:**
+- RunConfigurationBase<Options> pattern separates configuration logic from state persistence
+- StoredProperty with provideDelegate pattern provides type-safe property storage
+- Environment variables can be serialized as semicolon-separated key=value pairs
+- checkConfiguration() uses RuntimeConfigurationError for required fields, RuntimeConfigurationWarning for recommendations
+- SimpleConfigurationType handles factory creation, icon, and registration boilerplate

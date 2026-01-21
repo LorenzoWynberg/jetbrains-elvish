@@ -627,7 +627,7 @@
         "Configuration validates script path exists and ends with .elv",
         "./gradlew build succeeds"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-5.3.2"],
       "phase": 6,
       "epic": 4,
