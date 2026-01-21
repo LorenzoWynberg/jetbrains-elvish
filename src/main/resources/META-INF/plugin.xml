@@ -90,6 +90,10 @@
 
         <configurationType
                 implementation="com.elvish.plugin.run.ElvishConfigurationType"/>
+
+        <runLineMarkerContributor
+                language="Elvish"
+                implementationClass="com.elvish.plugin.run.ElvishRunLineMarkerProvider"/>
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.plugins.textmate">

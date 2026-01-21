@@ -689,7 +689,7 @@
         "Register in plugin.xml with runLineMarkerContributor extension point",
         "./gradlew build succeeds"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-6.4.3"],
       "phase": 6,
       "epic": 4,
