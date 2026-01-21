@@ -53,8 +53,19 @@ class ElvishRunConfiguration(
             options.passParentEnvs = value
         }
 
+    var useElvishFromSettings: Boolean
+        get() = options.useElvishFromSettings
+        set(value) {
+            options.useElvishFromSettings = value
+        }
+
+    var customElvishPath: String
+        get() = options.customElvishPath
+        set(value) {
+            options.customElvishPath = value
+        }
+
     override fun getConfigurationEditor(): SettingsEditor<out RunConfiguration> {
-        // Will be implemented in STORY-6.4.2
         return ElvishRunConfigurationEditor(project)
     }
 

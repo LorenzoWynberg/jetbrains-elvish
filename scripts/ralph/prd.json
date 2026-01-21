@@ -648,7 +648,7 @@
         "applyEditorTo() and resetEditorFrom() properly sync UI and configuration",
         "./gradlew build succeeds"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-6.4.1"],
       "phase": 6,
       "epic": 4,

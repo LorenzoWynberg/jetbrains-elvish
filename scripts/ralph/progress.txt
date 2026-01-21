@@ -1270,3 +1270,29 @@ Stories now use the format STORY-{phase}.{epic}.{story}.
 - Environment variables can be serialized as semicolon-separated key=value pairs
 - checkConfiguration() uses RuntimeConfigurationError for required fields, RuntimeConfigurationWarning for recommendations
 - SimpleConfigurationType handles factory creation, icon, and registration boilerplate
+
+---
+
+## 2026-01-21 - STORY-6.4.2: Implement Run Configuration Settings Editor
+
+**What was done:**
+- Enhanced ElvishRunConfigurationEditor with full UI for all configuration options
+- Added script arguments text field (using RawCommandLineEditor for proper argument handling)
+- Added working directory field with browse button (defaults to project root)
+- Added environment variables editor (using EnvironmentVariablesTextFieldWithBrowseButton)
+- Added checkbox option to use Elvish from project settings vs custom path
+- Added custom Elvish path field with browse button
+- Updated ElvishRunConfigurationOptions with useElvishFromSettings and customElvishPath properties
+- Updated ElvishRunConfiguration to expose new properties
+- All settings persisted between IDE sessions via StoredProperty
+
+**Files changed:**
+- src/main/kotlin/com/elvish/plugin/run/ElvishRunConfigurationEditor.kt (enhanced with full UI)
+- src/main/kotlin/com/elvish/plugin/run/ElvishRunConfigurationOptions.kt (added new properties)
+- src/main/kotlin/com/elvish/plugin/run/ElvishRunConfiguration.kt (exposed new properties)
+
+**Learnings:**
+- EnvironmentVariablesTextFieldWithBrowseButton is the preferred component for environment variable editing
+- RawCommandLineEditor handles argument parsing, quoting, and escaping automatically
+- UI components can be enabled/disabled dynamically via addActionListener on checkboxes
+- Working directory defaults to project.basePath if not explicitly set
