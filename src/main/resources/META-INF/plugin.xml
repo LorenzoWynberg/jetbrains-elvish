@@ -70,6 +70,10 @@
                 language="Elvish"
                 implementationClass="com.elvish.plugin.editor.ElvishCommenter"/>
 
+        <lang.braceMatcher
+                language="Elvish"
+                implementationClass="com.elvish.plugin.editor.ElvishBraceMatcher"/>
+
         <notificationGroup id="Elvish Plugin"
                            displayType="BALLOON"/>
     </extensions>

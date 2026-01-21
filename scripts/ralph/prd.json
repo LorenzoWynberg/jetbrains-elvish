@@ -542,7 +542,7 @@
         "Unmatched braces show error highlighting",
         "./gradlew build succeeds"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-4.3.1"],
       "phase": 4,
       "epic": 3,

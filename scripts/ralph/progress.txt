@@ -1131,3 +1131,28 @@ Stories now use the format STORY-{phase}.{epic}.{story}.
 - For languages without block comments, return null for block-related methods
 - Using "# " (with space) provides better readability when toggling comments
 - Editor features should be organized in a dedicated `editor` package
+
+---
+
+## 2026-01-21 - STORY-4.3.2: Implement Brace Matching
+
+**What was done:**
+- Created ElvishBraceMatcher implementing com.intellij.lang.PairedBraceMatcher
+- Defined BracePair for curly braces { } (structural, used for functions/blocks)
+- Defined BracePair for square brackets [ ] (used for lists and maps)
+- Defined BracePair for parentheses ( ) (used for output capture)
+- Registered brace matcher in plugin.xml with lang.braceMatcher extension point
+- Updated docs/DEVELOPMENT.md with brace matcher documentation
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/editor/ElvishBraceMatcher.kt
+
+**Files changed:**
+- src/main/resources/META-INF/plugin.xml (added lang.braceMatcher extension)
+- docs/DEVELOPMENT.md (added ElvishBraceMatcher to project structure and architecture)
+
+**Learnings:**
+- PairedBraceMatcher uses BracePair(left, right, structural) to define pairs
+- The "structural" flag (3rd param) indicates if the braces define code blocks for folding
+- isPairedBracesAllowedBeforeType controls auto-insertion of closing brackets
+- Brace matching relies on token types from the lexer (ElvishTokenTypes)
