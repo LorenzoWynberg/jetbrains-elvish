@@ -41,8 +41,8 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.plugins.textmate</depends>
 
-    <!-- LSP support available in all JetBrains IDEs since 2024.2 -->
-    <depends optional="true" config-file="lsp-support.xml">com.intellij.modules.lsp</depends>
+    <!-- LSP support - use ultimate module for 2024.x, lsp module for 2025.2+ -->
+    <depends optional="true" config-file="lsp-support.xml">com.intellij.modules.ultimate</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType
