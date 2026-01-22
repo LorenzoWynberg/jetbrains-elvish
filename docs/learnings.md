@@ -178,6 +178,24 @@ Consolidated learnings from development. Updated by Ralph after each story.
 
 ---
 
+## Gotchas & Debugging
+
+### Common Mistakes
+- Don't use `com.intellij.modules.ultimate` - restricts to Ultimate only, use `com.intellij.modules.lsp` instead
+- Don't use `wc -c` in Elvish pipes - can fail silently, use `stat -f%z` on macOS
+- Don't forget to check for digit after `.` in lexer - otherwise `1..10` looks like float `1.` followed by `.10`
+
+### Debugging Tips
+- Check idea.log via Help > Show Log for plugin errors
+- LSP "method not found" warnings are normal - Elvish LSP is minimal
+- If LSP isn't starting, verify elvish binary path in settings
+
+### Things That Look Right But Aren't
+- `com.intellij.util.Function` is deprecated - use `java.util.function.Function`
+- TextMate namespace is `org.jetbrains.plugins.textmate` not `com.intellij`
+
+---
+
 ## Code Organization
 
 ### Package Structure

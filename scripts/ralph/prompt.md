@@ -114,8 +114,14 @@ git branch -d {{BRANCH}} 2>/dev/null || true
 Output: `<story-complete>{{CURRENT_STORY}}</story-complete>`
 
 ## 9. On BLOCKED
-Don't commit. Don't update prd.json. Add to progress.txt what was tried and why blocked.
-Update `docs/activity/YYYY-MM-DD.md` with blocker details and what was attempted.
+Don't commit. Don't update prd.json.
+
+**Still capture learnings from failure:**
+- `docs/learnings.md`: Add what you learned (even from failures!) under appropriate category or "Gotchas & Debugging"
+- `progress.txt`: Add what was tried and why blocked
+- `docs/activity/YYYY-MM-DD.md`: Detailed blocker info and what was attempted
+
+Failures are valuable learning opportunities - don't lose them!
 
 Output: `<story-blocked>{{CURRENT_STORY}}</story-blocked>`
 
