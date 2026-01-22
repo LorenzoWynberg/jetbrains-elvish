@@ -571,7 +571,7 @@ while (< $current-iteration $max-iterations) {
         stream_text='\''select(.type == "assistant").message.content[]? | select(.type == "text").text // empty | gsub("\n"; "\r\n") | . + "\r\n\n"'\''
         final_result='\''select(.type == "result").result // empty'\''
 
-        claude --dangerously-skip-permissions --print --output-format stream-json < "$1" 2>&1 \
+        claude --dangerously-skip-permissions --verbose --print --output-format stream-json < "$1" 2>&1 \
           | grep --line-buffered "^{" \
           | tee "$2" \
           | jq --unbuffered -rj "$stream_text" 2>/dev/null || true
