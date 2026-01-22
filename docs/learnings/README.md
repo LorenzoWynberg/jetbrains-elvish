@@ -33,9 +33,31 @@ Each file has its own **Gotchas** section at the bottom for topic-specific mista
 └─────────────────────────────────────────┘
 ```
 
-## Adding New Learnings
+## Updating Learnings
 
+### Adding
 1. Identify the appropriate file based on topic
 2. Add under the relevant section
 3. Keep entries concise (1-2 lines)
 4. Focus on actionable insights, not obvious things
+
+### Correcting
+If you discover something in learnings was **wrong or incomplete**:
+1. Update or remove the incorrect entry
+2. Add the correct information
+3. Note the correction in today's activity log
+
+Example activity log entry:
+```
+### Learnings Correction
+- **File:** lsp.md
+- **Was:** "Use com.intellij.modules.ultimate for LSP"
+- **Now:** "Use com.intellij.modules.lsp for cross-IDE support"
+- **Why:** modules.ultimate restricts to Ultimate only
+```
+
+### Removing
+Delete entries that are:
+- No longer accurate (API changed, etc.)
+- Redundant (covered elsewhere)
+- Too obvious to be useful

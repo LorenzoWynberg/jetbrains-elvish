@@ -29,7 +29,12 @@ Review these recent activity logs for detailed context on recent work:
 
 {{RECENT_ACTIVITY_LOGS}}
 
-**Learning Loop:** After completing {{CURRENT_STORY}}, add any NEW learnings to the appropriate file in `docs/learnings/`. Each file has a Gotchas section for mistakes to avoid.
+**Learning Loop:** After completing {{CURRENT_STORY}}:
+1. **Add** new learnings to the appropriate file in `docs/learnings/`
+2. **Correct** any existing learnings you discover were wrong or incomplete
+3. **Remove** outdated info that no longer applies
+
+If correcting a misconception, note it briefly in the activity log so we know what changed and why.
 
 ## 2. Scope
 Implement ONLY {{CURRENT_STORY}}. No refactoring unrelated code. Note other issues in Learnings only.
