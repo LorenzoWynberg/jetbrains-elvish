@@ -111,5 +111,3 @@ The plugin will be available on the JetBrains Marketplace.
 ## License
 
 MIT
-
-<!-- RALPH_STREAMING_TEST -->
