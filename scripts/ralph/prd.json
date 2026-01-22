@@ -825,7 +825,8 @@
         "Template 'tryf': try { $CODE$ } finally { $END$ } - try-finally block",
         "All templates have descriptive names shown in completion popup",
         "All templates limited to Elvish context",
-        "./gradlew build succeeds"
+        "./gradlew build succeeds",
+        "./gradlew runIde launches without plugin errors in IDE logs"
       ],
       "passes": false,
       "depends_on": ["STORY-8.5.1"],
@@ -848,7 +849,8 @@
         "Template 'map': [&$KEY$=$VALUE$ $END$] - map literal",
         "Template 'list': [$ITEMS$] - list literal",
         "All templates have descriptive tooltips explaining usage",
-        "./gradlew build succeeds"
+        "./gradlew build succeeds",
+        "./gradlew runIde launches without plugin errors in IDE logs"
       ],
       "passes": false,
       "depends_on": ["STORY-8.5.2"],
@@ -868,7 +870,8 @@
         "Templates appear in Settings > Editor > Live Templates > Elvish group",
         "Templates can be edited by user in settings",
         "Templates only expand in .elv files, not in other file types",
-        "./gradlew build succeeds"
+        "./gradlew build succeeds",
+        "./gradlew runIde launches without plugin errors in IDE logs"
       ],
       "passes": false,
       "depends_on": ["STORY-8.5.3"],
@@ -887,7 +890,8 @@
         "Highlighted items appear in TODO tool window",
         "Register in plugin.xml with appropriate extension point",
         "Double-clicking TODO in tool window navigates to comment",
-        "./gradlew build succeeds"
+        "./gradlew build succeeds",
+        "./gradlew runIde launches without plugin errors in IDE logs"
       ],
       "passes": false,
       "depends_on": ["STORY-8.5.4"],
@@ -907,7 +911,8 @@
         "Register in plugin.xml with spellchecker.support extension point",
         "Misspelled words show squiggly underline",
         "Right-click offers spelling suggestions",
-        "./gradlew build succeeds"
+        "./gradlew build succeeds",
+        "./gradlew runIde launches without plugin errors in IDE logs"
       ],
       "passes": false,
       "depends_on": ["STORY-9.6.1"],
@@ -926,7 +931,8 @@
         "List file templates and live templates with examples",
         "CHANGELOG.md updated with all changes for version 1.1.0",
         "docs/DEVELOPMENT.md updated with architecture notes for new components",
-        "./gradlew build succeeds"
+        "./gradlew build succeeds",
+        "./gradlew runIde launches without plugin errors in IDE logs"
       ],
       "passes": false,
       "depends_on": ["STORY-9.6.2"],
