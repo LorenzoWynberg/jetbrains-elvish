@@ -23,7 +23,7 @@ Read these files first:
 
 If attempt > 1: check `git log` and `git diff` for previous work.
 
-**Activity Log:** Create or update `docs/activity/YYYY-MM-DD.md` (today's date). Add entry for starting work on {{CURRENT_STORY}}.
+**Activity Log:** Create or update `docs/activity/YYYY-MM-DD.md` (today's date). Add entry for starting work on {{CURRENT_STORY}}. Archive logs older than 7 days to `docs/activity/archive/YYYY-MM/`.
 
 ### Recent Activity Logs (Detailed Context)
 Review these recent activity logs for detailed context on recent work:

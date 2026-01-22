@@ -52,6 +52,7 @@ Create or update `docs/activity/YYYY-MM-DD.md`:
 - Add entry when starting the task
 - Document decisions made
 - Update when task completes
+- Archive logs older than 7 days to `docs/activity/archive/YYYY-MM/`
 
 ### 3. Scope
 Work on ONE task at a time. Stay focused:
@@ -106,7 +107,8 @@ JetBrains plugin for Elvish shell language support. Uses Elvish's built-in LSP (
 
 ## Documentation
 
-- [Contributing Guide](docs/CONTRIBUTING.md) - **Start here** for workflow
+- [Quick Context](docs/CONTEXT.md) - Fast reference (start here for quick tasks)
+- [Contributing Guide](docs/CONTRIBUTING.md) - Full workflow, branching, commits
 - [Development Guide](docs/DEVELOPMENT.md) - Build, architecture, debugging
 - [Roadmap](docs/ROADMAP.md) - Future plans
 - [Changelog](docs/CHANGELOG.md) - Version history
