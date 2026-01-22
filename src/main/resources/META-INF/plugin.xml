@@ -109,6 +109,10 @@
 
         <indexPatternBuilder
                 implementation="com.elvish.plugin.editor.ElvishIndexPatternBuilder"/>
+
+        <spellchecker.support
+                language="Elvish"
+                implementationClass="com.elvish.plugin.editor.ElvishSpellcheckingStrategy"/>
     </extensions>
 
     <actions>

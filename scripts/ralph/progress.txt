@@ -1572,3 +1572,35 @@ Stories now use the format STORY-{phase}.{epic}.{story}.
 - getCommentStartDelta() returns 1 to skip the # character at comment start
 - Combined with ParserDefinition.getCommentTokens() for full TODO support
 - TODO items appear in View > Tool Windows > TODO after proper indexing
+
+---
+
+## 2026-01-22 - STORY-9.6.2: Enable spell checking in comments and strings
+
+**What was done:**
+- Created ElvishSpellcheckingStrategy extending SpellcheckingStrategy
+- getTokenizer() returns TEXT_TOKENIZER for comments and strings, EMPTY_TOKENIZER for everything else
+- Checks element type against ElvishTokenTypes.COMMENT, SINGLE_QUOTED_STRING, DOUBLE_QUOTED_STRING
+- Barewords/identifiers explicitly excluded (often commands, paths, variable names)
+- Registered spellchecker.support extension in plugin.xml
+- Build passes with 122 tests
+- Plugin packages correctly
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/editor/ElvishSpellcheckingStrategy.kt (48 lines)
+
+**Files changed:**
+- src/main/resources/META-INF/plugin.xml (added spellchecker.support extension)
+- docs/DEVELOPMENT.md (added ElvishSpellcheckingStrategy to project structure and architecture)
+- docs/learnings/editor.md (added Spell Checking section)
+
+**Refactoring:**
+- Round 1: No changes needed - file is 48 lines, single responsibility
+- Round 2: No issues found - no circular dependencies, correct package organization
+
+**Learnings:**
+- SpellcheckingStrategy's getTokenizer() returns TEXT_TOKENIZER to enable spell checking
+- Returns EMPTY_TOKENIZER to disable spell checking for a token type
+- Check element.node?.elementType against parser token types
+- Barewords should NOT be spell checked (they're commands, paths, variable names)
+- Register with spellchecker.support extension point in plugin.xml

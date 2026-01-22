@@ -914,7 +914,7 @@
         "./gradlew build succeeds",
         "./gradlew runIde launches without plugin errors in IDE logs"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-9.6.1"],
       "phase": 9,
       "epic": 6,

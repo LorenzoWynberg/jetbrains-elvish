@@ -49,6 +49,14 @@ Learnings about editor enhancements (folding, structure view, breadcrumbs, etc.)
 - `indexPatternBuilder` extension point registered in plugin.xml
 - TODO items appear in View > Tool Windows > TODO
 
+## Spell Checking
+
+- `SpellcheckingStrategy` controls which tokens are checked for spelling
+- `getTokenizer()` returns `TEXT_TOKENIZER` to enable spell checking, `EMPTY_TOKENIZER` to disable
+- Check element type against token types to determine spell checking eligibility
+- Comments and strings should be checked; barewords/identifiers should NOT (they're often commands/paths)
+- Register with `spellchecker.support` extension point in plugin.xml
+
 ## Gotchas
 
 - Editor features should be in dedicated `editor` package
@@ -56,3 +64,4 @@ Learnings about editor enhancements (folding, structure view, breadcrumbs, etc.)
 - Structure view only shows top-level declarations, not nested
 - Similar token collection pattern works for both structure view and breadcrumbs
 - TODO indexing requires both ParserDefinition.getCommentTokens() AND IndexPatternBuilder for full support
+- Spell checking for barewords/identifiers should be disabled (they're commands, paths, variable names)

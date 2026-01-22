@@ -41,6 +41,7 @@ src/main/
 │   │   ├── ElvishFoldingBuilder.kt   # Code folding for blocks
 │   │   ├── ElvishBreadcrumbsProvider.kt  # Breadcrumbs navigation
 │   │   ├── ElvishIndexPatternBuilder.kt  # TODO/FIXME highlighting in comments
+│   │   ├── ElvishSpellcheckingStrategy.kt  # Spell checking for comments and strings
 │   │   └── structure/
 │   │       ├── ElvishStructureViewFactory.kt  # Structure view builder factory
 │   │       ├── ElvishStructureViewModel.kt    # Structure view model
@@ -116,6 +117,7 @@ src/main/
    - `ElvishFoldingBuilder`: Code folding for function bodies, control flow blocks, and multi-line lists/maps
    - `ElvishBreadcrumbsProvider`: Breadcrumbs navigation showing current code context (function, control flow blocks)
    - `ElvishIndexPatternBuilder`: TODO/FIXME/XXX/HACK/BUG highlighting in # comments for TODO tool window
+   - `ElvishSpellcheckingStrategy`: Spell checking in comments and string literals (not barewords)
    - `structure/` subpackage: Structure view support
      - `ElvishStructureViewFactory`: Creates structure view builders
      - `ElvishStructureViewModel`: Controls structure view display and sorting
@@ -129,7 +131,7 @@ src/main/
 9. **Plugin Manifest** (`META-INF/plugin.xml`)
    - Dependencies: `platform`, `textmate` modules, plus optional `lsp` module
    - The `lsp` module is available in all JetBrains IDEs since 2024.2 (free for all users)
-   - Extensions: file type, LSP server support, TextMate bundle, parser definition, project settings, commenter, brace matcher, folding builder, structure view, breadcrumbs, run configuration type, run line marker, run configuration producer, internal file template, index pattern builder
+   - Extensions: file type, LSP server support, TextMate bundle, parser definition, project settings, commenter, brace matcher, folding builder, structure view, breadcrumbs, run configuration type, run line marker, run configuration producer, internal file template, index pattern builder, spellchecker support
    - Actions: "New > Elvish Script" for file creation
 
 ### Key Design Decisions
