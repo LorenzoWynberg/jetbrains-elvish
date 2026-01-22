@@ -600,7 +600,7 @@ while (< $current-iteration $max-iterations) {
     if (>= $claude-duration $claude-timeout) {
       ralph-error "Claude execution TIMED OUT after "$claude-timeout"s"
     } else {
-      ralph-error "Claude execution error: "$e
+      ralph-error "Claude execution error: "(to-string $e[reason])
     }
   } finally {
     rm -f $prompt-tmp
