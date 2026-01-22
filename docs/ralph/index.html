@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ralph v4 - Autonomous Development System</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -21,6 +22,12 @@
             }
         }
     </script>
+    <style>
+        .icon-box { display: flex; align-items: center; justify-content: center; }
+        .icon-box svg { width: 24px; height: 24px; }
+        .icon-lg svg { width: 32px; height: 32px; }
+        .icon-xl svg { width: 40px; height: 40px; }
+    </style>
 </head>
 <body class="bg-slate-950 text-slate-200 font-sans antialiased">
 
@@ -47,17 +54,23 @@
         <section class="mb-32">
             <div class="grid md:grid-cols-3 gap-6">
                 <div class="group p-8 rounded-2xl bg-gradient-to-b from-slate-800/80 to-slate-900/80 border border-slate-700/50 hover:border-blue-500/50 transition-all">
-                    <div class="w-14 h-14 rounded-xl bg-blue-500/20 flex items-center justify-center text-3xl mb-6">🤖</div>
+                    <div class="w-14 h-14 rounded-xl bg-blue-500/20 icon-box icon-lg text-blue-400 mb-6">
+                        <i data-lucide="bot"></i>
+                    </div>
                     <h3 class="text-xl font-semibold mb-3">Autonomous</h3>
                     <p class="text-slate-400 leading-relaxed">Implements stories end-to-end. Creates branches, writes code, runs tests, merges PRs.</p>
                 </div>
                 <div class="group p-8 rounded-2xl bg-gradient-to-b from-slate-800/80 to-slate-900/80 border border-slate-700/50 hover:border-emerald-500/50 transition-all">
-                    <div class="w-14 h-14 rounded-xl bg-emerald-500/20 flex items-center justify-center text-3xl mb-6">🧠</div>
+                    <div class="w-14 h-14 rounded-xl bg-emerald-500/20 icon-box icon-lg text-emerald-400 mb-6">
+                        <i data-lucide="brain"></i>
+                    </div>
                     <h3 class="text-xl font-semibold mb-3">Learning</h3>
                     <p class="text-slate-400 leading-relaxed">Every iteration writes learnings back. Captures patterns from successes and failures.</p>
                 </div>
                 <div class="group p-8 rounded-2xl bg-gradient-to-b from-slate-800/80 to-slate-900/80 border border-slate-700/50 hover:border-purple-500/50 transition-all">
-                    <div class="w-14 h-14 rounded-xl bg-purple-500/20 flex items-center justify-center text-3xl mb-6">🔄</div>
+                    <div class="w-14 h-14 rounded-xl bg-purple-500/20 icon-box icon-lg text-purple-400 mb-6">
+                        <i data-lucide="refresh-cw"></i>
+                    </div>
                     <h3 class="text-xl font-semibold mb-3">Self-Correcting</h3>
                     <p class="text-slate-400 leading-relaxed">Misconceptions get fixed, not accumulated. Knowledge improves over time.</p>
                 </div>
@@ -71,19 +84,29 @@
 
             <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
                 <div class="text-center">
-                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center text-4xl mb-4 mx-auto shadow-lg shadow-emerald-500/25">👤</div>
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-400 to-cyan-500 icon-box icon-xl text-white mb-4 mx-auto shadow-lg shadow-emerald-500/25">
+                        <i data-lucide="user"></i>
+                    </div>
                     <h3 class="font-semibold text-lg">You</h3>
                     <p class="text-slate-500 text-sm mt-1">Define stories<br>Review PRs</p>
                 </div>
-                <div class="hidden md:block text-4xl text-slate-600">↔</div>
+                <div class="hidden md:flex items-center text-slate-600">
+                    <i data-lucide="arrow-left-right" class="w-8 h-8"></i>
+                </div>
                 <div class="text-center">
-                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center text-4xl mb-4 mx-auto shadow-lg shadow-orange-500/25">🧡</div>
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-400 to-amber-500 icon-box icon-xl text-white mb-4 mx-auto shadow-lg shadow-orange-500/25">
+                        <i data-lucide="message-circle"></i>
+                    </div>
                     <h3 class="font-semibold text-lg">Claude</h3>
                     <p class="text-slate-500 text-sm mt-1">Interactive help<br>Direct tasks</p>
                 </div>
-                <div class="hidden md:block text-4xl text-slate-600">↔</div>
+                <div class="hidden md:flex items-center text-slate-600">
+                    <i data-lucide="arrow-left-right" class="w-8 h-8"></i>
+                </div>
                 <div class="text-center">
-                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-4xl mb-4 mx-auto shadow-lg shadow-blue-500/25">🔮</div>
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-400 to-purple-500 icon-box icon-xl text-white mb-4 mx-auto shadow-lg shadow-blue-500/25">
+                        <i data-lucide="cpu"></i>
+                    </div>
                     <h3 class="font-semibold text-lg">Ralph</h3>
                     <p class="text-slate-500 text-sm mt-1">Autonomous<br>Story execution</p>
                 </div>
@@ -101,31 +124,49 @@
 
             <div class="flex flex-wrap justify-center items-center gap-4">
                 <div class="flex flex-col items-center">
-                    <div class="w-16 h-16 rounded-full bg-purple-500 flex items-center justify-center text-2xl shadow-lg shadow-purple-500/30">📖</div>
+                    <div class="w-16 h-16 rounded-full bg-purple-500 icon-box icon-lg text-white shadow-lg shadow-purple-500/30">
+                        <i data-lucide="book-open"></i>
+                    </div>
                     <span class="mt-3 font-medium">Load</span>
                     <span class="text-slate-500 text-sm">Context</span>
                 </div>
-                <div class="text-2xl text-slate-600">→</div>
+                <div class="text-slate-600">
+                    <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                </div>
                 <div class="flex flex-col items-center">
-                    <div class="w-16 h-16 rounded-full bg-cyan-500 flex items-center justify-center text-2xl shadow-lg shadow-cyan-500/30">🎯</div>
+                    <div class="w-16 h-16 rounded-full bg-cyan-500 icon-box icon-lg text-white shadow-lg shadow-cyan-500/30">
+                        <i data-lucide="target"></i>
+                    </div>
                     <span class="mt-3 font-medium">Pick</span>
                     <span class="text-slate-500 text-sm">Story</span>
                 </div>
-                <div class="text-2xl text-slate-600">→</div>
+                <div class="text-slate-600">
+                    <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                </div>
                 <div class="flex flex-col items-center">
-                    <div class="w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center text-2xl shadow-lg shadow-amber-500/30">⚡</div>
+                    <div class="w-16 h-16 rounded-full bg-amber-500 icon-box icon-lg text-white shadow-lg shadow-amber-500/30">
+                        <i data-lucide="zap"></i>
+                    </div>
                     <span class="mt-3 font-medium">Build</span>
                     <span class="text-slate-500 text-sm">& Test</span>
                 </div>
-                <div class="text-2xl text-slate-600">→</div>
+                <div class="text-slate-600">
+                    <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                </div>
                 <div class="flex flex-col items-center">
-                    <div class="w-16 h-16 rounded-full bg-emerald-500 flex items-center justify-center text-2xl shadow-lg shadow-emerald-500/30">✍️</div>
+                    <div class="w-16 h-16 rounded-full bg-emerald-500 icon-box icon-lg text-white shadow-lg shadow-emerald-500/30">
+                        <i data-lucide="pencil"></i>
+                    </div>
                     <span class="mt-3 font-medium">Write</span>
                     <span class="text-slate-500 text-sm">Learnings</span>
                 </div>
-                <div class="text-2xl text-slate-600">→</div>
+                <div class="text-slate-600">
+                    <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                </div>
                 <div class="flex flex-col items-center">
-                    <div class="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center text-2xl shadow-lg shadow-blue-500/30">🔁</div>
+                    <div class="w-16 h-16 rounded-full bg-blue-500 icon-box icon-lg text-white shadow-lg shadow-blue-500/30">
+                        <i data-lucide="git-merge"></i>
+                    </div>
                     <span class="mt-3 font-medium">Merge</span>
                     <span class="text-slate-500 text-sm">& Repeat</span>
                 </div>
@@ -160,17 +201,17 @@
                             <span class="font-semibold text-sm">Knowledge<br>Grows</span>
                         </div>
                         <!-- Nodes -->
-                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-2 rounded-lg bg-slate-900 border border-cyan-500 text-sm">
-                            📖 Read
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-2 rounded-lg bg-slate-900 border border-cyan-500 flex items-center gap-2 text-sm">
+                            <i data-lucide="book-open" class="w-4 h-4 text-cyan-400"></i> Read
                         </div>
-                        <div class="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 px-4 py-2 rounded-lg bg-slate-900 border border-amber-500 text-sm">
-                            ⚡ Work
+                        <div class="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 px-4 py-2 rounded-lg bg-slate-900 border border-amber-500 flex items-center gap-2 text-sm">
+                            <i data-lucide="zap" class="w-4 h-4 text-amber-400"></i> Work
                         </div>
-                        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 px-4 py-2 rounded-lg bg-slate-900 border border-emerald-500 text-sm">
-                            ✍️ Write
+                        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 px-4 py-2 rounded-lg bg-slate-900 border border-emerald-500 flex items-center gap-2 text-sm">
+                            <i data-lucide="pencil" class="w-4 h-4 text-emerald-400"></i> Write
                         </div>
-                        <div class="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 px-4 py-2 rounded-lg bg-slate-900 border border-purple-500 text-sm">
-                            🔄 Next
+                        <div class="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 px-4 py-2 rounded-lg bg-slate-900 border border-purple-500 flex items-center gap-2 text-sm">
+                            <i data-lucide="refresh-cw" class="w-4 h-4 text-purple-400"></i> Next
                         </div>
                     </div>
                 </div>
@@ -180,21 +221,27 @@
                     <h3 class="text-xl font-semibold mb-8 text-center">Self-Correcting</h3>
                     <div class="space-y-6">
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center text-xl flex-shrink-0">➕</div>
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/20 icon-box text-emerald-400 flex-shrink-0">
+                                <i data-lucide="plus"></i>
+                            </div>
                             <div>
                                 <div class="font-medium">Add</div>
                                 <div class="text-slate-400 text-sm">New patterns discovered</div>
                             </div>
                         </div>
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center text-xl flex-shrink-0">✏️</div>
+                            <div class="w-12 h-12 rounded-xl bg-amber-500/20 icon-box text-amber-400 flex-shrink-0">
+                                <i data-lucide="pencil"></i>
+                            </div>
                             <div>
                                 <div class="font-medium">Correct</div>
                                 <div class="text-slate-400 text-sm">Fix misconceptions</div>
                             </div>
                         </div>
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center text-xl flex-shrink-0">🗑️</div>
+                            <div class="w-12 h-12 rounded-xl bg-red-500/20 icon-box text-red-400 flex-shrink-0">
+                                <i data-lucide="trash-2"></i>
+                            </div>
                             <div>
                                 <div class="font-medium">Remove</div>
                                 <div class="text-slate-400 text-sm">Outdated information</div>
@@ -212,7 +259,9 @@
 
             <div class="grid md:grid-cols-3 gap-6">
                 <div class="p-6 rounded-xl bg-slate-800/50 border-l-4 border-emerald-500">
-                    <div class="text-2xl mb-3">📗</div>
+                    <div class="icon-box icon-lg text-emerald-400 mb-3 justify-start">
+                        <i data-lucide="library"></i>
+                    </div>
                     <h3 class="font-semibold mb-1">Learnings</h3>
                     <code class="text-xs text-slate-500">docs/learnings/</code>
                     <ul class="mt-4 space-y-2 text-sm text-slate-400">
@@ -222,7 +271,9 @@
                     </ul>
                 </div>
                 <div class="p-6 rounded-xl bg-slate-800/50 border-l-4 border-cyan-500">
-                    <div class="text-2xl mb-3">📘</div>
+                    <div class="icon-box icon-lg text-cyan-400 mb-3 justify-start">
+                        <i data-lucide="calendar"></i>
+                    </div>
                     <h3 class="font-semibold mb-1">Activity Logs</h3>
                     <code class="text-xs text-slate-500">docs/activity/</code>
                     <ul class="mt-4 space-y-2 text-sm text-slate-400">
@@ -232,7 +283,9 @@
                     </ul>
                 </div>
                 <div class="p-6 rounded-xl bg-slate-800/50 border-l-4 border-purple-500">
-                    <div class="text-2xl mb-3">📙</div>
+                    <div class="icon-box icon-lg text-purple-400 mb-3 justify-start">
+                        <i data-lucide="trending-up"></i>
+                    </div>
                     <h3 class="font-semibold mb-1">Progress</h3>
                     <code class="text-xs text-slate-500">scripts/ralph/progress.txt</code>
                     <ul class="mt-4 space-y-2 text-sm text-slate-400">
@@ -251,7 +304,7 @@
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="p-8 rounded-2xl bg-emerald-500/10 border border-emerald-500/30">
                     <h3 class="text-xl font-semibold text-emerald-400 mb-6 flex items-center gap-3">
-                        <span class="text-2xl">✅</span> On Success
+                        <i data-lucide="check-circle" class="w-6 h-6"></i> On Success
                     </h3>
                     <ul class="space-y-3 text-slate-300">
                         <li class="flex gap-3"><span class="text-slate-500">→</span> Add patterns to learnings</li>
@@ -262,7 +315,7 @@
                 </div>
                 <div class="p-8 rounded-2xl bg-red-500/10 border border-red-500/30">
                     <h3 class="text-xl font-semibold text-red-400 mb-6 flex items-center gap-3">
-                        <span class="text-2xl">❌</span> On Blocked
+                        <i data-lucide="x-circle" class="w-6 h-6"></i> On Blocked
                     </h3>
                     <ul class="space-y-3 text-slate-300">
                         <li class="flex gap-3"><span class="text-slate-500">→</span> Add gotchas to learnings</li>
@@ -279,16 +332,36 @@
             <h2 class="text-3xl font-bold text-center mb-12">File Structure</h2>
 
             <div class="max-w-xl mx-auto p-6 rounded-2xl bg-slate-800/50 border border-slate-700/50 font-mono text-sm">
-                <div class="text-blue-400 font-semibold">scripts/ralph/</div>
-                <div class="ml-4 text-slate-300">├── ralph.elv <span class="text-slate-500">← main script</span></div>
-                <div class="ml-4 text-slate-300">├── prompt.md <span class="text-slate-500">← agent instructions</span></div>
-                <div class="ml-4 text-slate-300">├── prd.json <span class="text-slate-500">← stories</span></div>
-                <div class="ml-4 text-slate-300">├── progress.txt</div>
-                <div class="ml-4 text-slate-300">└── state.json</div>
-                <div class="mt-4 text-blue-400 font-semibold">docs/</div>
-                <div class="ml-4 text-slate-300">├── learnings/ <span class="text-slate-500">← 8 topic files</span></div>
-                <div class="ml-4 text-slate-300">├── activity/ <span class="text-slate-500">← daily logs</span></div>
-                <div class="ml-4 text-slate-300">└── ralph/ <span class="text-slate-500">← this page</span></div>
+                <div class="text-blue-400 font-semibold flex items-center gap-2">
+                    <i data-lucide="folder" class="w-4 h-4"></i> scripts/ralph/
+                </div>
+                <div class="ml-6 text-slate-300 flex items-center gap-2 mt-1">
+                    <i data-lucide="file" class="w-3 h-3 text-slate-500"></i> ralph.elv <span class="text-slate-500 ml-2">← main script</span>
+                </div>
+                <div class="ml-6 text-slate-300 flex items-center gap-2 mt-1">
+                    <i data-lucide="file" class="w-3 h-3 text-slate-500"></i> prompt.md <span class="text-slate-500 ml-2">← agent instructions</span>
+                </div>
+                <div class="ml-6 text-slate-300 flex items-center gap-2 mt-1">
+                    <i data-lucide="file" class="w-3 h-3 text-slate-500"></i> prd.json <span class="text-slate-500 ml-2">← stories</span>
+                </div>
+                <div class="ml-6 text-slate-300 flex items-center gap-2 mt-1">
+                    <i data-lucide="file" class="w-3 h-3 text-slate-500"></i> progress.txt
+                </div>
+                <div class="ml-6 text-slate-300 flex items-center gap-2 mt-1">
+                    <i data-lucide="file" class="w-3 h-3 text-slate-500"></i> state.json
+                </div>
+                <div class="mt-4 text-blue-400 font-semibold flex items-center gap-2">
+                    <i data-lucide="folder" class="w-4 h-4"></i> docs/
+                </div>
+                <div class="ml-6 text-slate-300 flex items-center gap-2 mt-1">
+                    <i data-lucide="folder" class="w-3 h-3 text-slate-500"></i> learnings/ <span class="text-slate-500 ml-2">← 8 topic files</span>
+                </div>
+                <div class="ml-6 text-slate-300 flex items-center gap-2 mt-1">
+                    <i data-lucide="folder" class="w-3 h-3 text-slate-500"></i> activity/ <span class="text-slate-500 ml-2">← daily logs</span>
+                </div>
+                <div class="ml-6 text-slate-300 flex items-center gap-2 mt-1">
+                    <i data-lucide="folder" class="w-3 h-3 text-slate-500"></i> ralph/ <span class="text-slate-500 ml-2">← this page</span>
+                </div>
             </div>
         </section>
 
@@ -299,35 +372,51 @@
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-blue-500/50 transition-colors text-center">
-                    <div class="text-2xl mb-2">🐚</div>
+                    <div class="icon-box text-blue-400 mb-2">
+                        <i data-lucide="terminal"></i>
+                    </div>
                     <div class="font-medium text-sm">elvish.md</div>
                 </div>
                 <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-blue-500/50 transition-colors text-center">
-                    <div class="text-2xl mb-2">🔌</div>
+                    <div class="icon-box text-purple-400 mb-2">
+                        <i data-lucide="plug"></i>
+                    </div>
                     <div class="font-medium text-sm">intellij-plugin.md</div>
                 </div>
                 <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-blue-500/50 transition-colors text-center">
-                    <div class="text-2xl mb-2">🔗</div>
+                    <div class="icon-box text-cyan-400 mb-2">
+                        <i data-lucide="link"></i>
+                    </div>
                     <div class="font-medium text-sm">lsp.md</div>
                 </div>
                 <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-blue-500/50 transition-colors text-center">
-                    <div class="text-2xl mb-2">✏️</div>
+                    <div class="icon-box text-amber-400 mb-2">
+                        <i data-lucide="edit-3"></i>
+                    </div>
                     <div class="font-medium text-sm">editor.md</div>
                 </div>
                 <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-blue-500/50 transition-colors text-center">
-                    <div class="text-2xl mb-2">▶️</div>
+                    <div class="icon-box text-emerald-400 mb-2">
+                        <i data-lucide="play"></i>
+                    </div>
                     <div class="font-medium text-sm">run-configs.md</div>
                 </div>
                 <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-blue-500/50 transition-colors text-center">
-                    <div class="text-2xl mb-2">📝</div>
+                    <div class="icon-box text-pink-400 mb-2">
+                        <i data-lucide="file-text"></i>
+                    </div>
                     <div class="font-medium text-sm">templates.md</div>
                 </div>
                 <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-blue-500/50 transition-colors text-center">
-                    <div class="text-2xl mb-2">🧪</div>
+                    <div class="icon-box text-orange-400 mb-2">
+                        <i data-lucide="flask-conical"></i>
+                    </div>
                     <div class="font-medium text-sm">testing.md</div>
                 </div>
                 <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-blue-500/50 transition-colors text-center">
-                    <div class="text-2xl mb-2">🔧</div>
+                    <div class="icon-box text-slate-400 mb-2">
+                        <i data-lucide="wrench"></i>
+                    </div>
                     <div class="font-medium text-sm">build.md</div>
                 </div>
             </div>
@@ -349,8 +438,12 @@
     </main>
 
     <footer class="border-t border-slate-800 py-8 text-center text-slate-500 text-sm">
-        Ralph v4 · JetBrains Elvish Plugin · Built with 🧡
+        Ralph v4 · JetBrains Elvish Plugin
     </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
 
 </body>
 </html>
