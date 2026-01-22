@@ -1539,3 +1539,36 @@ Stories now use the format STORY-{phase}.{epic}.{story}.
 - templateSet group="Elvish" makes templates appear in Settings > Editor > Live Templates > Elvish
 - Context option `<option name="ELVISH" value="true" />` restricts templates to Elvish files only
 - STORY-8.5.4 was essentially a verification story - all code was implemented in STORY-8.5.1
+
+---
+
+## 2026-01-22 - STORY-9.6.1: Add TODO/FIXME highlighting in comments
+
+**What was done:**
+- Created ElvishIndexPatternBuilder implementing IndexPatternBuilder interface
+- Implements getIndexingLexer() returning ElvishLexer for tokenization
+- Implements getCommentTokenSet() returning ElvishTokenTypes.COMMENTS
+- Implements getCommentStartDelta() returning 1 (skips # character)
+- Implements getCommentEndDelta() returning 0 (no closing delimiter for line comments)
+- Registered indexPatternBuilder extension in plugin.xml
+- Build passes with all 123 tests
+- runIde launches without plugin errors
+
+**Files created:**
+- src/main/kotlin/com/elvish/plugin/editor/ElvishIndexPatternBuilder.kt (56 lines)
+
+**Files changed:**
+- src/main/resources/META-INF/plugin.xml (added indexPatternBuilder extension)
+- docs/DEVELOPMENT.md (added ElvishIndexPatternBuilder to project structure)
+- docs/learnings/editor.md (added TODO/FIXME highlighting section)
+
+**Refactoring:**
+- Round 1: No changes needed - file is 56 lines, single responsibility
+- Round 2: No issues found - no circular dependencies
+
+**Learnings:**
+- IndexPatternBuilder interface enables TODO/FIXME/XXX/HACK/BUG highlighting in comments
+- Key methods: getIndexingLexer(), getCommentTokenSet(), getCommentStartDelta(), getCommentEndDelta()
+- getCommentStartDelta() returns 1 to skip the # character at comment start
+- Combined with ParserDefinition.getCommentTokens() for full TODO support
+- TODO items appear in View > Tool Windows > TODO after proper indexing

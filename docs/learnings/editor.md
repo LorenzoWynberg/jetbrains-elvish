@@ -39,9 +39,20 @@ Learnings about editor enhancements (folding, structure view, breadcrumbs, etc.)
 - Navigation and enable/disable settings are handled by the framework
 - Lambda expressions distinguished by `{|` pattern at start of block
 
+## TODO/FIXME Highlighting
+
+- `IndexPatternBuilder` interface enables TODO patterns (TODO, FIXME, XXX, HACK, BUG) in comments
+- Key methods: `getIndexingLexer()`, `getCommentTokenSet()`, `getCommentStartDelta()`, `getCommentEndDelta()`
+- `getCommentStartDelta()` returns 1 for `#` comments to skip the hash character
+- `getCommentEndDelta()` returns 0 for line comments (no closing delimiter)
+- `ParserDefinition.getCommentTokens()` must return the comment token set for basic TODO support
+- `indexPatternBuilder` extension point registered in plugin.xml
+- TODO items appear in View > Tool Windows > TODO
+
 ## Gotchas
 
 - Editor features should be in dedicated `editor` package
 - Single-line blocks are not useful to fold - skip them
 - Structure view only shows top-level declarations, not nested
 - Similar token collection pattern works for both structure view and breadcrumbs
+- TODO indexing requires both ParserDefinition.getCommentTokens() AND IndexPatternBuilder for full support

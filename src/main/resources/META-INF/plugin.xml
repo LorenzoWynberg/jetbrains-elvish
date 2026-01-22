@@ -106,6 +106,9 @@
                 implementation="com.elvish.plugin.templates.ElvishTemplateContextType"/>
 
         <defaultLiveTemplates file="/liveTemplates/Elvish.xml"/>
+
+        <indexPatternBuilder
+                implementation="com.elvish.plugin.editor.ElvishIndexPatternBuilder"/>
     </extensions>
 
     <actions>
