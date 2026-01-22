@@ -30,7 +30,7 @@ Future plans for the Elvish JetBrains plugin.
 | Semantic Highlighting | Richer colors using LSP semantic tokens | Planned |
 | Inlay Hints | Show parameter names inline | Planned |
 | Surround With | Wrap selection in `{ }`, `try { }`, `?(...)` | Planned |
-| Smart Enter | Auto-continue pipelines with `|` | Planned |
+| Smart Enter | Auto-continue pipelines | Planned |
 
 ## v2.0.0 - Advanced Features
 
