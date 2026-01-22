@@ -480,7 +480,7 @@
 
                 <div class="loop-node read">📖 Read<br>learnings/</div>
                 <div class="loop-node work">⚡ Do Work<br>Learn stuff</div>
-                <div class="loop-node write">✍️ Write<br>learnings/</div>
+                <div class="loop-node write">✍️ Update<br>learnings/</div>
                 <div class="loop-node next">🔄 Next<br>iteration</div>
 
                 <div class="loop-arrow arrow-1">↘</div>
@@ -489,9 +489,28 @@
                 <div class="loop-arrow arrow-4">↗</div>
             </div>
         </div>
-        <div class="card" style="max-width: 600px; margin: 0 auto; text-align: center;">
-            <p><strong>Key Insight:</strong> Failures are learning opportunities too!<br>
-            "Gotchas & Debugging" section captures what NOT to do.</p>
+        <div class="card" style="max-width: 700px; margin: 0 auto;">
+            <h3 style="text-align: center; margin-bottom: 1rem;">Self-Correcting Knowledge</h3>
+            <div style="display: flex; justify-content: space-around; text-align: center;">
+                <div>
+                    <div style="font-size: 1.5rem;">➕</div>
+                    <strong>Add</strong><br>
+                    <span style="color: var(--text-dim); font-size: 0.9rem;">New patterns</span>
+                </div>
+                <div>
+                    <div style="font-size: 1.5rem;">✏️</div>
+                    <strong>Correct</strong><br>
+                    <span style="color: var(--text-dim); font-size: 0.9rem;">Fix mistakes</span>
+                </div>
+                <div>
+                    <div style="font-size: 1.5rem;">🗑️</div>
+                    <strong>Remove</strong><br>
+                    <span style="color: var(--text-dim); font-size: 0.9rem;">Outdated info</span>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 1rem; color: var(--text-dim); font-size: 0.9rem;">
+                Corrections are logged in activity logs so we know what changed and why.
+            </p>
         </div>
     </section>
 
@@ -503,11 +522,11 @@
                 <h3>📗 Distilled Wisdom</h3>
                 <div class="path">docs/learnings/</div>
                 <ul>
-                    <li>Organized by category</li>
-                    <li>Patterns & best practices</li>
-                    <li>Gotchas & debugging tips</li>
+                    <li>Organized by topic files</li>
+                    <li>Each file has Gotchas section</li>
                     <li>Read FIRST every iteration</li>
-                    <li>Updated on success AND failure</li>
+                    <li>Add, Correct, Remove as needed</li>
+                    <li>Self-correcting over time</li>
                 </ul>
             </div>
             <div class="knowledge-box context">
@@ -516,6 +535,7 @@
                 <ul>
                     <li>Session-by-session narrative</li>
                     <li>Files modified, decisions made</li>
+                    <li>Learnings corrections logged here</li>
                     <li>Last 2 logs included in prompt</li>
                     <li>Detailed blocker information</li>
                 </ul>

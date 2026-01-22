@@ -38,6 +38,37 @@ Ralph is an autonomous development agent that iterates through stories from a PR
 | `scripts/ralph/prompt.md` | Agent instructions template |
 | `scripts/ralph/progress.txt` | Development log |
 | `scripts/ralph/state.json` | Current story tracking (local only) |
+| `docs/learnings/` | Consolidated learnings by topic |
+| `docs/activity/` | Daily session logs |
+
+## Learning System
+
+Ralph learns from every iteration and self-corrects over time.
+
+```
+┌─────────────────────────────────────────────────────┐
+│                  LEARNING LOOP                      │
+├─────────────────────────────────────────────────────┤
+│  📖 READ    docs/learnings/*.md before each task   │
+│  ➕ ADD     new patterns discovered                 │
+│  ✏️ CORRECT fix misconceptions                      │
+│  🗑️ REMOVE  outdated info                           │
+│  📝 LOG     corrections in activity log             │
+└─────────────────────────────────────────────────────┘
+```
+
+Learnings are organized by topic:
+- `elvish.md` - Language patterns
+- `lsp.md` - LSP integration
+- `editor.md` - Editor features
+- `run-configs.md` - Run configurations
+- `templates.md` - File/live templates
+- `testing.md` - Test patterns
+- `build.md` - Build/environment
+
+Each file has a **Gotchas** section for common mistakes.
+
+See `docs/ralph/index.html` for a visual guide.
 
 ## Options
 
