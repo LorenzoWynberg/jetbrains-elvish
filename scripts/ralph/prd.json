@@ -966,7 +966,7 @@
       "title": "Add test comment to README",
       "intent": "Add a simple test comment to verify Ralph streaming works",
       "acceptance": [
-        "Add HTML comment <!-- Ralph streaming test --> at end of README.md",
+        "Add HTML comment <!-- RALPH_STREAMING_TEST --> as the very last line of README.md",
         "./gradlew build succeeds"
       ],
       "passes": false,
@@ -977,10 +977,11 @@
     },
     {
       "id": "STORY-TEST-2",
-      "title": "Add test comment to CHANGELOG",
-      "intent": "Add a simple test comment to verify Ralph streaming works",
+      "title": "Remove test comment from README",
+      "intent": "Remove the test comment to restore README to original state",
       "acceptance": [
-        "Add HTML comment <!-- Ralph streaming test 2 --> at end of CHANGELOG.md",
+        "Remove the line <!-- RALPH_STREAMING_TEST --> from README.md",
+        "README.md is back to its original state (no test comment)",
         "./gradlew build succeeds"
       ],
       "passes": false,
