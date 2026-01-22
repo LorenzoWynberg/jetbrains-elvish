@@ -112,9 +112,11 @@ JetBrains plugin for Elvish shell language support. Uses Elvish's built-in LSP (
 
 ## Branching
 
+- `main` - Production releases (tagged versions)
 - `dev` - Integration branch, PRs merge here
-- `main` - Stable releases only
+- `release/vX.Y.Z` - Release prep (dev → main)
 - `feat/story-X.Y.Z` - Feature branches
+- `fix/description` - Bug fix branches
 
 ## Commits
 

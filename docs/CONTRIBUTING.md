@@ -2,9 +2,19 @@
 
 ## Branching Strategy
 
+- **main** - Production releases (tagged versions)
 - **dev** - Integration branch, all PRs merge here
-- **main** - Stable releases only
-- **feat/story-X.Y.Z** - Feature branches for each story
+- **release/vX.Y.Z** - Release prep branches (from dev → main)
+- **feat/story-X.Y.Z** - Feature branches (from dev)
+- **fix/description** - Bug fix branches (from dev)
+
+### Release Flow
+
+```
+feat/* ──► dev ──► release/vX.Y.Z ──► main (tag vX.Y.Z)
+                         │
+                         └──► merge back to dev
+```
 
 ## Workflow
 
