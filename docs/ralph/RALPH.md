@@ -21,11 +21,11 @@ Ralph is an autonomous development agent that iterates through stories from a PR
 ## How It Works
 
 1. **Pick Story** - Selects next story respecting dependencies
-2. **Create Branch** - Creates `feat/story-X.Y.Z` from `dev`
+2. **Create Branch** - Creates `feat/story-X.Y.Z` from `main`
 3. **Implement** - Runs Claude to implement the story
 4. **Verify** - Runs `./gradlew build` to verify
 5. **Self-Review** - Agent reviews work and iterates
-6. **Create PR** - Opens PR targeting `dev`
+6. **Create PR** - Opens PR targeting `main`
 7. **Merge** - Merges PR and cleans up branch
 8. **Repeat** - Moves to next story
 
@@ -75,7 +75,7 @@ See `docs/ralph/index.html` for a visual guide.
 | Option | Description |
 |--------|-------------|
 | `--max-iterations <n>` | Max iterations before auto-stop (default: 15) |
-| `--base-branch <name>` | Base branch for new stories (default: dev) |
+| `--base-branch <name>` | Base branch for new stories (default: main) |
 | `--resume` | Resume from last state |
 | `--reset` | Reset state and start fresh |
 | `-q, --quiet` | Hide Claude output, show only status |
@@ -107,12 +107,12 @@ See `docs/ralph/index.html` for a visual guide.
 │                  RALPH LOOP                      │
 ├─────────────────────────────────────────────────┤
 │  1. Read state.json (or pick next story)        │
-│  2. Create branch feat/story-X.Y.Z from dev     │
+│  2. Create branch feat/story-X.Y.Z from main    │
 │  3. Run Claude with prompt.md                   │
 │  4. Claude implements + runs ./gradlew build    │
 │  5. Self-review cycle until satisfied           │
 │  6. Create PR → Merge → Delete branch           │
-│  7. Sync local dev with remote                  │
+│  7. Sync local main with remote                 │
 │  8. Pause (20s) → Continue or stop              │
 │  9. Repeat until all stories complete           │
 └─────────────────────────────────────────────────┘
@@ -137,4 +137,4 @@ See `docs/ralph/index.html` for a visual guide.
 ```
 
 **Branch conflicts:**
-Ralph always syncs from remote using `fetch + reset --hard`, so local changes on `dev` are discarded. Work on feature branches only.
+Ralph always syncs from remote using `fetch + reset --hard`, so local changes on `main` are discarded. Work on feature branches only.

@@ -1,28 +1,27 @@
 # Contributing Guide
 
-## Branching Strategy
+## Branching Strategy (GitHub Flow)
 
-- **main** - Production releases (tagged versions)
-- **dev** - Integration branch, all PRs merge here
-- **release/vX.Y.Z** - Release prep branches (from dev → main)
-- **feat/description** - Feature branches (from dev)
+- **main** - Single integration branch, all PRs merge here
+- **feat/description** - Feature branches (from main)
 - **feat/story-X.Y.Z** - Ralph story branches (automated)
-- **fix/description** - Bug fix branches (from dev)
+- **fix/description** - Bug fix branches (from main)
 
-### Release Flow
+### Flow
 
 ```
-feat/* ──► dev ──► release/vX.Y.Z ──► main (tag vX.Y.Z)
-                         │
-                         └──► merge back to dev
+feat/* ──► main (tag vX.Y.Z for releases)
+fix/*  ──┘
 ```
+
+Releases are tagged directly on main (e.g., `v1.0.0`).
 
 ## Workflow
 
-1. Create feature branch from `dev`
+1. Create feature branch from `main`
 2. Implement changes
 3. Run `./gradlew build` to verify
-4. Create PR targeting `dev`
+4. Create PR targeting `main`
 5. After merge, feature branch is deleted
 
 ## Commit Guidelines
@@ -56,7 +55,7 @@ docs: Update README with installation instructions
 
 ## Pull Requests
 
-- PRs always target `dev` branch
+- PRs always target `main` branch
 - Include a brief description of changes
 - Reference the story ID if applicable
 - Ensure `./gradlew build` passes

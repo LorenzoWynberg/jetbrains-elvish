@@ -22,7 +22,7 @@ var state-file = (path:join $script-dir "state.json")
 # Default configuration
 var max-iterations = 15
 var current-iteration = 0
-var base-branch = "dev"
+var base-branch = "main"
 var quiet-mode = $false
 
 # ANSI color codes
@@ -71,7 +71,7 @@ USAGE:
 
 OPTIONS:
   --max-iterations <n>    Maximum iterations before auto-stop (default: 15)
-  --base-branch <name>    Base branch to create story branches from (default: dev)
+  --base-branch <name>    Base branch to create story branches from (default: main)
   --resume                Resume from last state (skip story selection)
   --reset                 Reset state and start fresh
   -q, --quiet             Quiet mode - hide Claude output, show only Ralph status
@@ -81,16 +81,16 @@ FEATURES:
   - State persistence: Tracks current story across invocations
   - Branch naming: Creates feat/story-<phase>.<epic>.<story> branches (e.g., feat/story-4.1.1)
   - Self-review cycle: Agent reviews work, suggests improvements, iterates until done
-  - PR automation: Creates PR, merges to dev, cleans up branch
+  - PR automation: Creates PR, merges to main, cleans up branch
   - Error recovery: Can resume interrupted work
 
 WORKFLOW:
   1. Pick next story (respecting dependencies)
-  2. Create branch from dev (always syncs with latest)
+  2. Create branch from main (always syncs with latest)
   3. Implement story with verification (./gradlew build)
   4. Self-review: generate suggestions, evaluate, implement worthwhile ones
   5. Repeat review until no more improvements
-  6. Create PR, merge to dev, delete branch
+  6. Create PR, merge to main, delete branch
   7. Move to next story
 
 FILES:
@@ -103,7 +103,7 @@ EXAMPLES:
   ./ralph.elv                          # Start fresh or continue
   ./ralph.elv --resume                 # Force resume current story
   ./ralph.elv --reset                  # Reset state, start fresh
-  ./ralph.elv --base-branch develop    # Use develop as base branch
+  ./ralph.elv --base-branch develop    # Use alternate base branch
 '
 }
 
@@ -228,7 +228,7 @@ fn get-story-info {|story-id|
   jq -r $query $pf
 }
 
-# Always branch from BASE_BRANCH (dev) since PRs merge there and feature branches are deleted
+# Always branch from BASE_BRANCH (main) since PRs merge there and feature branches are deleted
 
 fn create-story-branch {|story-id|
   # Get story info for branch naming
@@ -656,15 +656,15 @@ while (< $current-iteration $max-iterations) {
     write-state $state
     ralph-dim "  State saved locally."
 
-    # Sync local dev with remote (PR was merged, so pull latest)
-    ralph-dim "  Syncing local dev with remote..."
+    # Sync local main with remote (PR was merged, so pull latest)
+    ralph-dim "  Syncing local main with remote..."
     try {
-      git -C $project-root fetch origin dev > /dev/null 2>&1
-      git -C $project-root checkout dev > /dev/null 2>&1
-      git -C $project-root reset --hard origin/dev > /dev/null 2>&1
-      ralph-success "  Local dev synced with remote."
+      git -C $project-root fetch origin main > /dev/null 2>&1
+      git -C $project-root checkout main > /dev/null 2>&1
+      git -C $project-root reset --hard origin/main > /dev/null 2>&1
+      ralph-success "  Local main synced with remote."
     } catch {
-      ralph-dim "  (dev sync skipped - may need manual intervention)"
+      ralph-dim "  (main sync skipped - may need manual intervention)"
     }
 
     # Interactive prompt: chance to stop before next story (20s auto-continue)

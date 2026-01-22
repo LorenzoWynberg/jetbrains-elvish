@@ -105,7 +105,7 @@ The plugin focuses on **editing, running, and testing** Elvish code within the I
 
 Want to help? Pick an item from the roadmap and:
 1. Check if there's an existing issue
-2. Create a feature branch from `dev`
+2. Create a feature branch from `main`
 3. Follow the [Contributing Guide](CONTRIBUTING.md)
 4. Submit a PR
 

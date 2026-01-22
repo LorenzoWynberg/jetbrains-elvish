@@ -112,7 +112,7 @@ Then (no Co-Authored-By lines in commits or PRs):
 ```bash
 git add -A && git commit -m "feat: {{CURRENT_STORY}} - <title>"
 git push -u origin {{BRANCH}}
-gh pr create --base dev --title "feat: {{CURRENT_STORY}} - <title>" --body "## Summary
+gh pr create --base main --title "feat: {{CURRENT_STORY}} - <title>" --body "## Summary
 <what>
 ## Changes
 - <list>
@@ -121,7 +121,7 @@ gh pr create --base dev --title "feat: {{CURRENT_STORY}} - <title>" --body "## S
 ## Testing
 - ./gradlew build passes"
 gh pr merge --merge --delete-branch
-git checkout dev && git pull origin dev
+git checkout main && git pull origin main
 git branch -d {{BRANCH}} 2>/dev/null || true
 ```
 
