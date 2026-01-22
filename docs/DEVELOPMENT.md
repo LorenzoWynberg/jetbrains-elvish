@@ -58,7 +58,9 @@ src/main/
 │   │   ├── ElvishRunLineMarkerProvider.kt # Gutter run icons for .elv files
 │   │   └── ElvishRunProfileState.kt       # Script execution and output
 │   ├── actions/
-│   │   └── CreateElvishFileAction.kt      # New > Elvish Script file creation
+│   │   └── CreateElvishFileAction.kt      # New > Elvish Script/Module file creation
+│   ├── templates/
+│   │   └── ElvishTemplateContextType.kt   # Live template context for .elv files
 │   └── textmate/
 │       └── ElvishTextMateBundleProvider.kt
 └── resources/
@@ -66,7 +68,11 @@ src/main/
     ├── icons/elvish.svg       # File icon
     ├── fileTemplates/
     │   ├── Elvish Script.elv.ft    # Elvish script file template
-    │   └── Elvish Script.elv.html  # Template description
+    │   ├── Elvish Script.elv.html  # Script template description
+    │   ├── Elvish Module.elv.ft    # Elvish module file template
+    │   └── Elvish Module.elv.html  # Module template description
+    ├── liveTemplates/
+    │   └── Elvish.xml              # Live templates (fn, if, for, etc.)
     └── textmate/
         └── elvish.tmLanguage.json
 ```
@@ -124,15 +130,24 @@ src/main/
      - `ElvishStructureViewElement`: Parses file to find functions (fn), variables (var), and imports (use)
 
 8. **File Templates** (`actions/` package and `fileTemplates/` resources)
-   - `CreateElvishFileAction`: Action for "New > Elvish Script" in context menu
-   - `Elvish Script.elv.ft`: File template with shebang and comment header
-   - `Elvish Script.elv.html`: Template description shown in New File dialog
+   - `CreateElvishFileAction`: Action for "New > Elvish Script/Module" in context menu
+   - `Elvish Script.elv.ft`: Script template with shebang and comment header
+   - `Elvish Script.elv.html`: Script template description
+   - `Elvish Module.elv.ft`: Module template with example function
+   - `Elvish Module.elv.html`: Module template description explaining `use` statement
 
-9. **Plugin Manifest** (`META-INF/plugin.xml`)
+9. **Live Templates** (`templates/` package and `liveTemplates/` resources)
+   - `ElvishTemplateContextType`: Context type that restricts templates to Elvish files
+   - `Elvish.xml`: 15 live templates for common Elvish patterns
+     - Function: `fn` (function definition)
+     - Control Flow: `if`, `ife`, `for`, `while`, `try`, `tryf`
+     - Common Patterns: `use`, `var`, `set`, `each`, `peach`, `lambda`, `map`, `list`
+
+10. **Plugin Manifest** (`META-INF/plugin.xml`)
    - Dependencies: `platform`, `textmate` modules, plus optional `lsp` module
    - The `lsp` module is available in all JetBrains IDEs since 2024.2 (free for all users)
-   - Extensions: file type, LSP server support, TextMate bundle, parser definition, project settings, commenter, brace matcher, folding builder, structure view, breadcrumbs, run configuration type, run line marker, run configuration producer, internal file template, index pattern builder, spellchecker support
-   - Actions: "New > Elvish Script" for file creation
+   - Extensions: file type, LSP server support, TextMate bundle, parser definition, project settings, commenter, brace matcher, folding builder, structure view, breadcrumbs, run configuration, run line marker, run configuration producer, file templates, live templates, index pattern builder, spellchecker support
+   - Actions: "New > Elvish Script/Module" for file creation
 
 ### Key Design Decisions
 
