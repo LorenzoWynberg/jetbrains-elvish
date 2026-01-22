@@ -28,7 +28,7 @@ Works with **all JetBrains IDEs** version 2024.3 or later:
 - File type recognition for `.elv` files with custom icon
 - Syntax highlighting via TextMate grammar
 - Code completion, diagnostics, hover docs via Elvish's built-in LSP
-- Go-to-definition and find references
+- Go-to-definition navigation
 
 ### Editor Features
 - **Line Comments**: Toggle comments with `Ctrl+/` (`Cmd+/` on Mac)

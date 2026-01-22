@@ -66,4 +66,4 @@ Before submitting a PR:
 
 ## Automated Development
 
-This project uses [Ralph](ralph/RALPH.md) for autonomous development. If you're contributing manually, you can ignore Ralph and follow the standard workflow above.
+This project uses [Ralph](docs/ralph/RALPH.md) for autonomous development. If you're contributing manually, you can ignore Ralph and follow the standard workflow above.
