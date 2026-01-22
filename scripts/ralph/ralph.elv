@@ -565,8 +565,8 @@ while (< $current-iteration $max-iterations) {
       timeout $claude-timeout bash -c 'claude --dangerously-skip-permissions --print < "$1"' _ $prompt-tmp > $output-file 2>&1
     } else {
       # Streaming mode: use helper script to avoid Elvish quoting issues
-      var stream-script = (path:join $script-dir "stream-claude.sh")
-      bash $stream-script $prompt-tmp $output-file $claude-timeout
+      var stream-script = (path:join $script-dir "stream-claude.elv")
+      elvish $stream-script $prompt-tmp $output-file $claude-timeout
 
       # Use the extracted result if available, otherwise use raw output
       if (path:is-regular $output-file".result") {
