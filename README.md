@@ -24,10 +24,52 @@ Works with **all JetBrains IDEs** version 2024.3 or later:
 
 ## Features
 
+### Language Support
 - File type recognition for `.elv` files with custom icon
 - Syntax highlighting via TextMate grammar
 - Code completion, diagnostics, hover docs via Elvish's built-in LSP
 - Go-to-definition and find references
+
+### Editor Features
+- **Line Comments**: Toggle comments with `Ctrl+/` (`Cmd+/` on Mac)
+- **Brace Matching**: Highlight matching `{}`, `[]`, and `()`
+- **Code Folding**: Collapse function bodies, control flow blocks, and multi-line lists/maps
+- **Structure View**: Navigate functions, variables, and imports in the Structure tool window
+- **Breadcrumbs**: See current code context (function name, block type) at top of editor
+- **TODO Highlighting**: `TODO`, `FIXME`, `XXX`, `HACK`, `BUG` in comments appear in TODO tool window
+- **Spell Checking**: Spell check comments and string literals
+
+### Run Configuration
+- Run `.elv` scripts directly from the IDE
+- Configure script arguments, working directory, and environment variables
+- Green play icon in gutter for quick script execution
+- Right-click context menu: "Run &lt;filename&gt;"
+
+### File Templates
+Create new files via **New > Elvish Script** or **New > Elvish Module**:
+- **Elvish Script**: Includes shebang and comment header
+- **Elvish Module**: Includes example function for reusable modules
+
+### Live Templates
+Type abbreviation + `Tab` to expand code snippets:
+
+| Abbreviation | Expands To | Description |
+|--------------|------------|-------------|
+| `fn` | `fn name {\|params\| ... }` | Function definition |
+| `if` | `if condition { ... }` | If conditional |
+| `ife` | `if condition { ... } else { ... }` | If-else |
+| `for` | `for item $items { ... }` | For loop |
+| `while` | `while condition { ... }` | While loop |
+| `try` | `try { ... } catch e { ... }` | Try-catch |
+| `tryf` | `try { ... } finally { ... }` | Try-finally |
+| `use` | `use module` | Import module |
+| `var` | `var name = value` | Variable declaration |
+| `set` | `set name = value` | Variable assignment |
+| `each` | `each {\|item\| ... }` | Iteration callback |
+| `peach` | `peach {\|item\| ... }` | Parallel iteration |
+| `lambda` | `{\|params\| ... }` | Anonymous function |
+| `map` | `[&key=value]` | Map literal |
+| `list` | `[items]` | List literal |
 
 ## Requirements
 

@@ -1604,3 +1604,36 @@ Stories now use the format STORY-{phase}.{epic}.{story}.
 - Check element.node?.elementType against parser token types
 - Barewords should NOT be spell checked (they're commands, paths, variable names)
 - Register with spellchecker.support extension point in plugin.xml
+
+---
+
+## 2026-01-22 - STORY-9.6.3: Update documentation for new features
+
+**What was done:**
+- Updated README.md with comprehensive new features section covering:
+  - Editor Features (commenter, brace matching, folding, structure view, breadcrumbs, TODO, spell checking)
+  - Run Configuration (run scripts, arguments, environment variables, gutter icons, context menu)
+  - File Templates (Elvish Script, Elvish Module)
+  - Live Templates (15 templates in table format)
+- Updated CHANGELOG.md with version 1.1.0 changes organized by category
+- Updated docs/DEVELOPMENT.md with:
+  - templates/ package in project structure
+  - liveTemplates/ resources in project structure
+  - Elvish Module file template entries
+  - Section 9 "Live Templates" in Architecture
+- Build passes
+- runIde launches without plugin errors
+
+**Files changed:**
+- README.md (added comprehensive Features section)
+- docs/CHANGELOG.md (added version 1.1.0)
+- docs/DEVELOPMENT.md (added templates package and live templates documentation)
+
+**Refactoring:**
+- Round 1: All files under 300 lines (README: 111, CHANGELOG: 64, DEVELOPMENT: 179)
+- Round 2: No issues found - documentation well-structured
+
+**Learnings:**
+- Documentation should be updated incrementally as features are added
+- Using markdown tables for live templates provides better readability
+- Changelog should separate features by category for clarity
