@@ -29,16 +29,27 @@
 <body class="text-neutral-300 font-sans antialiased">
 
     <!-- Hero -->
-    <header class="pt-24 pb-20 px-6">
-        <div class="max-w-3xl mx-auto text-center">
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-xs text-neutral-500 mb-8">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+    <header class="relative pt-32 pb-28 px-6 overflow-hidden">
+        <!-- Gradient glow -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] opacity-30">
+                <div class="absolute inset-0 bg-gradient-to-b from-blue-600/40 via-violet-600/20 to-transparent blur-3xl"></div>
+            </div>
+            <div class="absolute top-20 left-1/4 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-3xl"></div>
+            <div class="absolute top-20 right-1/4 w-[400px] h-[400px] bg-violet-500/10 rounded-full blur-3xl"></div>
+        </div>
+        <!-- Fade to black -->
+        <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#0c0c0c] to-transparent"></div>
+
+        <div class="relative max-w-3xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-900/80 border border-neutral-700 text-xs text-neutral-400 mb-8 backdrop-blur-sm">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 v4.0
             </div>
-            <h1 class="text-5xl md:text-6xl font-semibold text-white mb-4 tracking-tight">
+            <h1 class="text-6xl md:text-7xl font-semibold text-white mb-5 tracking-tight">
                 Ralph
             </h1>
-            <p class="text-lg text-neutral-500 max-w-md mx-auto">
+            <p class="text-xl text-neutral-400 max-w-lg mx-auto leading-relaxed">
                 Autonomous development system with self-correcting learning
             </p>
         </div>
