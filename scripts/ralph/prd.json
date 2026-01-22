@@ -984,7 +984,7 @@
         "README.md is back to its original state (no test comment)",
         "./gradlew build succeeds"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-TEST-1"],
       "phase": 99,
       "epic": 99,
