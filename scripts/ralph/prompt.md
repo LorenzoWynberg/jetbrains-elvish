@@ -107,7 +107,7 @@ Update these files:
 - `scripts/ralph/state.json`: Reset to `{"version":1,"current_story":null,"status":"idle","branch":null,"started_at":null,"last_updated":null,"attempts":0,"error":null,"checkpoints":[]}`
 - `docs/activity/YYYY-MM-DD.md`: Update with completed work, files modified, decisions made
 
-Then (no Co-Authored-By lines in commits):
+Then (no Co-Authored-By lines in commits or PRs):
 ```bash
 git add -A && git commit -m "feat: {{CURRENT_STORY}} - <title>"
 git push -u origin {{BRANCH}}
