@@ -564,11 +564,20 @@ while (< $current-iteration $max-iterations) {
       # Quiet mode: capture output to file, no streaming
       timeout $claude-timeout bash -c 'claude --dangerously-skip-permissions --print < "$1"' _ $prompt-tmp > $output-file 2>&1
     } else {
-      # Streaming mode: use helper script to avoid Elvish quoting issues
-      var stream-script = (path:join $script-dir "stream-claude.elv")
-      elvish $stream-script $prompt-tmp $output-file $claude-timeout
+      # Streaming mode: native Elvish pipeline with jq filtering
+      var stream-text = 'select(.type == "assistant").message.content[]? | select(.type == "text").text // empty | gsub("\n"; "\r\n") | . + "\r\n\n"'
+      var final-result = 'select(.type == "result").result // empty'
 
-      # Use the extracted result if available, otherwise use raw output
+      try {
+        timeout $claude-timeout claude --dangerously-skip-permissions --verbose --print --output-format stream-json < $prompt-tmp 2>&1 | grep --line-buffered '^{' | tee $output-file | jq --unbuffered -rj $stream-text 2>/dev/null
+      } catch _ { }
+
+      # Extract final result text for signal detection
+      try {
+        jq -rs $final-result $output-file > $output-file".result" 2>/dev/null
+      } catch _ { }
+
+      # Use the extracted result if available
       if (path:is-regular $output-file".result") {
         var result-content = (cat $output-file".result" | slurp)
         if (not (eq $result-content "")) {
