@@ -113,6 +113,11 @@
         <spellchecker.support
                 language="Elvish"
                 implementationClass="com.elvish.plugin.editor.ElvishSpellcheckingStrategy"/>
+
+        <!-- Syntax error highlighting via elvish -compileonly -->
+        <annotator
+                language="Elvish"
+                implementationClass="com.elvish.plugin.highlighting.ElvishSyntaxAnnotator"/>
     </extensions>
 
     <actions>
