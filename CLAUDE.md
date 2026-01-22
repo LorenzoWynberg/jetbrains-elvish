@@ -10,7 +10,20 @@ Instructions for Claude Code when working in this repository.
 ./scripts/ralph/ralph.elv  # Run autonomous dev loop
 ```
 
-## Task Workflow (Follow This for Every Task)
+## Task Workflow
+
+### When to Use Full Workflow
+
+**Use `--ralph-style`** (or "ralph style", "full workflow") when you want the complete workflow below.
+
+**Skip the workflow** for:
+- Quick questions or lookups
+- When Ralph is running Claude (Ralph handles the workflow)
+- Simple one-off tasks
+
+---
+
+### Full Workflow (when `--ralph-style` requested)
 
 ### 1. Load Context
 Before starting ANY task, read relevant files:
