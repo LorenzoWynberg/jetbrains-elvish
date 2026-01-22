@@ -7,8 +7,17 @@ Instructions for Claude Code when working in this repository.
 ```bash
 ./gradlew build        # Build and test
 ./gradlew runIde       # Run sandbox IDE
-./scripts/ralph/ralph.elv  # Run autonomous dev loop
 ```
+
+## Follow CONTRIBUTING.md
+
+**Use [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for:**
+- Branching strategy
+- Commit message format
+- PR process
+- Code style
+
+**Key rule:** No "Co-Authored-By" lines (commits or PRs)
 
 ## Task Workflow
 
@@ -31,7 +40,7 @@ Before starting ANY task, read relevant files:
   - `elvish.md` - Elvish language patterns
   - `intellij-plugin.md` - Core plugin patterns
   - `lsp.md` - LSP integration
-  - `editor.md` - Editor features (folding, structure, breadcrumbs)
+  - `editor.md` - Editor features
   - `run-configs.md` - Run configurations
   - `templates.md` - File/live templates
   - `testing.md` - Testing patterns
@@ -77,14 +86,9 @@ Update docs if changes affect:
 - README.md - New features, requirements
 - docs/DEVELOPMENT.md - Architecture, new components
 - docs/CONTRIBUTING.md - Workflow changes
-- CLAUDE.md - Key patterns
 
 ### 9. Commit & Push
-```bash
-git add <files>
-git commit -m "type: Description"
-git push origin <branch>
-```
+Follow [CONTRIBUTING.md](docs/CONTRIBUTING.md) for commit format and branching.
 
 ## Project Overview
 
@@ -97,31 +101,13 @@ JetBrains plugin for Elvish shell language support. Uses Elvish's built-in LSP (
 | `src/main/kotlin/com/elvish/plugin/` | Plugin source code |
 | `src/main/resources/META-INF/plugin.xml` | Plugin manifest |
 | `src/main/resources/textmate/` | TextMate grammar |
-| `scripts/ralph/` | Autonomous dev loop |
 | `docs/learnings/` | Consolidated patterns and gotchas |
 | `docs/activity/` | Daily activity logs |
 
 ## Documentation
 
+- [Contributing Guide](docs/CONTRIBUTING.md) - **Start here** for workflow
 - [Development Guide](docs/DEVELOPMENT.md) - Build, architecture, debugging
-- [Contributing Guide](docs/CONTRIBUTING.md) - Branching, commits, PRs
 - [Roadmap](docs/ROADMAP.md) - Future plans
 - [Changelog](docs/CHANGELOG.md) - Version history
-- [Ralph Guide](docs/ralph/RALPH.md) - Autonomous development loop
 - [Learnings](docs/learnings/) - Topic-based patterns
-
-## Branching
-
-- `main` - Production releases (tagged versions)
-- `dev` - Integration branch, PRs merge here
-- `release/vX.Y.Z` - Release prep (dev → main)
-- `feat/story-X.Y.Z` - Feature branches
-- `fix/description` - Bug fix branches
-
-## Commits
-
-- One commit per logical change
-- Push after each commit
-- **No "Co-Authored-By" lines** (commits or PRs)
-- Format: `type: Description`
-- Types: `feat`, `fix`, `refactor`, `docs`, `chore`

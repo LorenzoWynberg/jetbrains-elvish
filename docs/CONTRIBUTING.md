@@ -29,6 +29,7 @@ feat/* ──► dev ──► release/vX.Y.Z ──► main (tag vX.Y.Z)
 - One commit per logical change
 - Push after each commit
 - Keep messages concise and descriptive
+- **No "Co-Authored-By" lines** (commits or PRs)
 
 ### Commit Message Format
 

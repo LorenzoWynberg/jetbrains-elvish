@@ -8,6 +8,7 @@ Dependencies (completed): {{DEPENDENCIES}}
 ## 1. Load Context
 Read these files first:
 - `scripts/ralph/prd.json` - acceptance criteria for {{CURRENT_STORY}}
+- `docs/CONTRIBUTING.md` - branching, commits, PR process
 - `docs/learnings/` - **read relevant files** based on task:
   - `elvish.md` - Elvish language patterns
   - `intellij-plugin.md` - core plugin patterns
