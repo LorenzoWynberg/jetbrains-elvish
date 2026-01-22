@@ -6,11 +6,35 @@ Story: {{CURRENT_STORY}} | Branch: {{BRANCH}} | Attempt: {{ATTEMPT}} | Iteration
 Dependencies (completed): {{DEPENDENCIES}}
 
 ## 1. Load Context
-Read: `scripts/ralph/prd.json` (acceptance criteria), `scripts/ralph/progress.txt` (patterns), `CLAUDE.md` (conventions)
+Read these files first:
+- `scripts/ralph/prd.json` - acceptance criteria for {{CURRENT_STORY}}
+- `docs/learnings/` - **read relevant files** based on task:
+  - `elvish.md` - Elvish language patterns
+  - `intellij-plugin.md` - core plugin patterns
+  - `lsp.md` - LSP integration
+  - `editor.md` - editor features
+  - `run-configs.md` - run configurations
+  - `templates.md` - file/live templates
+  - `testing.md` - testing patterns
+  - `build.md` - build/environment
+- `scripts/ralph/progress.txt` - story history
+- `CLAUDE.md` - project conventions
 
 If attempt > 1: check `git log` and `git diff` for previous work.
 
 **Activity Log:** Create or update `docs/activity/YYYY-MM-DD.md` (today's date). Add entry for starting work on {{CURRENT_STORY}}.
+
+### Recent Activity Logs (Detailed Context)
+Review these recent activity logs for detailed context on recent work:
+
+{{RECENT_ACTIVITY_LOGS}}
+
+**Learning Loop:** After completing {{CURRENT_STORY}}:
+1. **Add** new learnings to the appropriate file in `docs/learnings/`
+2. **Correct** any existing learnings you discover were wrong or incomplete
+3. **Remove** outdated info that no longer applies
+
+If correcting a misconception, note it briefly in the activity log so we know what changed and why.
 
 ## 2. Scope
 Implement ONLY {{CURRENT_STORY}}. No refactoring unrelated code. Note other issues in Learnings only.
@@ -77,6 +101,7 @@ Commit docs separately: `git commit -m "docs: update for {{CURRENT_STORY}}"`
 ## 8. On SUCCESS
 
 Update these files:
+- `docs/learnings/*.md`: Add any NEW learnings to the appropriate topic file (elvish.md, lsp.md, editor.md, etc.)
 - `progress.txt`: Add entry with date, changes, learnings (include any refactoring done)
 - `prd.json`: Set `"passes": true`
 - `scripts/ralph/state.json`: Reset to `{"version":1,"current_story":null,"status":"idle","branch":null,"started_at":null,"last_updated":null,"attempts":0,"error":null,"checkpoints":[]}`
@@ -102,8 +127,14 @@ git branch -d {{BRANCH}} 2>/dev/null || true
 Output: `<story-complete>{{CURRENT_STORY}}</story-complete>`
 
 ## 9. On BLOCKED
-Don't commit. Don't update prd.json. Add to progress.txt what was tried and why blocked.
-Update `docs/activity/YYYY-MM-DD.md` with blocker details and what was attempted.
+Don't commit. Don't update prd.json.
+
+**Still capture learnings from failure:**
+- `docs/learnings/*.md`: Add what you learned to the appropriate file's **Gotchas** section
+- `progress.txt`: Add what was tried and why blocked
+- `docs/activity/YYYY-MM-DD.md`: Detailed blocker info and what was attempted
+
+Failures are valuable learning opportunities - don't lose them!
 
 Output: `<story-blocked>{{CURRENT_STORY}}</story-blocked>`
 

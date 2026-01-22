@@ -360,6 +360,52 @@ fn get-story-deps {|story-id|
   }
 }
 
+# Get recent activity logs (up to 2 most recent)
+fn get-recent-activity-logs {
+  var activity-dir = (path:join $project-root "docs" "activity")
+
+  # Check if directory exists
+  if (not (path:is-dir $activity-dir)) {
+    echo "No activity logs found."
+    return
+  }
+
+  # Find all YYYY-MM-DD.md files, sort by name (date), take last 2
+  var log-files = []
+  try {
+    # List files matching date pattern, excluding README
+    for f [(ls $activity-dir)] {
+      if (and (re:match '^\d{4}-\d{2}-\d{2}\.md$' $f) (not (eq $f "README.md"))) {
+        set log-files = [$@log-files $f]
+      }
+    }
+  } catch _ { }
+
+  if (eq (count $log-files) 0) {
+    echo "No activity logs found."
+    return
+  }
+
+  # Sort files (alphabetically = chronologically for YYYY-MM-DD format)
+  var sorted-files = [(put $@log-files | order)]
+
+  # Take up to last 2 files (most recent)
+  var num-files = (count $sorted-files)
+  var start-idx = (if (> $num-files 2) { put (- $num-files 2) } else { put 0 })
+  var recent-files = $sorted-files[$start-idx..]
+
+  # Read and output each file with header
+  for f $recent-files {
+    var full-path = (path:join $activity-dir $f)
+    echo "=== Activity Log: "$f" ==="
+    echo ""
+    cat $full-path
+    echo ""
+    echo "---"
+    echo ""
+  }
+}
+
 # Read prompt template
 var prompt-template = (cat $prompt-file | slurp)
 
@@ -479,6 +525,10 @@ while (< $current-iteration $max-iterations) {
   var deps-info = (get-story-deps $story-id | slurp)
   set iteration-prompt = (str:replace &max=-1 "{{DEPENDENCIES}}" $deps-info $iteration-prompt)
 
+  # Add recent activity logs for learning
+  var activity-logs = (get-recent-activity-logs | slurp)
+  set iteration-prompt = (str:replace &max=-1 "{{RECENT_ACTIVITY_LOGS}}" $activity-logs $iteration-prompt)
+
   # Run Claude
   var output-file = (mktemp)
 
@@ -527,7 +577,10 @@ while (< $current-iteration $max-iterations) {
   }
 
   # Show output file size as indicator of activity
-  var file-size = (wc -c < $output-file | one | str:trim-space)
+  var file-size = "unknown"
+  try {
+    set file-size = (stat -f%z $output-file)
+  } catch _ { }
   ralph-dim "  Output size: "$file-size" bytes"
   echo ""
 

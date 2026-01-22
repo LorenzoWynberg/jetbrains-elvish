@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ralph v4 - Autonomous Development System</title>
+    <style>
+        :root {
+            --bg: #1a1b26;
+            --bg-light: #24283b;
+            --bg-lighter: #414868;
+            --text: #c0caf5;
+            --text-dim: #565f89;
+            --accent: #7aa2f7;
+            --green: #9ece6a;
+            --red: #f7768e;
+            --yellow: #e0af68;
+            --purple: #bb9af7;
+            --cyan: #7dcfff;
+            --orange: #ff9e64;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-dim);
+            margin-bottom: 3rem;
+            font-size: 1.2rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        /* Overview Cards */
+        .overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--bg-lighter);
+        }
+
+        .card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card .icon {
+            font-size: 1.5rem;
+        }
+
+        .card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        /* Flow Diagram */
+        .flow-container {
+            background: var(--bg-light);
+            border-radius: 16px;
+            padding: 2rem;
+            overflow-x: auto;
+        }
+
+        .flow {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            min-width: 900px;
+        }
+
+        .flow-step {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .flow-step:last-child::after {
+            content: '';
+        }
+
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+        }
+
+        .step-1 .step-icon { background: var(--purple); }
+        .step-2 .step-icon { background: var(--cyan); }
+        .step-3 .step-icon { background: var(--yellow); }
+        .step-4 .step-icon { background: var(--green); }
+        .step-5 .step-icon { background: var(--accent); }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-desc {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        /* Knowledge Architecture */
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .knowledge-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .knowledge-box {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid;
+        }
+
+        .knowledge-box.primary { border-color: var(--green); }
+        .knowledge-box.context { border-color: var(--cyan); }
+        .knowledge-box.history { border-color: var(--purple); }
+
+        .knowledge-box h3 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .knowledge-box .path {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 0.75rem;
+        }
+
+        .knowledge-box ul {
+            list-style: none;
+            font-size: 0.9rem;
+        }
+
+        .knowledge-box li {
+            padding: 0.25rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .knowledge-box li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--text-dim);
+        }
+
+        /* Learning Loop */
+        .loop-container {
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .loop-diagram {
+            position: relative;
+            width: 400px;
+            height: 400px;
+        }
+
+        .loop-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: var(--bg-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            text-align: center;
+            border: 3px solid var(--accent);
+            z-index: 10;
+        }
+
+        .loop-node {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: var(--bg-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.85rem;
+            padding: 0.5rem;
+            border: 2px solid var(--bg-lighter);
+        }
+
+        .loop-node.read { top: 20px; left: 50%; transform: translateX(-50%); border-color: var(--cyan); }
+        .loop-node.work { top: 50%; right: 20px; transform: translateY(-50%); border-color: var(--yellow); }
+        .loop-node.write { bottom: 20px; left: 50%; transform: translateX(-50%); border-color: var(--green); }
+        .loop-node.next { top: 50%; left: 20px; transform: translateY(-50%); border-color: var(--purple); }
+
+        .loop-arrow {
+            position: absolute;
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        .arrow-1 { top: 80px; right: 80px; transform: rotate(45deg); }
+        .arrow-2 { bottom: 80px; right: 80px; transform: rotate(135deg); }
+        .arrow-3 { bottom: 80px; left: 80px; transform: rotate(-135deg); }
+        .arrow-4 { top: 80px; left: 80px; transform: rotate(-45deg); }
+
+        /* Collaboration */
+        .collab-container {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .agent {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .agent-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 1rem;
+        }
+
+        .agent.ralph .agent-icon { background: linear-gradient(135deg, var(--purple), var(--accent)); }
+        .agent.claude .agent-icon { background: linear-gradient(135deg, var(--orange), var(--yellow)); }
+        .agent.human .agent-icon { background: linear-gradient(135deg, var(--green), var(--cyan)); }
+
+        .agent h3 { margin-bottom: 0.25rem; }
+        .agent p { color: var(--text-dim); font-size: 0.9rem; }
+
+        .collab-arrow {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        /* Success/Failure */
+        .outcomes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            .outcomes { grid-template-columns: 1fr; }
+        }
+
+        .outcome {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .outcome.success { border: 2px solid var(--green); }
+        .outcome.failure { border: 2px solid var(--red); }
+
+        .outcome h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .outcome.success h3 { color: var(--green); }
+        .outcome.failure h3 { color: var(--red); }
+
+        .outcome ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .outcome li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .outcome li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--text-dim);
+        }
+
+        /* Files */
+        .file-tree {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .file-tree .folder { color: var(--accent); }
+        .file-tree .file { color: var(--text); margin-left: 1.5rem; }
+        .file-tree .comment { color: var(--text-dim); margin-left: 0.5rem; }
+
+        /* Animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            color: var(--text-dim);
+            padding-top: 2rem;
+            border-top: 1px solid var(--bg-lighter);
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ralph v4</h1>
+    <p class="subtitle">Autonomous Development System with Learning Loop</p>
+
+    <!-- Overview -->
+    <section>
+        <h2>What is Ralph?</h2>
+        <div class="overview">
+            <div class="card">
+                <h3><span class="icon">🤖</span> Autonomous Agent</h3>
+                <p>Ralph reads stories from prd.json and implements them one by one, creating branches, writing code, running tests, and merging PRs—all without human intervention.</p>
+            </div>
+            <div class="card">
+                <h3><span class="icon">🧠</span> Learning System</h3>
+                <p>Every iteration—success or failure—writes learnings back to docs/learnings/. The next iteration reads those learnings first. Ralph gets smarter with every loop.</p>
+            </div>
+            <div class="card">
+                <h3><span class="icon">🔄</span> Self-Improving</h3>
+                <p>Patterns, gotchas, and best practices accumulate over time. What Ralph learns in iteration 1 helps it avoid mistakes in iteration 50.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collaboration -->
+    <section>
+        <h2>How We Work Together</h2>
+        <div class="collab-container">
+            <div class="agent human">
+                <div class="agent-icon">👤</div>
+                <h3>You</h3>
+                <p>Define stories in prd.json<br>Review PRs<br>Direct Claude for specific tasks</p>
+            </div>
+            <div class="collab-arrow">⟷</div>
+            <div class="agent claude">
+                <div class="agent-icon">🧡</div>
+                <h3>Claude</h3>
+                <p>Interactive assistant<br>Handles direct requests<br>Updates learnings/</p>
+            </div>
+            <div class="collab-arrow">⟷</div>
+            <div class="agent ralph">
+                <div class="agent-icon">🔮</div>
+                <h3>Ralph</h3>
+                <p>Autonomous execution<br>Works through prd.json<br>Updates learnings/</p>
+            </div>
+        </div>
+        <div class="card" style="margin-top: 2rem; text-align: center;">
+            <p><strong>Shared Knowledge:</strong> Both Claude and Ralph read from and write to <code>docs/learnings/</code><br>
+            Everything we learn together accumulates in one place.</p>
+        </div>
+    </section>
+
+    <!-- Iteration Flow -->
+    <section>
+        <h2>Ralph Iteration Flow</h2>
+        <div class="flow-container">
+            <div class="flow">
+                <div class="flow-step step-1">
+                    <div class="step-icon">📖</div>
+                    <div class="step-title">Load Context</div>
+                    <div class="step-desc">Read learnings/, activity logs, prd.json, progress.txt</div>
+                </div>
+                <div class="flow-step step-2">
+                    <div class="step-icon">🎯</div>
+                    <div class="step-title">Pick Story</div>
+                    <div class="step-desc">Find next story where passes ≠ true, create branch</div>
+                </div>
+                <div class="flow-step step-3">
+                    <div class="step-icon">⚡</div>
+                    <div class="step-title">Implement</div>
+                    <div class="step-desc">Write code, tests, run build, self-review, refactor</div>
+                </div>
+                <div class="flow-step step-4">
+                    <div class="step-icon">✍️</div>
+                    <div class="step-title">Write Learnings</div>
+                    <div class="step-desc">Update learnings/ (success OR failure), activity log</div>
+                </div>
+                <div class="flow-step step-5">
+                    <div class="step-icon">🔁</div>
+                    <div class="step-title">Next</div>
+                    <div class="step-desc">Merge PR (if success), loop to next story</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Loop -->
+    <section>
+        <h2>The Learning Loop</h2>
+        <div class="loop-container">
+            <div class="loop-diagram">
+                <div class="loop-center">Knowledge<br>Grows</div>
+
+                <div class="loop-node read">📖 Read<br>learnings/</div>
+                <div class="loop-node work">⚡ Do Work<br>Learn stuff</div>
+                <div class="loop-node write">✍️ Update<br>learnings/</div>
+                <div class="loop-node next">🔄 Next<br>iteration</div>
+
+                <div class="loop-arrow arrow-1">↘</div>
+                <div class="loop-arrow arrow-2">↙</div>
+                <div class="loop-arrow arrow-3">↖</div>
+                <div class="loop-arrow arrow-4">↗</div>
+            </div>
+        </div>
+        <div class="card" style="max-width: 700px; margin: 0 auto;">
+            <h3 style="text-align: center; margin-bottom: 1rem;">Self-Correcting Knowledge</h3>
+            <div style="display: flex; justify-content: space-around; text-align: center;">
+                <div>
+                    <div style="font-size: 1.5rem;">➕</div>
+                    <strong>Add</strong><br>
+                    <span style="color: var(--text-dim); font-size: 0.9rem;">New patterns</span>
+                </div>
+                <div>
+                    <div style="font-size: 1.5rem;">✏️</div>
+                    <strong>Correct</strong><br>
+                    <span style="color: var(--text-dim); font-size: 0.9rem;">Fix mistakes</span>
+                </div>
+                <div>
+                    <div style="font-size: 1.5rem;">🗑️</div>
+                    <strong>Remove</strong><br>
+                    <span style="color: var(--text-dim); font-size: 0.9rem;">Outdated info</span>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 1rem; color: var(--text-dim); font-size: 0.9rem;">
+                Corrections are logged in activity logs so we know what changed and why.
+            </p>
+        </div>
+    </section>
+
+    <!-- Knowledge Architecture -->
+    <section>
+        <h2>Knowledge Architecture</h2>
+        <div class="knowledge-grid">
+            <div class="knowledge-box primary">
+                <h3>📗 Distilled Wisdom</h3>
+                <div class="path">docs/learnings/</div>
+                <ul>
+                    <li>Organized by topic files</li>
+                    <li>Each file has Gotchas section</li>
+                    <li>Read FIRST every iteration</li>
+                    <li>Add, Correct, Remove as needed</li>
+                    <li>Self-correcting over time</li>
+                </ul>
+            </div>
+            <div class="knowledge-box context">
+                <h3>📘 Detailed Context</h3>
+                <div class="path">docs/activity/YYYY-MM-DD.md</div>
+                <ul>
+                    <li>Session-by-session narrative</li>
+                    <li>Files modified, decisions made</li>
+                    <li>Learnings corrections logged here</li>
+                    <li>Last 2 logs included in prompt</li>
+                    <li>Detailed blocker information</li>
+                </ul>
+            </div>
+            <div class="knowledge-box history">
+                <h3>📙 Story History</h3>
+                <div class="path">scripts/ralph/progress.txt</div>
+                <ul>
+                    <li>Per-story entries</li>
+                    <li>What was done & learned</li>
+                    <li>Codebase patterns at top</li>
+                    <li>Architecture decisions</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success vs Failure -->
+    <section>
+        <h2>Learning from Everything</h2>
+        <div class="outcomes">
+            <div class="outcome success">
+                <h3>✅ On Success</h3>
+                <ul>
+                    <li>Add patterns to learnings/</li>
+                    <li>Document in activity log</li>
+                    <li>Update progress.txt</li>
+                    <li>Set prd.json passes: true</li>
+                    <li>Commit → Push → PR → Merge</li>
+                </ul>
+            </div>
+            <div class="outcome failure">
+                <h3>❌ On Blocked</h3>
+                <ul>
+                    <li>Add gotchas to learnings/</li>
+                    <li>Document what went wrong</li>
+                    <li>Update progress.txt (tried/blocked)</li>
+                    <li>DON'T update prd.json</li>
+                    <li>Retry or move to next story</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- File Structure -->
+    <section>
+        <h2>Ralph File Structure</h2>
+        <div class="file-tree">
+            <div class="folder">scripts/ralph/</div>
+            <div class="file">ralph.elv <span class="comment"># Main script - runs the loop</span></div>
+            <div class="file">prompt.md <span class="comment"># Template sent to Claude</span></div>
+            <div class="file">prd.json <span class="comment"># Stories & acceptance criteria</span></div>
+            <div class="file">progress.txt <span class="comment"># Story history & patterns</span></div>
+            <div class="file">state.json <span class="comment"># Current state (story, branch, attempts)</span></div>
+            <br>
+            <div class="folder">docs/</div>
+            <div class="file">learnings/ <span class="comment"># Consolidated wisdom (READ FIRST)</span></div>
+            <div class="file" style="margin-left: 3rem;">elvish.md <span class="comment"># Language patterns</span></div>
+            <div class="file" style="margin-left: 3rem;">lsp.md <span class="comment"># LSP integration</span></div>
+            <div class="file" style="margin-left: 3rem;">editor.md <span class="comment"># Editor features</span></div>
+            <div class="file" style="margin-left: 3rem;">... <span class="comment"># + more topic files</span></div>
+            <div class="file">activity/ <span class="comment"># Daily session logs</span></div>
+            <div class="file" style="margin-left: 3rem;">2026-01-21.md</div>
+            <div class="file" style="margin-left: 3rem;">2026-01-20.md</div>
+        </div>
+    </section>
+
+    <!-- Categories in learnings/ -->
+    <section>
+        <h2>What's in learnings/?</h2>
+        <div class="overview">
+            <div class="card">
+                <h3>🐚 elvish.md</h3>
+                <p>Elvish syntax, features, operators + gotchas</p>
+            </div>
+            <div class="card">
+                <h3>🔌 intellij-plugin.md</h3>
+                <p>Core plugin patterns, settings, icons + gotchas</p>
+            </div>
+            <div class="card">
+                <h3>🔗 lsp.md</h3>
+                <p>LSP integration, protocol, testing + gotchas</p>
+            </div>
+            <div class="card">
+                <h3>✏️ editor.md</h3>
+                <p>Folding, structure, breadcrumbs + gotchas</p>
+            </div>
+            <div class="card">
+                <h3>▶️ run-configs.md</h3>
+                <p>Run configs, execution, gutter icons + gotchas</p>
+            </div>
+            <div class="card">
+                <h3>📝 templates.md</h3>
+                <p>File & live templates + gotchas</p>
+            </div>
+            <div class="card">
+                <h3>🧪 testing.md</h3>
+                <p>Test patterns, LSP testing + gotchas</p>
+            </div>
+            <div class="card">
+                <h3>🔧 build.md</h3>
+                <p>Gradle, environment, macOS + gotchas</p>
+            </div>
+        </div>
+        <div class="card" style="margin-top: 1rem; text-align: center;">
+            <p>Each file has its own <strong>Gotchas</strong> section at the bottom for topic-specific mistakes to avoid.</p>
+        </div>
+    </section>
+
+    <!-- Summary -->
+    <section>
+        <h2>TL;DR</h2>
+        <div class="card" style="font-size: 1.1rem; line-height: 1.8;">
+            <p>
+                <strong>Ralph</strong> autonomously works through stories in prd.json.<br>
+                <strong>Claude</strong> handles direct requests interactively.<br>
+                <strong>Both</strong> read from and write to <code>docs/learnings/</code>.<br>
+                <strong>Every iteration</strong> (success or failure) adds knowledge.<br>
+                <strong>Result:</strong> A system that gets smarter over time. 🚀
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <p>Ralph v4 • JetBrains Elvish Plugin • Built with 🧡 by Claude & You</p>
+    </footer>
+</body>
+</html>
