@@ -955,7 +955,7 @@
         "./gradlew buildPlugin produces distributable ZIP",
         "CHANGELOG.md has release date for 1.1.0"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": ["STORY-9.6.3"],
       "phase": 9,
       "epic": 6,
