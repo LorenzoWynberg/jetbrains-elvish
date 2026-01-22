@@ -1482,3 +1482,31 @@ Stories now use the format STORY-{phase}.{epic}.{story}.
 - For loops use `for var container` syntax without `in` keyword
 - Template default values help users understand expected input format
 - Consistent template structure makes maintenance easier
+
+---
+
+## 2026-01-22 - STORY-8.5.3: Create Common Pattern Live Templates
+
+**What was done:**
+- Added 8 common pattern live templates to liveTemplates/Elvish.xml:
+  - `use` - import module: `use $MODULE$` (default: str)
+  - `var` - variable declaration: `var $NAME$ = $VALUE$`
+  - `set` - variable assignment: `set $NAME$ = $VALUE$`
+  - `each` - iteration pattern: `each {|$VAR$| $END$ }`
+  - `peach` - parallel iteration: `peach {|$VAR$| $END$ }`
+  - `lambda` - anonymous function: `{|$PARAMS$| $END$ }`
+  - `map` - map literal: `[&$KEY$=$VALUE$ $END$]`
+  - `list` - list literal: `[$ITEMS$]`
+- All templates have descriptive tooltips explaining usage
+- All templates limited to ELVISH context
+- Build passes (./gradlew build succeeds)
+- runIde launches without plugin errors
+
+**Files changed:**
+- src/main/resources/liveTemplates/Elvish.xml (added 8 common pattern templates)
+
+**Learnings:**
+- XML entity `&amp;` required for ampersand in map template value
+- `each` and `peach` are common Elvish iteration patterns (callback-based)
+- Lambda expressions use `{|params| body}` syntax inline
+- Map literals use `[&key=value]` syntax with ampersand prefix for keys

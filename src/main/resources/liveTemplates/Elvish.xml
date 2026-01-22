@@ -50,4 +50,65 @@
       <option name="ELVISH" value="true" />
     </context>
   </template>
+
+  <!-- Common Pattern Templates -->
+
+  <template name="use" value="use $MODULE$" description="Import module (str, path, math, re, file, os)" toReformat="false" toShortenFQNames="true">
+    <variable name="MODULE" expression="" defaultValue="&quot;str&quot;" alwaysStopAt="true" />
+    <context>
+      <option name="ELVISH" value="true" />
+    </context>
+  </template>
+
+  <template name="var" value="var $NAME$ = $VALUE$" description="Variable declaration" toReformat="false" toShortenFQNames="true">
+    <variable name="NAME" expression="" defaultValue="&quot;name&quot;" alwaysStopAt="true" />
+    <variable name="VALUE" expression="" defaultValue="&quot;&quot;" alwaysStopAt="true" />
+    <context>
+      <option name="ELVISH" value="true" />
+    </context>
+  </template>
+
+  <template name="set" value="set $NAME$ = $VALUE$" description="Variable assignment" toReformat="false" toShortenFQNames="true">
+    <variable name="NAME" expression="" defaultValue="&quot;name&quot;" alwaysStopAt="true" />
+    <variable name="VALUE" expression="" defaultValue="&quot;&quot;" alwaysStopAt="true" />
+    <context>
+      <option name="ELVISH" value="true" />
+    </context>
+  </template>
+
+  <template name="each" value="each {|$VAR$|&#10;  $END$&#10;}" description="Iteration pattern with callback" toReformat="false" toShortenFQNames="true">
+    <variable name="VAR" expression="" defaultValue="&quot;item&quot;" alwaysStopAt="true" />
+    <context>
+      <option name="ELVISH" value="true" />
+    </context>
+  </template>
+
+  <template name="peach" value="peach {|$VAR$|&#10;  $END$&#10;}" description="Parallel iteration pattern" toReformat="false" toShortenFQNames="true">
+    <variable name="VAR" expression="" defaultValue="&quot;item&quot;" alwaysStopAt="true" />
+    <context>
+      <option name="ELVISH" value="true" />
+    </context>
+  </template>
+
+  <template name="lambda" value="{|$PARAMS$| $END$ }" description="Anonymous function (lambda)" toReformat="false" toShortenFQNames="true">
+    <variable name="PARAMS" expression="" defaultValue="&quot;&quot;" alwaysStopAt="true" />
+    <context>
+      <option name="ELVISH" value="true" />
+    </context>
+  </template>
+
+  <template name="map" value="[&amp;$KEY$=$VALUE$ $END$]" description="Map literal with key-value pair" toReformat="false" toShortenFQNames="true">
+    <variable name="KEY" expression="" defaultValue="&quot;key&quot;" alwaysStopAt="true" />
+    <variable name="VALUE" expression="" defaultValue="&quot;value&quot;" alwaysStopAt="true" />
+    <context>
+      <option name="ELVISH" value="true" />
+    </context>
+  </template>
+
+  <template name="list" value="[$ITEMS$]" description="List literal" toReformat="false" toShortenFQNames="true">
+    <variable name="ITEMS" expression="" defaultValue="&quot;&quot;" alwaysStopAt="true" />
+    <context>
+      <option name="ELVISH" value="true" />
+    </context>
+  </template>
 </templateSet>
