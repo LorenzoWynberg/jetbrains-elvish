@@ -10,39 +10,68 @@ Instructions for Claude Code when working in this repository.
 ./scripts/ralph/ralph.elv  # Run autonomous dev loop
 ```
 
-## Activity Logging (Required)
+## Task Workflow (Follow This for Every Task)
 
-**Always update the activity log when working on this project.**
+### 1. Load Context
+Before starting ANY task, read relevant files:
+- `docs/learnings/` - Check topic files based on task:
+  - `elvish.md` - Elvish language patterns
+  - `intellij-plugin.md` - Core plugin patterns
+  - `lsp.md` - LSP integration
+  - `editor.md` - Editor features (folding, structure, breadcrumbs)
+  - `run-configs.md` - Run configurations
+  - `templates.md` - File/live templates
+  - `testing.md` - Testing patterns
+  - `build.md` - Build/environment
+- Recent activity logs in `docs/activity/` for context
 
-- Log location: `docs/activity/YYYY-MM-DD.md`
-- Create new file if today's log doesn't exist
-- Update throughout the session with changes made
-- See `docs/activity/README.md` for template and guidelines
+### 2. Activity Log
+Create or update `docs/activity/YYYY-MM-DD.md`:
+- Add entry when starting the task
+- Document decisions made
+- Update when task completes
 
-Example: `docs/activity/2026-01-20.md`
+### 3. Scope
+Work on ONE task at a time. Stay focused:
+- Don't refactor unrelated code
+- Note other issues in learnings for later
 
-## Learnings (Read & Write & Correct)
+### 4. Implementation
+- Write code
+- Write tests when applicable (skip for pure UI, trivial code, or LSP integration)
+- Tests go in `src/test/kotlin/` mirroring main structure
 
-**Always check relevant learnings before starting work.**
+### 5. Verification
+```bash
+./gradlew build  # Must pass
+```
 
-- Location: `docs/learnings/`
-- Files organized by topic: `elvish.md`, `lsp.md`, `editor.md`, etc.
-- Each file has a **Gotchas** section for common mistakes
+### 6. Self-Review
+After build passes, ask: "What's missing or could improve?"
+- Edge cases, API design, code organization
+- Only implement if in scope and meaningful
+- Max 3 review cycles
 
-**After completing work:**
-- **Add** new learnings to the appropriate file
-- **Correct** anything you discover was wrong or incomplete
-- **Remove** outdated info that no longer applies
+### 7. Update Learnings
+After completing the task:
+- **Add** new patterns to appropriate `docs/learnings/*.md` file
+- **Correct** anything discovered to be wrong
+- **Remove** outdated info
+- Note corrections in activity log
 
-If correcting a misconception, note it in the activity log so we know what changed and why.
+### 8. Documentation
+Update docs if changes affect:
+- README.md - New features, requirements
+- docs/DEVELOPMENT.md - Architecture, new components
+- docs/CONTRIBUTING.md - Workflow changes
+- CLAUDE.md - Key patterns
 
-## Documentation
-
-- [Development Guide](docs/DEVELOPMENT.md) - Build, architecture, debugging
-- [Contributing Guide](docs/CONTRIBUTING.md) - Branching, commits, PRs
-- [Ralph Guide](docs/ralph/RALPH.md) - Autonomous development loop
-- [Changelog](docs/CHANGELOG.md) - Version history
-- [Learnings](docs/learnings/) - Consolidated patterns and gotchas
+### 9. Commit & Push
+```bash
+git add <files>
+git commit -m "type: Description"
+git push origin <branch>
+```
 
 ## Project Overview
 
@@ -56,15 +85,16 @@ JetBrains plugin for Elvish shell language support. Uses Elvish's built-in LSP (
 | `src/main/resources/META-INF/plugin.xml` | Plugin manifest |
 | `src/main/resources/textmate/` | TextMate grammar |
 | `scripts/ralph/` | Autonomous dev loop |
+| `docs/learnings/` | Consolidated patterns and gotchas |
+| `docs/activity/` | Daily activity logs |
 
-## Workflow
+## Documentation
 
-Use [Ralph](docs/ralph/RALPH.md) for autonomous development, or follow manual workflow:
-
-1. Create branch from `dev`
-2. Implement changes
-3. Run `./gradlew build`
-4. Create PR targeting `dev`
+- [Development Guide](docs/DEVELOPMENT.md) - Build, architecture, debugging
+- [Contributing Guide](docs/CONTRIBUTING.md) - Branching, commits, PRs
+- [Ralph Guide](docs/ralph/RALPH.md) - Autonomous development loop
+- [Changelog](docs/CHANGELOG.md) - Version history
+- [Learnings](docs/learnings/) - Topic-based patterns
 
 ## Branching
 
@@ -76,5 +106,5 @@ Use [Ralph](docs/ralph/RALPH.md) for autonomous development, or follow manual wo
 
 - One commit per logical change
 - Push after each commit
-- No "Co-Authored-By" lines
-- Format: `type: STORY-XXX - Description`
+- Format: `type: Description`
+- Types: `feat`, `fix`, `refactor`, `docs`, `chore`
