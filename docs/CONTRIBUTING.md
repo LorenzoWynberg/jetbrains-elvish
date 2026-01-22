@@ -5,7 +5,8 @@
 - **main** - Production releases (tagged versions)
 - **dev** - Integration branch, all PRs merge here
 - **release/vX.Y.Z** - Release prep branches (from dev → main)
-- **feat/story-X.Y.Z** - Feature branches (from dev)
+- **feat/description** - Feature branches (from dev)
+- **feat/story-X.Y.Z** - Ralph story branches (automated)
 - **fix/description** - Bug fix branches (from dev)
 
 ### Release Flow
