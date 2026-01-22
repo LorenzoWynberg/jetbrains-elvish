@@ -1705,3 +1705,20 @@ Stories now use the format STORY-{phase}.{epic}.{story}.
 **Learnings:**
 - Simple test story to verify Ralph streaming works correctly
 - Minimal changes don't require extensive refactoring
+
+---
+
+## 2026-01-22 - STORY-TEST-2: Remove test comment from README
+
+**What was done:**
+- Removed HTML comment `<!-- RALPH_STREAMING_TEST -->` from README.md
+- README.md restored to its original state
+- Build passes (./gradlew build succeeds)
+- Performed 2 rounds of refactor checks (no changes needed - minimal change)
+
+**Files changed:**
+- README.md (removed HTML comment at end)
+
+**Learnings:**
+- Simple cleanup story to restore README to original state
+- Completes the test story pair (STORY-TEST-1 added, STORY-TEST-2 removed)
