@@ -142,9 +142,9 @@
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- Circular Diagram with SVG -->
                 <div class="bg-dark-700 rounded-2xl p-8 border border-dark-600 flex items-center justify-center">
-                    <div class="relative w-[420px] h-[420px]">
+                    <div class="relative w-[400px] h-[400px]">
                         <!-- SVG Arrows -->
-                        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 420 420">
+                        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 400">
                             <defs>
                                 <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
                                     <polygon points="0 0, 10 3.5, 0 7" fill="#7aa2f7" />
@@ -152,30 +152,30 @@
                             </defs>
                             <!-- Curved arrows: clockwise flow -->
                             <!-- Read → Work (top-right arc) -->
-                            <path d="M 250 70 Q 340 70 350 160" stroke="#7aa2f7" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
+                            <path d="M 255 65 Q 335 65 335 145" stroke="#7aa2f7" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
                             <!-- Work → Update (bottom-right arc) -->
-                            <path d="M 350 260 Q 350 350 260 350" stroke="#7aa2f7" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
+                            <path d="M 335 255 Q 335 335 255 335" stroke="#7aa2f7" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
                             <!-- Update → Next (bottom-left arc) -->
-                            <path d="M 170 350 Q 70 350 70 260" stroke="#7aa2f7" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
+                            <path d="M 145 335 Q 65 335 65 255" stroke="#7aa2f7" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
                             <!-- Next → Read (top-left arc) -->
-                            <path d="M 70 160 Q 70 70 160 70" stroke="#7aa2f7" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
+                            <path d="M 65 145 Q 65 65 145 65" stroke="#7aa2f7" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
                         </svg>
                         <!-- Center -->
-                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36 rounded-full bg-dark-800 border-4 border-accent flex items-center justify-center text-center z-10">
-                            <span class="font-bold text-xl">Knowledge<br>Grows</span>
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-dark-800 border-4 border-accent flex items-center justify-center text-center z-10">
+                            <span class="font-bold text-lg">Knowledge<br>Grows</span>
                         </div>
-                        <!-- Nodes -->
-                        <div class="absolute top-2 left-1/2 -translate-x-1/2 w-32 h-24 bg-dark-800 rounded-xl border-2 border-cyan flex items-center justify-center text-center p-3">
-                            <span class="text-lg">📖 Read<br>learnings/</span>
+                        <!-- Nodes - positioned symmetrically -->
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-20 bg-dark-800 rounded-xl border-2 border-cyan flex items-center justify-center text-center">
+                            <span>📖 Read<br>learnings/</span>
                         </div>
-                        <div class="absolute top-1/2 right-2 -translate-y-1/2 w-32 h-24 bg-dark-800 rounded-xl border-2 border-warning flex items-center justify-center text-center p-3">
-                            <span class="text-lg">⚡ Do Work<br>Learn stuff</span>
+                        <div class="absolute top-1/2 right-0 -translate-y-1/2 w-28 h-20 bg-dark-800 rounded-xl border-2 border-warning flex items-center justify-center text-center">
+                            <span>⚡ Do Work<br>Learn stuff</span>
                         </div>
-                        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-24 bg-dark-800 rounded-xl border-2 border-success flex items-center justify-center text-center p-3">
-                            <span class="text-lg">✍️ Update<br>learnings/</span>
+                        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-28 h-20 bg-dark-800 rounded-xl border-2 border-success flex items-center justify-center text-center">
+                            <span>✍️ Update<br>learnings/</span>
                         </div>
-                        <div class="absolute top-1/2 left-2 -translate-y-1/2 w-32 h-24 bg-dark-800 rounded-xl border-2 border-purple flex items-center justify-center text-center p-3">
-                            <span class="text-lg">🔄 Next<br>iteration</span>
+                        <div class="absolute top-1/2 left-0 -translate-y-1/2 w-28 h-20 bg-dark-800 rounded-xl border-2 border-purple flex items-center justify-center text-center">
+                            <span>🔄 Next<br>iteration</span>
                         </div>
                     </div>
                 </div>
