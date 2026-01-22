@@ -1689,3 +1689,19 @@ Stories now use the format STORY-{phase}.{epic}.{story}.
 - Error handling for missing Elvish binary
 
 **Ready for JetBrains Marketplace submission.**
+
+---
+
+## 2026-01-22 - STORY-TEST-1: Add test comment to README
+
+**What was done:**
+- Added HTML comment `<!-- RALPH_STREAMING_TEST -->` as the very last line of README.md
+- Build passes (./gradlew build succeeds)
+- Performed 2 rounds of refactor checks (no changes needed - minimal change)
+
+**Files changed:**
+- README.md (added HTML comment at end)
+
+**Learnings:**
+- Simple test story to verify Ralph streaming works correctly
+- Minimal changes don't require extensive refactoring

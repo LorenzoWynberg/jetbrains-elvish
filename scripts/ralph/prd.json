@@ -969,7 +969,7 @@
         "Add HTML comment <!-- RALPH_STREAMING_TEST --> as the very last line of README.md",
         "./gradlew build succeeds"
       ],
-      "passes": false,
+      "passes": true,
       "depends_on": [],
       "phase": 99,
       "epic": 99,
