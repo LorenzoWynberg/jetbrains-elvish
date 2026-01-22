@@ -564,21 +564,9 @@ while (< $current-iteration $max-iterations) {
       # Quiet mode: capture output to file, no streaming
       timeout $claude-timeout bash -c 'claude --dangerously-skip-permissions --print < "$1"' _ $prompt-tmp > $output-file 2>&1
     } else {
-      # Streaming mode: use stream-json + jq for real-time output
-      # jq filters extract readable text from verbose JSON stream
-      # tee captures full output for completion signal detection
-      timeout $claude-timeout bash -c '
-        stream_text='\''select(.type == "assistant").message.content[]? | select(.type == "text").text // empty | gsub("\n"; "\r\n") | . + "\r\n\n"'\''
-        final_result='\''select(.type == "result").result // empty'\''
-
-        claude --dangerously-skip-permissions --verbose --print --output-format stream-json < "$1" 2>&1 \
-          | grep --line-buffered "^{" \
-          | tee "$2" \
-          | jq --unbuffered -rj "$stream_text" 2>/dev/null || true
-
-        # Extract final result text for signal detection
-        jq -rs "$final_result" "$2" >> "$2.result" 2>/dev/null || true
-      ' _ $prompt-tmp $output-file
+      # Streaming mode: use helper script to avoid Elvish quoting issues
+      var stream-script = (path:join $script-dir "stream-claude.sh")
+      bash $stream-script $prompt-tmp $output-file $claude-timeout
 
       # Use the extracted result if available, otherwise use raw output
       if (path:is-regular $output-file".result") {
