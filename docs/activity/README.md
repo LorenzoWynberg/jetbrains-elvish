@@ -49,6 +49,29 @@ Brief overview of what was accomplished today.
 4. **Link to commits** when relevant
 5. **Note blockers** and how they were resolved
 
+## Archive
+
+Older activity logs are moved to `archive/` to keep the main directory clean.
+
+**Structure:**
+```
+docs/activity/
+├── README.md           # This file
+├── 2026-01-21.md       # Recent logs (keep last 7 days)
+├── 2026-01-20.md
+└── archive/
+    └── 2026-01/        # Monthly folders
+        └── 2026-01-15.md
+```
+
+**When to archive:** Move logs older than 7 days to `archive/YYYY-MM/` folder.
+
+**To archive manually:**
+```bash
+mkdir -p docs/activity/archive/2026-01
+mv docs/activity/2026-01-15.md docs/activity/archive/2026-01/
+```
+
 ## Automation
 
 When using Claude Code or Ralph, activity logs should be created/updated automatically at the start of each session. The log serves as a record of AI-assisted development work.
