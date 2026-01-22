@@ -14,27 +14,28 @@
 ### Editor Enhancements
 | Feature | Description | Effort |
 |---------|-------------|--------|
-| **More Live Templates** | `pipe`, `defer`, `nop`, `edit` | Low |
-| **Surround With** | Wrap selection in `{ }`, `try { }`, etc. | Low |
-| **Smart Enter** | Auto-continue pipelines, lists | Medium |
-| **Quote Handling** | Smart quote insertion/pairing | Low |
+| **More Live Templates** | `nop`, `range`, `all`, `one`, `slurp` | Low |
+| **Surround With** | Wrap selection in `{ }`, `try { }`, `?(...)` | Low |
+| **Smart Enter** | Auto-continue pipelines with `\|` | Medium |
+| **Wildcard Preview** | Show what `*`, `**`, `?` would match | Medium |
 
 ### Advanced Features
 | Feature | Description | Effort |
 |---------|-------------|--------|
-| **REPL Integration** | Interactive Elvish shell in IDE | High |
-| **Module Browser** | Browse/search Elvish modules | Medium |
-| **Debugger** | Step through Elvish scripts | Very High |
-| **Package Manager** | Install/manage Elvish packages | Medium |
-| **rc.elv Editor** | Special support for config file | Low |
+| **REPL Integration** | Interactive Elvish shell in IDE terminal | High |
+| **Module Browser** | Browse str:, path:, math:, re:, file:, os: modules | Medium |
+| **epm Integration** | Install packages via Elvish Package Manager | Medium |
+| **rc.elv Support** | Special support for `~/.config/elvish/rc.elv` | Low |
+| **lib/*.elv Support** | Navigate to user modules in `~/.config/elvish/lib/` | Low |
 
 ### Nice to Have
 | Feature | Description | Effort |
 |---------|-------------|--------|
-| **Color Preview** | Show color swatches for ANSI codes | Low |
-| **Path Completion** | Autocomplete file paths | Medium |
-| **Environment Variables** | Show env var values on hover | Medium |
-| **Shell History** | Browse command history | Medium |
+| **Tilde Expansion Preview** | Show what `~/` and `~user/` resolve to | Low |
+| **Path Completion** | Autocomplete file paths in strings | Medium |
+| **Env Var Hover** | Show `$E:VAR` values on hover | Medium |
+| **Store Browser** | Browse persistent store (`store:` module) | Medium |
+| **Output Capture Hints** | Explain `(cmd)` vs `?(cmd)` difference | Low |
 
 ---
 
